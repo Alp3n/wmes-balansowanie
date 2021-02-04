@@ -8,16 +8,23 @@ import {
   Like,
   Chat,
   Next,
+  Close,
 } from 'grommet-icons';
 
-const PositionCard = ({ position }) => {
+const PositionCard = ({ position, index, removeFromList }) => {
   const [background, setBackground] = useState('status-unknown');
   return (
     <Card margin={{ bottom: 'medium' }}>
-      <CardHeader justify='center' background='status-unknown' pad='small'>
-        <Text size='large' weight='bold'>
-          {position.name}
-        </Text>
+      <CardHeader background='status-unknown' pad='small'>
+        <Box>
+          <Text size='large' weight='bold'>
+            {position.name}
+          </Text>
+        </Box>
+        <Button
+          icon={<Close size='small' />}
+          onClick={() => removeFromList(index)}
+        />
       </CardHeader>
       <CardBody direction='row' justify='between' align='center'>
         <Button icon={<Chat />} />

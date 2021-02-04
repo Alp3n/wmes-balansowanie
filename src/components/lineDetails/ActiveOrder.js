@@ -5,7 +5,11 @@ import { Edit } from 'grommet-icons';
 
 const ActiveOrder = () => {
   return (
-    <Box round='small' margin='medium' background='white' elevation='small'>
+    <Box
+      // round='small'
+      background='white'
+      // elevation='small'
+    >
       <Box direction='row' justify='between'>
         <Text size='large' margin='small' weight='bold'>
           Aktualne zlecenie

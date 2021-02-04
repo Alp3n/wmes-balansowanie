@@ -24,7 +24,7 @@ const LineDetails = ({ item }) => {
     setList((list) => [...list, ...newList]);
   }, []);
 
-  const addPosition = () => {
+  const addToList = () => {
     const newItem = {
       name: `ST-${list.length + 1}`,
       time: '00:00',
@@ -33,27 +33,37 @@ const LineDetails = ({ item }) => {
     setList((list) => [...list, newItem]);
   };
 
+  const removeFromList = (index) => {
+    setList(list.filter((_, i) => i !== index));
+  };
+
   console.log(list);
   return (
     <Layout pageName={'title'}>
       <ActiveOrder />
       <BreakLine />
-      <Box margin={{ left: 'large', top: 'medium' }}>
+      <Box margin='medium'>
         <Text size='large' weight='bold'>
           Balansowanie
         </Text>
       </Box>
       <Box margin='medium'>
-        {list.map((position) => (
-          <PositionCard key={position.name} position={position} />
+        {list.map((position, index) => (
+          <PositionCard
+            key={position.name}
+            position={position}
+            index={index}
+            removeFromList={removeFromList}
+          />
         ))}
         <Button
           icon={<AddCircle />}
           label='Dodaj stanowisko'
           margin={{ vertical: 'small' }}
+          size='large'
           primary
           onClick={() => {
-            addPosition();
+            addToList();
           }}
         />
       </Box>

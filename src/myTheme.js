@@ -10,7 +10,7 @@ export const myTheme = deepMerge(grommet, {
       brand: 'signifyGreen',
       focus: 'signifyGreen',
       selected: 'signifyGreen',
-
+      background: '#f0f0f0',
       signifyGreen: '#00E696',
       signifyBlue: '#1EC8D2',
       signifyGradient: brandGradient,

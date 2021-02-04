@@ -26,7 +26,7 @@ const Topbar = styled(Box)`
 
 const Layout = ({ children, pageName, firstPage }) => {
   return (
-    <Box style={boxStyle} background='#fcfcfc'>
+    <Box style={boxStyle} background='background' fill='horizontal'>
       <Topbar
         fill='horizontal'
         direction='row'

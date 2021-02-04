@@ -18,8 +18,6 @@ const ListCard = ({ item, index }) => {
       justify='between'
       pad={{ vertical: 'medium', horizontal: 'medium' }}
       margin={{ vertical: 'small', horizontal: 'medium' }}
-      // border={{ side: 'all', color: '#e3e3e3' }}
-      // background={index % 2 ? 'white' : '#efefef'}
       elevation='small'
       background='white'
       onClick={() => {
