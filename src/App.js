@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Grommet } from 'grommet';
-import { grommet } from 'grommet/themes';
-import { deepMerge } from 'grommet/utils';
+import { myTheme } from './myTheme';
 import Login from './pages/Login';
 import Line from './pages/Line';
+import LineDetails from './pages/LineDetails';
 
 import {
   BrowserRouter as Router,
@@ -12,32 +12,25 @@ import {
   Switch,
 } from 'react-router-dom';
 
-const theme = deepMerge(grommet, {
-  list: {
-    item: {
-      pad: { horizontal: 'large', vertical: 'xsmall' },
-      background: ['white', 'light-2'],
-      border: true,
-    },
-  },
-});
+// const theme = deepMerge(grommet, {
+//   list: {
+//     item: {
+//       pad: { horizontal: 'large', vertical: 'xsmall' },
+//       background: ['white', 'light-2'],
+//       border: true,
+//     },
+//   },
+// });
 
 function App() {
-  const [isAuth, setAuth] = useState(false);
-
-  if (isAuth === false) {
-    return (
-      <Grommet theme={theme}>
-        <Login isAuth={isAuth} setAuth={setAuth} />;
-      </Grommet>
-    );
-  }
+  const [isAuth, setAuth] = useState(true);
 
   return (
-    <Grommet theme={theme}>
+    <Grommet theme={myTheme}>
       <Router>
         <Switch>
-          {isAuth && <Redirect from='/' to='/line' exact />}
+          <Route path='/lines/:id' component={LineDetails} />
+          <Route path='/lines' exact component={Line} />
           <Route
             path='/login'
             exact
@@ -45,8 +38,11 @@ function App() {
               <Login {...props} setAuth={setAuth} isAuth={isAuth} />
             )}
           />
-          {isAuth === false && <Redirect from='/*' to='/login' exact />}
-          <Route path='/line' exact component={Line} />
+          {isAuth ? (
+            <Redirect from='/' to='/lines' />
+          ) : (
+            <Redirect from='/' to='/login' />
+          )}
           <Route path='/*' component={() => '404'} />
         </Switch>
       </Router>

@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Box, InfiniteScroll, TextInput, Text, Card } from 'grommet';
-import { base } from 'grommet/themes';
-import { Search, Next } from 'grommet-icons';
-import Layout from '../components/Layout';
+
+import Layout from '../components/layout/Layout';
+import SearchBox from '../components/SearchBox';
+import List from '../components/list/List';
+import BreakLine from '../components/BreakLine';
 
 const pageName = 'Linie produkcyjne';
-
-const searchBoxStyle = {
-  position: 'sticky',
-  top: 56,
-  background: 'white',
-};
 
 const items = [];
 for (let i = 0; i < 15; i++) {
@@ -53,52 +48,8 @@ const Line = () => {
 
   return (
     <Layout pageName={pageName} firstPage={true}>
-      <Box style={searchBoxStyle}>
-        <Box
-          direction='row'
-          align='center'
-          border
-          round='small'
-          pad={{ horizontal: 'small', vertical: 'xsmall' }}
-          margin='medium'
-        >
-          <Search />
-          <TextInput
-            type='text'
-            value={search}
-            onChange={onChange}
-            plain
-            placeholder='Wyszukaj linię...'
-          />
-        </Box>
-        <Box margin='medium'>
-          <Text size='large'>
-            <strong>Lista linii</strong>
-          </Text>
-        </Box>
-      </Box>
-
-      <Box overflow='auto' height='100%'>
-        <InfiniteScroll items={filteredLines}>
-          {(item, index) => (
-            <Box
-              key={item.name}
-              round='small'
-              direction='row'
-              align='center'
-              justify='between'
-              pad={{ vertical: 'medium', horizontal: 'medium' }}
-              margin={{ vertical: 'small', horizontal: 'medium' }}
-              border={{ side: 'all', color: '#e3e3e3' }}
-              background={index % 2 ? 'white' : '#efefef'}
-              onClick={() => {}}
-            >
-              <Text>{item.name}</Text>
-              <Next />
-            </Box>
-          )}
-        </InfiniteScroll>
-      </Box>
+      <SearchBox search={search} onChange={onChange} setSearch={setSearch} />
+      <List filteredLines={filteredLines} />
     </Layout>
   );
 };

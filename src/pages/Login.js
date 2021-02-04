@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, Form, Text, Button, CheckBox, Box, Heading } from 'grommet';
+import { TextInput, Form, Text, Button, CheckBox, Box } from 'grommet';
+import Layout from '../components/layout/Layout.js';
 
 import strings from '../data/strings.json';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 // const strings = JSON.parse(stringsJson);
 const {
@@ -32,24 +33,19 @@ const Login = ({ isAuth, setAuth }) => {
 
   const [checked, setChecked] = useState(false);
   return (
-    <Box>
-      <Box elevation='medium' background='brand'>
-        <Heading level='2' margin='medium' alignSelf='center'>
-          {appTittle}
-        </Heading>
-      </Box>
+    <Layout firstPage='true' pageName={appTittle}>
       <Box margin='small'>
         <Form onSubmit={handleLogin}>
           <Box pad='medium' gap='medium'>
             <Box>
               <Text margin='xsmall'>{email}</Text>
-              <Box border round='small'>
+              <Box border round='small' onClick={() => {}}>
                 <TextInput plain type='email' placeholder={emailPlaceholder} />
               </Box>
             </Box>
             <Box>
               <Text margin='xsmall'>{password}</Text>
-              <Box border round='small'>
+              <Box border round='small' onClick={() => {}}>
                 <TextInput
                   plain
                   type='password'
@@ -62,18 +58,21 @@ const Login = ({ isAuth, setAuth }) => {
               checked={checked}
               onChange={(event) => setChecked(event.target.checked)}
             />
-            <Button
-              primary
-              label={login}
-              fill='horizontal'
-              size='large'
-              margin={{ top: 'small' }}
-              type='submit'
-            />
+            <Link to='/lines'>
+              <Button
+                primary
+                label={login}
+                fill='horizontal'
+                size='large'
+                margin={{ top: 'small' }}
+                type='submit'
+                style={{ border: 'none' }}
+              />
+            </Link>
           </Box>
         </Form>
       </Box>
-    </Box>
+    </Layout>
   );
 };
 
