@@ -4,6 +4,7 @@ import { myTheme } from './myTheme';
 import Login from './pages/Login';
 import Line from './pages/Line';
 import LineDetails from './pages/LineDetails';
+import PositionDetails from './pages/PositionDetails';
 
 import {
   BrowserRouter as Router,
@@ -29,6 +30,7 @@ function App() {
     <Grommet theme={myTheme}>
       <Router>
         <Switch>
+          <Route path='/lines/:id/:id' component={PositionDetails} />
           <Route path='/lines/:id' component={LineDetails} />
           <Route path='/lines' exact component={Line} />
           <Route

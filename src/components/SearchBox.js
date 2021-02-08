@@ -7,12 +7,12 @@ const StyledBox = styled(Box)`
   position: sticky;
   top: 56px;
   background: white;
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid 'dark-4';
 `;
 
 const SearchBox = ({ search, onChange, setSearch }) => {
   return (
-    <StyledBox>
+    <StyledBox border={{ side: 'bottom', color: 'light-4' }}>
       <Box
         direction='row'
         align='center'

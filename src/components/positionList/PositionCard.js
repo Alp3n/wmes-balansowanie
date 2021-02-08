@@ -16,7 +16,7 @@ const PositionCard = ({ position, index, removeFromList }) => {
   return (
     <Card margin={{ bottom: 'medium' }}>
       <CardHeader background='status-unknown' pad='small'>
-        <Box>
+        <Box margin={{ left: 'small' }}>
           <Text size='large' weight='bold'>
             {position.name}
           </Text>
@@ -26,7 +26,12 @@ const PositionCard = ({ position, index, removeFromList }) => {
           onClick={() => removeFromList(index)}
         />
       </CardHeader>
-      <CardBody direction='row' justify='between' align='center'>
+      <CardBody
+        direction='row'
+        justify='between'
+        align='center'
+        background='white'
+      >
         <Button icon={<Chat />} />
         <Text size='large'>00:00s</Text>
         <Button icon={<Next />} />

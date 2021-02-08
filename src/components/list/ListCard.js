@@ -24,7 +24,7 @@ const ListCard = ({ item, index }) => {
         handleClick();
       }}
     >
-      <Text>{item.name}</Text>
+      <Text weight='bold'>{item.name}</Text>
       <Next />
     </Box>
   );
