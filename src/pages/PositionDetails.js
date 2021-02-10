@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { Box, Text, Button } from 'grommet';
+import { Box, Text } from 'grommet';
 import Layout from '../components/layout/Layout';
 import Timer from '../components/timer/Timer';
-import BreakLine from '../components/BreakLine';
 
 const PositionDetails = () => {
   return (

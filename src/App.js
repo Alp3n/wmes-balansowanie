@@ -13,18 +13,8 @@ import {
   Switch,
 } from 'react-router-dom';
 
-// const theme = deepMerge(grommet, {
-//   list: {
-//     item: {
-//       pad: { horizontal: 'large', vertical: 'xsmall' },
-//       background: ['white', 'light-2'],
-//       border: true,
-//     },
-//   },
-// });
-
 function App() {
-  const [isAuth, setAuth] = useState(true);
+  const [user, setUser] = useState();
 
   return (
     <Grommet theme={myTheme}>
@@ -32,15 +22,19 @@ function App() {
         <Switch>
           <Route path='/lines/:id/:id' component={PositionDetails} />
           <Route path='/lines/:id' component={LineDetails} />
-          <Route path='/lines' exact component={Line} />
+          <Route
+            path='/lines'
+            exact
+            render={(props) => <Line {...props} user={user} />}
+          />
           <Route
             path='/login'
             exact
             render={(props) => (
-              <Login {...props} setAuth={setAuth} isAuth={isAuth} />
+              <Login {...props} setUser={setUser} user={user} />
             )}
           />
-          {isAuth ? (
+          {user ? (
             <Redirect from='/' to='/lines' />
           ) : (
             <Redirect from='/' to='/login' />

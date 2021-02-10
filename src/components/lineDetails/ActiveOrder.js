@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Box, Text, Button } from 'grommet';
 import { Edit } from 'grommet-icons';
 
-const ActiveOrder = () => {
+const ActiveOrder = ({ orderNumber }) => {
   return (
-    <Box background='white' pad='small'>
+    <Box
+      background='white'
+      pad='small'
+      border={{ side: 'bottom', color: 'light-4' }}
+    >
       <Box direction='row'>
         <Text size='large' margin='small' weight='bold'>
           Aktualne zlecenie
@@ -13,7 +17,7 @@ const ActiveOrder = () => {
         <Button icon={<Edit color='signifyGreen' />} />
       </Box>
       <Text size='large' margin={{ horizontal: 'small', bottom: 'small' }}>
-        32173862167
+        {orderNumber}
       </Text>
     </Box>
   );

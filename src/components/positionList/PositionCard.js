@@ -1,18 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Box, Button, Text, Card, CardBody, CardHeader } from 'grommet';
-import {
-  PlayFill,
-  Play,
-  StopFill,
-  Stop,
-  Like,
-  Chat,
-  Next,
-  Close,
-} from 'grommet-icons';
+import { Chat, Next, Close } from 'grommet-icons';
 
 const PositionCard = ({ position, index, removeFromList }) => {
-  const [background, setBackground] = useState('status-unknown');
+  const history = useHistory();
   return (
     <Card margin={{ bottom: 'medium' }}>
       <CardHeader background='status-unknown' pad='small'>
@@ -32,9 +24,19 @@ const PositionCard = ({ position, index, removeFromList }) => {
         align='center'
         background='white'
       >
-        <Button icon={<Chat />} />
+        <Button
+          icon={<Chat />}
+          onClick={() => {
+            console.log('I PRESSED MESSAGE EDITION');
+          }}
+        />
         <Text size='large'>00:00s</Text>
-        <Button icon={<Next />} />
+        <Button
+          icon={<Next />}
+          onClick={() => {
+            history.push('/lines/123');
+          }}
+        />
       </CardBody>
     </Card>
   );

@@ -18,7 +18,7 @@ const SearchBox = ({ search, onChange, setSearch }) => {
         align='center'
         border
         round='small'
-        pad={{ horizontal: 'small', vertical: 'xsmall' }}
+        pad={{ horizontal: 'small', vertical: 'xxsmall' }}
         margin='medium'
         onClick={() => {}}
       >

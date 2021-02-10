@@ -1,32 +1,34 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Box, Text } from 'grommet';
+import { Card, CardBody, CardHeader, Text } from 'grommet';
 import { Next } from 'grommet-icons';
 
-const ListCard = ({ item, index }) => {
+const ListCard = ({ item }) => {
   const history = useHistory();
 
   const handleClick = async (e) => {
-    console.log(item.name);
-    history.push(`/lines/${item.name}`);
+    history.push(`/lines/${item._id}`, item);
   };
+
   return (
-    <Box
-      round='small'
-      direction='row'
-      align='center'
-      justify='between'
-      pad={{ vertical: 'medium', horizontal: 'medium' }}
+    <Card
       margin={{ vertical: 'small', horizontal: 'medium' }}
-      elevation='small'
-      background='white'
-      onClick={() => {
-        handleClick();
-      }}
+      onClick={() => handleClick()}
     >
-      <Text weight='bold'>{item.name}</Text>
-      <Next />
-    </Box>
+      <CardHeader background='white' pad='small' border={{ side: 'bottom' }}>
+        <Text weight='bold'>{item._id}</Text>
+      </CardHeader>
+      <CardBody
+        direction='row'
+        background='white'
+        justify='between'
+        align='center'
+        pad='small'
+      >
+        <Text size='small'>{item.description}</Text>
+        <Next />
+      </CardBody>
+    </Card>
   );
 };
 

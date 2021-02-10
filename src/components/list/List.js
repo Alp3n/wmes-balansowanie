@@ -9,7 +9,7 @@ const List = ({ filteredLines }) => {
   return (
     <Box overflow='auto' height='100%'>
       <InfiniteScroll items={filteredLines}>
-        {(item, index) => <ListCard item={item} index={index} key={index} />}
+        {(item) => <ListCard item={item} key={item._id} />}
       </InfiniteScroll>
     </Box>
   );

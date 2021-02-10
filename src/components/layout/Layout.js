@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Heading, Button } from 'grommet';
 import { Previous, Menu } from 'grommet-icons';
+import { useHistory } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -25,6 +26,7 @@ const Topbar = styled(Box)`
 `;
 
 const Layout = ({ children, pageName, firstPage }) => {
+  const history = useHistory();
   return (
     <Box style={boxStyle} background='background' fill='horizontal'>
       <Topbar
@@ -40,6 +42,7 @@ const Layout = ({ children, pageName, firstPage }) => {
             icon={<Previous color='white' />}
             margin={{ left: 'small' }}
             plain
+            onClick={() => history.goBack()}
           />
         )}
         <TopbarHeading level='2' margin='medium'>

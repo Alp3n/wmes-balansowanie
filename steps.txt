@@ -1,0 +1,32 @@
+1. GET -> https://dev.wmes.pl/users/self
+
+if (loggedIn) {
+	-> assign user id to GLOBAL STATE check cookies
+	-> go to lines page
+} else {
+	-> GO TO LOGIN PAGE
+	-> POST 
+	https://dev.wmes.pl/login
+	Accept application/json
+	
+	set GLOBAL STATE with user ID and save cookies
+}
+
+2. GET -> https://dev.wmes.pl/prodLines
+
+set ID of prodLine onClick
+
+GET -> https://dev.wmes.pl/prodLines
+
+
+3. SENDING BALANCING 
+POST->https://dev.wmes.pl/ct/balancing/pces
+
+payload:
+{
+  finishedAt: Date.now(),
+  line: ${lineID},
+  order: ${orderNumber}
+  startedAt: Date.now(),
+  station: ${station}
+}

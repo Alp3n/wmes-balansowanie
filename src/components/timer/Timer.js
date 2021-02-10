@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Box, Button, Text } from 'grommet';
-import { PlayFill, Play, StopFill, Stop, Like, Refresh } from 'grommet-icons';
+import { Box, Text } from 'grommet';
+import { PlayFill, StopFill, Like, Refresh } from 'grommet-icons';
 import TimerButton from './TimerButton';
 
 const StyledBoxWrapper = styled(Box)`

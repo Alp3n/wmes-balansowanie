@@ -1,11 +1,11 @@
 {
   "loginPage": {
-    "appTittle": "WMES Balansowanie",
-    "email": "Email",
-    "password": "Hasło",
-    "emailPlaceholder": "xyz@signify.com",
-    "passwordPlaceholder": "Wpisz swoje hasło",
-    "remember": "Zapamiętaj mnie",
-    "login": "Zaloguj"
+    "LOGIN_appTittle": "WMES Balansowanie",
+    "LOGIN_userName": "Login lub email",
+    "LOGIN_password": "Hasło",
+    "LOGIN_userNamePlaceholder": "Login/xyz@signify.com",
+    "LOGIN_passwordPlaceholder": "Wpisz swoje hasło",
+    "LOGIN_remember": "Zapamiętaj mnie",
+    "LOGIN_login": "Zaloguj"
   }
 }

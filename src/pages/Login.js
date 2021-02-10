@@ -3,72 +3,89 @@ import { TextInput, Form, Text, Button, CheckBox, Box } from 'grommet';
 import Layout from '../components/layout/Layout.js';
 
 import strings from '../data/strings.json';
-import { Redirect, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-// const strings = JSON.parse(stringsJson);
+import { URL_LOGIN, HEADERS } from '../utils/consts';
+
 const {
-  appTittle,
-  email,
-  password,
-  emailPlaceholder,
-  passwordPlaceholder,
-  remember,
-  login,
+  LOGIN_appTittle,
+  LOGIN_userName,
+  LOGIN_password,
+  LOGIN_userNamePlaceholder,
+  LOGIN_passwordPlaceholder,
+  LOGIN_remember,
+  LOGIN_login,
 } = strings.loginPage;
 
-// async function loginUser() {
-//   setAuth(!isAuth);
-//   if (isAuth) {
-//     <Redirect to='/line' />;
-//   }
-//   console.log(isAuth);
-// };
+async function loginUser(credentials) {
+  return fetch(URL_LOGIN, {
+    method: 'POST',
+    headers: HEADERS,
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
 
-const Login = ({ isAuth, setAuth }) => {
+const Login = ({ setUser, user }) => {
+  const [checked, setChecked] = useState(false);
+  const [userName, setUserName] = useState();
+  const [password, setPassword] = useState();
+
+  let history = useHistory();
+
   const handleLogin = async (e) => {
-    setAuth(true);
-    console.log(isAuth);
-    <Redirect to='/line' />;
+    e.preventDefault();
+    const user = await loginUser({
+      login: userName,
+      password,
+    });
+    setUser(user);
+    history.push('/lines');
   };
 
-  const [checked, setChecked] = useState(false);
+  useEffect(() => {}, []);
+
   return (
-    <Layout firstPage='true' pageName={appTittle}>
-      <Box margin='small'>
+    <Layout firstPage='true' pageName={LOGIN_appTittle}>
+      <Box background='white'>
         <Form onSubmit={handleLogin}>
           <Box pad='medium' gap='medium'>
             <Box>
-              <Text margin='xsmall'>{email}</Text>
-              <Box border round='small' onClick={() => {}}>
-                <TextInput plain type='email' placeholder={emailPlaceholder} />
+              <Text margin='xsmall'>{LOGIN_userName}</Text>
+              <Box border={{ size: 'small' }} round='small' onClick={() => {}}>
+                <TextInput
+                  plain
+                  type='text'
+                  placeholder={LOGIN_userNamePlaceholder}
+                  onChange={(e) => setUserName(e.target.value)}
+                />
               </Box>
             </Box>
             <Box>
-              <Text margin='xsmall'>{password}</Text>
-              <Box border round='small' onClick={() => {}}>
+              <Text margin='xsmall'>{LOGIN_password}</Text>
+              <Box border={{ size: 'small' }} round='small' onClick={() => {}}>
                 <TextInput
                   plain
                   type='password'
-                  placeholder={passwordPlaceholder}
+                  placeholder={LOGIN_passwordPlaceholder}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Box>
             </Box>
             <CheckBox
-              label={remember}
+              label={LOGIN_remember}
               checked={checked}
               onChange={(event) => setChecked(event.target.checked)}
             />
-            <Link to='/lines'>
-              <Button
-                primary
-                label={login}
-                fill='horizontal'
-                size='large'
-                margin={{ top: 'small' }}
-                type='submit'
-                style={{ border: 'none' }}
-              />
-            </Link>
+
+            <Button
+              primary
+              label={LOGIN_login}
+              fill='horizontal'
+              size='large'
+              margin={{ top: 'small' }}
+              type='submit'
+              style={{ border: 'none' }}
+            />
           </Box>
         </Form>
       </Box>
