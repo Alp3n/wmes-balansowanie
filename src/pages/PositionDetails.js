@@ -18,7 +18,6 @@ const PositionDetails = () => {
         </Text>
         <Text>ST-1</Text>
       </Box>
-
       <Timer />
     </Layout>
   );

@@ -24,9 +24,14 @@ POST->https://dev.wmes.pl/ct/balancing/pces
 
 payload:
 {
-  finishedAt: Date.now(),
-  line: ${lineID},
-  order: ${orderNumber}
-  startedAt: Date.now(),
-  station: ${station}
+	line: ${lineID}, //"LM-1"
+  order: ${orderNumber}, //object
+  station: ${station}, //number
+	startedAt: Date.now(), //start button
+  finishedAt: Date.now(), //stop button
+	comment: ${comment}, //comment
+	createdAt: Date.now(), //on mount
+	createdBy: ${user}, //user {id, ip, label},
+	d: ${count}, //time count
+	stt: ??
 }

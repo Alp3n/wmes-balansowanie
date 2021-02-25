@@ -79,6 +79,7 @@ const LineDetails = () => {
         list={list}
         removeFromList={removeFromList}
         addToList={addToList}
+        // id={order.orderId}
       />
     </Layout>
   );

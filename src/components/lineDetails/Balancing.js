@@ -3,7 +3,7 @@ import { Box, Button, Text } from 'grommet';
 import { AddCircle } from 'grommet-icons';
 import PositionCard from '../positionList/PositionCard';
 
-const Balancing = ({ list, removeFromList, addToList }) => {
+const Balancing = ({ list, removeFromList, addToList, id }) => {
   return (
     <Box>
       <Box margin='medium'>
@@ -18,7 +18,8 @@ const Balancing = ({ list, removeFromList, addToList }) => {
             position={position}
             index={index}
             removeFromList={removeFromList}
-            onClick={{}}
+            id={id}
+            // onClick={{}}
           />
         ))}
         {list.length < 10 ? (

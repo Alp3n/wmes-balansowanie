@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Box, Button, Text, Card, CardBody, CardHeader } from 'grommet';
 import { Chat, Next, Close } from 'grommet-icons';
 
-const PositionCard = ({ position, index, removeFromList }) => {
+const PositionCard = ({ position, index, removeFromList, id }) => {
   const history = useHistory();
   return (
     <Card margin={{ bottom: 'medium' }}>
@@ -34,7 +34,7 @@ const PositionCard = ({ position, index, removeFromList }) => {
         <Button
           icon={<Next />}
           onClick={() => {
-            history.push('/lines/123');
+            history.push(`/lines/${id}/${position.id}`);
           }}
         />
       </CardBody>
