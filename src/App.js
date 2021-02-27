@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Grommet } from 'grommet';
 import { myTheme } from './myTheme';
 import Login from './pages/Login';
-import Line from './pages/Line';
+import Lines from './pages/Lines';
 import LineDetails from './pages/LineDetails';
 import PositionDetails from './pages/PositionDetails';
 
@@ -20,12 +20,12 @@ function App() {
     <Grommet theme={myTheme}>
       <Router>
         <Switch>
-          <Route path='/lines/:id/:id' component={PositionDetails} />
-          <Route path='/lines/:id' component={LineDetails} />
+          <Route path='/lines/:lineId/:positionId' component={PositionDetails} />
+          <Route path='/lines/:lineId' component={LineDetails} />
           <Route
             path='/lines'
             exact
-            render={(props) => <Line {...props} user={user} />}
+            render={(props) => <Lines {...props} user={user} />}
           />
           <Route
             path='/login'

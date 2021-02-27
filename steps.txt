@@ -25,13 +25,18 @@ POST->https://dev.wmes.pl/ct/balancing/pces
 payload:
 {
 	line: ${lineID}, //"LM-1"
-  order: ${orderNumber}, //object
+  order: ${orderNumber}, //object {_id}
   station: ${station}, //number
 	startedAt: Date.now(), //start button
   finishedAt: Date.now(), //stop button
 	comment: ${comment}, //comment
 	createdAt: Date.now(), //on mount
-	createdBy: ${user}, //user {id, ip, label},
-	d: ${count}, //time count
-	stt: ??
+}
+
+TODO message box in position details
+
+
+PositionDetails {
+	<Timer/>
+	<Comment/>
 }

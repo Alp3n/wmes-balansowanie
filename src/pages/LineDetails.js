@@ -7,42 +7,26 @@ import ActiveOrder from '../components/lineDetails/ActiveOrder';
 import { URL_PRODSHIFTORDER, HEADERS } from '../utils/consts';
 import Balancing from '../components/lineDetails/Balancing';
 
-const balancingModel = {
-  line: 'line',
-  order: 'order',
-  station: 'station',
-  comment: 'comment',
-  startedAt: Date.now(),
-  finishedAt: Date.now(),
-};
-
 const LineDetails = () => {
   const [list, setList] = useState([]);
   const [order, setOrder] = useState();
 
-  const { id } = useParams();
+  const { lineId } = useParams();
   const { state } = useLocation();
-
-  // console.log(state);
-  // console.log(`${URL_PRODSHIFTORDER}/${state.prodShiftOrder}`);
-  const getOrder = async () => {
-    const response = await fetch(
-      `${URL_PRODSHIFTORDER}/${state.prodShiftOrder}`,
-      {
-        headers: HEADERS,
-      }
-    );
-    const data = await response.json();
-    setOrder(data);
-  };
 
   useEffect(() => {
     if (state.prodShiftOrder !== undefined) {
-      getOrder();
+      fetch(`${URL_PRODSHIFTORDER}/${state.prodShiftOrder}`, {
+        headers: HEADERS,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setOrder(data);
+        });
     } else {
       return null;
     }
-  }, []);
+  }, [state.prodShiftOrder]);
 
   useEffect(() => {
     let tempList = [];
@@ -73,13 +57,14 @@ const LineDetails = () => {
   };
 
   return (
-    <Layout pageName={id}>
+    <Layout pageName={lineId}>
       <ActiveOrder orderNumber={order ? order.orderId : 'Brak zamówienia'} />
       <Balancing
         list={list}
         removeFromList={removeFromList}
         addToList={addToList}
-        // id={order.orderId}
+        lineId={lineId}
+        order={order}
       />
     </Layout>
   );

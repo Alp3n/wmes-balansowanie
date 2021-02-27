@@ -2,25 +2,23 @@ import React, { useState, useEffect } from 'react';
 
 import Layout from '../components/layout/Layout';
 import SearchBox from '../components/SearchBox';
-import List from '../components/list/List';
+import LineList from '../components/list/LineList';
 
 import { URL_PRODLINES, HEADERS } from '../utils/consts';
 
 const pageName = 'Linie produkcyjne';
 
-const Line = () => {
+const Lines = () => {
   const [search, setSearch] = useState('');
   const [lines, setLines] = useState([]);
   const [filteredLines, setFilteredLines] = useState([]);
 
-  const getLines = async () => {
-    const response = await fetch(URL_PRODLINES, { headers: HEADERS });
-    const data = await response.json();
-    setLines(data.collection);
-  };
-
   useEffect(() => {
-    getLines();
+    fetch(URL_PRODLINES, { headers: HEADERS })
+      .then((response) => response.json())
+      .then((data) => {
+        setLines(data.collection);
+      });
   }, []);
 
   useEffect(() => {
@@ -39,10 +37,9 @@ const Line = () => {
   return (
     <Layout pageName={pageName} firstPage={true}>
       <SearchBox search={search} onChange={onChange} setSearch={setSearch} />
-      {/* <List filteredLines={lines} /> */}
-      <List filteredLines={filteredLines} />
+      <LineList filteredLines={filteredLines} />
     </Layout>
   );
 };
 
-export default Line;
+export default Lines;

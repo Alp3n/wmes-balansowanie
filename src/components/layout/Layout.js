@@ -23,6 +23,7 @@ const Topbar = styled(Box)`
   position: sticky;
   top: 0;
   overflow: auto;
+  z-index: 999;
 `;
 
 const Layout = ({ children, pageName, firstPage }) => {

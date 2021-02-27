@@ -1,26 +1,74 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Box, Text } from 'grommet';
 import { PlayFill, StopFill, Like, Refresh } from 'grommet-icons';
 import TimerButton from './TimerButton';
 
-const Timer = () => {
-  const [isRunning, setIsRunning] = useState(0);
+// Stop watch hook
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
+
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
+const Timer = ({ setPosition, position }) => {
+  const [millsecDelay, setMillsecDelay] = useState(100);
+  const [isRunning, setIsRunning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [startedAt, setStartedAt] = useState();
+  const [finishedAt, setFinishedAt] = useState();
 
   const handleStart = () => {
     setIsRunning(true);
-    // setIsFinished(false);
+    setStartedAt(new Date().toISOString());
   };
 
   const handleStop = () => {
+    setFinishedAt(new Date().toISOString());
     setIsRunning(false);
     setIsFinished(true);
   };
 
   const handleFinished = () => {
     setIsFinished(false);
+    setSecCount(0);
+    setMillSecCount(0);
   };
+
+  useEffect(() => {
+    setPosition((prevState) => ({
+      ...prevState,
+      startedAt: startedAt,
+      finishedAt: finishedAt,
+    }));
+  }, [startedAt, finishedAt, setPosition]);
+
+  // useInterval custom hook for displaying stopwatch digits
+  const [millSecCount, setMillSecCount] = useState(0);
+  const [secCount, setSecCount] = useState(0);
+
+  useInterval(
+    () => {
+      setMillSecCount(millSecCount + 1);
+      if (millSecCount >= 9) {
+        setMillSecCount(0);
+        setSecCount(secCount + 1);
+      }
+    },
+    isRunning ? millsecDelay : null
+  );
 
   return (
     <Box
@@ -30,7 +78,6 @@ const Timer = () => {
       border={{ side: 'horizontal', color: 'light-4' }}
     >
       <StyledBoxWrapper
-        // elevation='small'
         round='50%'
         width='15rem'
         height='15rem'
@@ -44,23 +91,39 @@ const Timer = () => {
           round='50%'
           className={isRunning ? 'running' : null}
           background={isFinished ? 'signifyGreen' : 'light-3'}
-          // background={isFinished ? 'signifyGreen' : 'dark-4'}
         ></StyledBoxBorder>
         <StyledBoxContent
           width='90%'
           height='90%'
           round='50%'
           background={isFinished ? 'status-ok' : 'light-3'}
-          // background={isFinished ? 'status-ok' : 'dark-4'}
           justify='center'
           align='center'
+          direction='row'
         >
           <Text
             size='4rem'
             color='dark-1'
             className={isRunning ? 'running' : null}
+            direction='row'
           >
-            00:00
+            {secCount}
+          </Text>
+          <Text
+            size='4rem'
+            color='dark-1'
+            className={isRunning ? 'running' : null}
+            direction='row'
+          >
+            :
+          </Text>
+          <Text
+            size='4rem'
+            color='dark-1'
+            className={isRunning ? 'running' : null}
+            direction='row'
+          >
+            {millSecCount}
           </Text>
         </StyledBoxContent>
       </StyledBoxWrapper>
@@ -151,4 +214,5 @@ const StyledBoxBorder = styled(Box)`
 const StyledBoxContent = styled(Box)`
   position: absolute;
   z-index: 3;
+  font-family: monospace;
 `;
