@@ -21,6 +21,8 @@ async function loginUser(credentials) {
   return fetch(URL_LOGIN, {
     method: 'POST',
     headers: HEADERS,
+    mode: 'cors',
+    credentials: 'include',
     body: JSON.stringify(credentials),
   }).then((data) => data.json());
 }

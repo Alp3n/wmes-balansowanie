@@ -10,6 +10,8 @@ import { HEADERS, URL_BALANCING } from '../utils/consts';
 const PositionDetails = () => {
   const { lineId, positionId } = useParams();
   const { state } = useLocation();
+  const [isTimeSub, setTimeSub] = useState(false);
+  const [isCommentSub, setCommentSub] = useState(false);
   const [response, setResponse] = useState();
   const [position, setPosition] = useState({
     line: lineId,
@@ -20,36 +22,73 @@ const PositionDetails = () => {
     comment: '',
   });
 
-  // const [isCounting, setIsCounting] = useState(false);
   //TODO fix POST PUT (Post on stop button, put on zatwierdź)
-  const handleClick = async () => {
-    if (position.comment !== '') {
-      await fetch(`${URL_BALANCING}/${response._id}`, {
-        method: 'PUT',
-        headers: HEADERS,
-        body: JSON.stringify(position),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setResponse(data);
-          console.log(response);
-        });
-    } else {
-      await fetch(URL_BALANCING, {
-        method: 'POST',
-        headers: HEADERS,
-        body: JSON.stringify(position),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setResponse(data);
-        });
-    }
+
+  const handlePost = async () => {
+    await fetch(URL_BALANCING, {
+      method: 'POST',
+      headers: HEADERS,
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify(position),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setResponse(data);
+        setTimeSub(true);
+      });
   };
+
+  const handlePut = async () => {
+    await fetch(`${URL_BALANCING}/${response._id}`, {
+      method: 'PUT',
+      headers: HEADERS,
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify(position),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setResponse(data);
+        console.log(response);
+        setCommentSub(true);
+      });
+  };
+
+  // const handleClick = async () => {
+  //   if (position.comment !== '') {
+  //     await fetch(`${URL_BALANCING}/${response._id}`, {
+  //       method: 'PUT',
+  //       headers: HEADERS,
+  //       mode: 'cors',
+  //       credentials: 'include',
+  //       body: JSON.stringify(position),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         setResponse(data);
+  //         console.log(response);
+  //         setCommentSub(true);
+  //       });
+  //   } else {
+  //     await fetch(URL_BALANCING, {
+  //       method: 'POST',
+  //       headers: HEADERS,
+  //       mode: 'cors',
+  //       credentials: 'include',
+  //       body: JSON.stringify(position),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         setResponse(data);
+  //         setTimeSub(true);
+  //       });
+  //   }
+  // };
   console.log(response);
   return (
     <Layout pageName={`ST-${positionId}`}>
-      <Box
+      {/* <Box
         pad='medium'
         background='white'
         margin={{ bottom: 'small' }}
@@ -59,22 +98,30 @@ const PositionDetails = () => {
           Nazwa stanowiska
         </Text>
         <Text>ST-{positionId}</Text>
-      </Box>
+      </Box> */}
       <Timer
         setPosition={setPosition}
         position={position}
-        // setIsCounting={setIsCounting}
         setResponse={setResponse}
+        setTimeSub={setTimeSub}
+        handleClick={handlePost}
+        isTimeSub={isTimeSub}
       />
-      <Comment setPosition={setPosition} />
-      <Button
-        label='Zatwierdź'
-        primary
-        color='signifyGreen'
-        margin='small'
-        size='large'
-        onClick={() => handleClick()}
-      />
+      {isTimeSub ? (
+        <>
+          <Comment setPosition={setPosition} />
+          {isCommentSub ? null : (
+            <Button
+              label='Zatwierdź komentarz'
+              primary
+              color='signifyGreen'
+              margin='small'
+              size='large'
+              onClick={() => handlePut()}
+            />
+          )}
+        </>
+      ) : null}
     </Layout>
   );
 };

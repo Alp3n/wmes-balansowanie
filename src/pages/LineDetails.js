@@ -18,6 +18,7 @@ const LineDetails = () => {
     if (state.prodShiftOrder !== undefined) {
       fetch(`${URL_PRODSHIFTORDER}/${state.prodShiftOrder}`, {
         headers: HEADERS,
+        credentials: 'include',
       })
         .then((response) => response.json())
         .then((data) => {

@@ -14,7 +14,11 @@ const Lines = () => {
   const [filteredLines, setFilteredLines] = useState([]);
 
   useEffect(() => {
-    fetch(URL_PRODLINES, { headers: HEADERS })
+    fetch(URL_PRODLINES, {
+      headers: HEADERS,
+      mode: 'cors',
+      credentials: 'include',
+    })
       .then((response) => response.json())
       .then((data) => {
         setLines(data.collection);

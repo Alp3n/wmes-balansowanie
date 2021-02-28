@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextArea, Text } from 'grommet';
+import { Box, TextArea, Text, Button } from 'grommet';
+import { Edit } from 'grommet-icons';
 
 const Comment = ({ setPosition }) => {
   const [value, setValue] = useState('');
@@ -18,9 +19,12 @@ const Comment = ({ setPosition }) => {
       height='small'
       border={{ vertical: 'small', color: 'light-4' }}
     >
-      <Text margin={'small'} weight='bold' size='large'>
-        Komentarz
-      </Text>
+      <Box direction='row' align='center' justify='between'>
+        <Text margin={'small'} weight='bold' size='large'>
+          Komentarz
+        </Text>
+        <Button icon={<Edit color='signifyGreen' />} />
+      </Box>
       <TextArea
         placeholder={'Wpisz komentarz...'}
         value={value}

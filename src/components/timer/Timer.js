@@ -1,30 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import { Box, Text } from 'grommet';
+import React, { useState, useEffect } from 'react';
+import { Box, Button } from 'grommet';
 import { PlayFill, StopFill, Like, Refresh } from 'grommet-icons';
 import TimerButton from './TimerButton';
+import TimerCounter from './TimerCounter';
 
-// Stop watch hook
-function useInterval(callback, delay) {
-  const savedCallback = useRef();
-
-  useEffect(() => {
-    savedCallback.current = callback;
-  });
-
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
-
-const Timer = ({ setPosition, position }) => {
-  const [millsecDelay, setMillsecDelay] = useState(100);
+const Timer = ({ setPosition, setTimeSub, handleClick, isTimeSub }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [startedAt, setStartedAt] = useState();
@@ -43,8 +23,7 @@ const Timer = ({ setPosition, position }) => {
 
   const handleFinished = () => {
     setIsFinished(false);
-    setSecCount(0);
-    setMillSecCount(0);
+    setTimeSub(false);
   };
 
   useEffect(() => {
@@ -55,78 +34,16 @@ const Timer = ({ setPosition, position }) => {
     }));
   }, [startedAt, finishedAt, setPosition]);
 
-  // useInterval custom hook for displaying stopwatch digits
-  const [millSecCount, setMillSecCount] = useState(0);
-  const [secCount, setSecCount] = useState(0);
-
-  useInterval(
-    () => {
-      setMillSecCount(millSecCount + 1);
-      if (millSecCount >= 9) {
-        setMillSecCount(0);
-        setSecCount(secCount + 1);
-      }
-    },
-    isRunning ? millsecDelay : null
-  );
-
   return (
     <Box
       background='white'
       justify='center'
       align='center'
       border={{ side: 'horizontal', color: 'light-4' }}
+      pad={{ vertical: 'large' }}
     >
-      <StyledBoxWrapper
-        round='50%'
-        width='15rem'
-        height='15rem'
-        justify='center'
-        align='center'
-        margin='medium'
-      >
-        <StyledBoxBorder
-          width='100%'
-          height='100%'
-          round='50%'
-          className={isRunning ? 'running' : null}
-          background={isFinished ? 'signifyGreen' : 'light-3'}
-        ></StyledBoxBorder>
-        <StyledBoxContent
-          width='90%'
-          height='90%'
-          round='50%'
-          background={isFinished ? 'status-ok' : 'light-3'}
-          justify='center'
-          align='center'
-          direction='row'
-        >
-          <Text
-            size='4rem'
-            color='dark-1'
-            className={isRunning ? 'running' : null}
-            direction='row'
-          >
-            {secCount}
-          </Text>
-          <Text
-            size='4rem'
-            color='dark-1'
-            className={isRunning ? 'running' : null}
-            direction='row'
-          >
-            :
-          </Text>
-          <Text
-            size='4rem'
-            color='dark-1'
-            className={isRunning ? 'running' : null}
-            direction='row'
-          >
-            {millSecCount}
-          </Text>
-        </StyledBoxContent>
-      </StyledBoxWrapper>
+      {/* Timer component responsible for displaying circles and counter */}
+      <TimerCounter isFinished={isFinished} isRunning={isRunning} />
       {isFinished ? (
         <Box direction='row' fill='horizontal' justify='evenly'>
           <TimerButton
@@ -135,11 +52,11 @@ const Timer = ({ setPosition, position }) => {
             onClick={handleFinished}
             isRunning={isRunning}
           />
-          <TimerButton
+          {/*  <TimerButton
             background='status-ok'
             icon={<Like size='large' color='white' />}
             isFinished={isFinished}
-          />
+          /> */}
         </Box>
       ) : isRunning ? (
         <TimerButton
@@ -157,62 +74,27 @@ const Timer = ({ setPosition, position }) => {
           isRunning={isRunning}
         />
       )}
+      {isFinished === true ? (
+        <Button
+          label='Zatwierdź czas'
+          primary
+          color='signifyGreen'
+          margin='small'
+          size='large'
+          onClick={handleClick}
+        />
+      ) : isTimeSub ? null : (
+        <Button
+          label='Zatwierdź czas'
+          primary
+          color='signifyGreen'
+          margin='small'
+          size='large'
+          onClick={handleClick}
+        />
+      )}
     </Box>
   );
 };
 
 export default Timer;
-
-const StyledBoxWrapper = styled(Box)`
-  position: relative;
-  z-index: 1;
-`;
-
-const StyledBoxBorder = styled(Box)`
-  position: absolute;
-  z-index: 2;
-
-  &.running {
-    background-image: linear-gradient(
-      45deg,
-      rgba(0, 230, 150, 1) 0%,
-      rgba(30, 200, 210, 1) 100%
-    );
-    -webkit-animation: myAnimation 1s linear infinite;
-    -moz-animation: myAnimation 1s linear infinite;
-    animation: myAnimation 1s linear infinite;
-  }
-
-  @-moz-keyframes myAnimation {
-    50% {
-      -moz-transform: rotate(360deg) scale(1.05);
-    }
-    100% {
-      -moz-transform: rotate(360deg) scale(1);
-    }
-  }
-  @-webkit-keyframes myAnimation {
-    50% {
-      -moz-transform: rotate(360deg) scale(1.05);
-    }
-    100% {
-      -moz-transform: rotate(360deg) scale(1);
-    }
-  }
-  @keyframes myAnimation {
-    50% {
-      -webkit-transform: rotate(360deg) scale(1.05);
-      transform: rotate(360deg) scale(1.05);
-    }
-    100% {
-      -webkit-transform: rotate(360deg) scale(1);
-      transform: rotate(360deg) scale(1);
-    }
-  }
-`;
-
-const StyledBoxContent = styled(Box)`
-  position: absolute;
-  z-index: 3;
-  font-family: monospace;
-`;
