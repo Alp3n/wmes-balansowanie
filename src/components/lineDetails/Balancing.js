@@ -21,6 +21,8 @@ const Balancing = ({ list, removeFromList, addToList, lineId, order }) => {
             removeFromList={removeFromList}
             lineId={lineId}
             order={order}
+            time={position.time}
+            position={position}
           />
         ))}
         {list.length < 10 ? (

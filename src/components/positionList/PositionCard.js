@@ -10,6 +10,8 @@ const PositionCard = ({
   removeFromList,
   lineId,
   order,
+  time,
+  position,
 }) => {
   const history = useHistory();
   return (
@@ -37,11 +39,11 @@ const PositionCard = ({
             console.log('I PRESSED MESSAGE EDITION');
           }}
         />
-        <Text size='large'>00:00s</Text>
+        <Text size='large'>{time}</Text>
         <Button
           icon={<Next />}
           onClick={() => {
-            history.push(`/lines/${lineId}/${positionId}`, order);
+            history.push(`/lines/${lineId}/${positionId}`, [order, position]);
           }}
         />
       </CardBody>

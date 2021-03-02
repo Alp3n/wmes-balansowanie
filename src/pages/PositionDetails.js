@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { Box, Button, Text } from 'grommet';
 import { useLocation, useParams } from 'react-router-dom';
@@ -86,6 +86,7 @@ const PositionDetails = () => {
   //   }
   // };
   console.log(response);
+  console.log(state[1]);
   return (
     <Layout pageName={`ST-${positionId}`}>
       {/* <Box
