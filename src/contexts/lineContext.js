@@ -8,11 +8,16 @@ const LineContextProvider = (props) => {
 
   const [lineData, setLineData] = useState({
     lineId: null,
+    orderId: null,
     stations: [],
   });
 
   const changeLineId = (id) => {
     setLineData((prevState) => ({ ...prevState, lineId: id }));
+  };
+
+  const changeOrderId = (id) => {
+    setLineData((prevState) => ({ ...prevState, orderId: id }));
   };
 
   const addToStations = (item) => {
@@ -51,6 +56,7 @@ const LineContextProvider = (props) => {
         removeFromStations,
         clearStations,
         changeLineId,
+        changeOrderId,
       }}
     >
       {props.children}

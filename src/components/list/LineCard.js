@@ -6,23 +6,27 @@ import { Next } from 'grommet-icons';
 const LineCard = ({ line }) => {
   const history = useHistory();
 
-  const handleClick = async (e) => {
+  const handleOpen = async (e) => {
     history.push(`/lines/${line._id}`, line);
+    console.log('MY LINE: ', line);
   };
+
   return (
     <Card
       margin={{ vertical: 'small', horizontal: 'medium' }}
-      onClick={() => handleClick()}
+      onClick={() => handleOpen()}
     >
       <CardHeader background='white' pad='small' border={{ side: 'bottom' }}>
-        <Text weight='bold'>{line._id}</Text>
+        <Text margin={{ left: 'xsmall' }} size='large' weight='bold'>
+          {line._id}
+        </Text>
       </CardHeader>
       <CardBody
         direction='row'
         background='white'
         justify='between'
         align='center'
-        pad='small'
+        pad='medium'
       >
         <Text size='small'>{line.description}</Text>
         <Next />

@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 
-import { Box, Button, Text } from 'grommet';
+import { Button } from 'grommet';
 import { useLocation, useParams } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import Timer from '../components/timer/Timer';
@@ -9,27 +9,28 @@ import { HEADERS, URL_BALANCING } from '../utils/consts';
 
 const PositionDetails = () => {
   const { lineId, positionId } = useParams();
-  const { state } = useLocation();
+  // const { state } = useLocation();
+  // const [orderId, positionFromState] = state;
   const [isTimeSub, setTimeSub] = useState(false);
   const [isCommentSub, setCommentSub] = useState(false);
   const [response, setResponse] = useState();
   const [position, setPosition] = useState({
     line: lineId,
-    order: state.orderId,
+    // order: orderId,
     station: positionId,
     startedAt: null,
     finishedAt: null,
     comment: '',
   });
-
+  // console.log(orderId);
   //TODO fix POST PUT (Post on stop button, put on zatwierdź)
 
   const handlePost = async () => {
     await fetch(URL_BALANCING, {
       method: 'POST',
       headers: HEADERS,
-      mode: 'cors',
-      credentials: 'include',
+      // mode: 'cors',
+      // credentials: 'include',
       body: JSON.stringify(position),
     })
       .then((response) => response.json())
@@ -85,8 +86,6 @@ const PositionDetails = () => {
   //       });
   //   }
   // };
-  console.log(response);
-  console.log(state[1]);
   return (
     <Layout pageName={`ST-${positionId}`}>
       {/* <Box

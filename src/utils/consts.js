@@ -1,5 +1,4 @@
-// const URL_IP = `https://localhost:`;
-const URL_IP = `http://192.168.1.103`;
+const URL_IP = `http://192.168.1.100`;
 
 export const URL_CHECK_LOGIN = `${URL_IP}/users/self`;
 export const URL_LOGIN = `${URL_IP}/login`;

@@ -8,10 +8,10 @@ import { URL_PRODSHIFTORDER, HEADERS } from '../utils/consts';
 import Balancing from '../components/lineDetails/Balancing';
 
 import { LineContext } from '../contexts/lineContext';
+import PositionCard from '../components/positionList/PositionCard';
 
 const LineDetails = () => {
-  // const [list, setList] = useState([]);
-  const [order, setOrder] = useState();
+  const [orderId, setOrderId] = useState();
 
   const { lineId } = useParams();
   const { state } = useLocation();
@@ -19,8 +19,9 @@ const LineDetails = () => {
     lineData,
     addToStations,
     removeFromStations,
-    changeLineId,
     clearStations,
+    changeLineId,
+    changeOrderId,
   } = useContext(LineContext);
 
   useEffect(() => {
@@ -31,46 +32,41 @@ const LineDetails = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          setOrder(data);
+          // console.log('response order: ', data);
+          setOrderId(data.orderId);
         });
-    } else {
-      return null;
     }
     changeLineId(lineId);
+    changeOrderId(orderId);
   }, [state.prodShiftOrder]);
 
+  console.log(lineData);
+  
   useEffect(() => {
     if (lineData.lineId !== lineId) {
       clearStations();
       let tempList = [];
       for (let i = 1; i < 7; i++) {
         let newItem = {
-          name: `ST-${i}`,
           station: i,
-          time: '00:00',
+          time: '0s',
+          startedAt: null,
+          finishedAt: null,
           comment: null,
         };
         tempList.push(newItem);
         addToStations(newItem);
       }
     }
-
-    // setList((list) => [...list, ...tempList]);
   }, []);
 
   const addToList = () => {
-    // const newItem = {
-    //   name: `ST-${list.length + 1}`,
-    //   station: list.length + 1,
-    //   time: '00:00',
-    //   status: 'waiting',
-    // };
-    // setList((list) => [...list, newItem]);
     const newItem = {
-      name: `ST-${lineData.stations.length + 1}`,
       station: lineData.stations.length + 1,
-      time: '00:00',
-      status: 'waiting',
+      time: '0s',
+      startedAt: null,
+      finishedAt: null,
+      comment: null,
     };
     addToStations(newItem);
   };
@@ -79,17 +75,31 @@ const LineDetails = () => {
     removeFromStations(index);
   };
 
-  console.log('Line Context:', lineData);
+  // console.log('Line Context:', lineData);
+  console.log(state);
   return (
     <Layout pageName={lineId}>
-      <ActiveOrder orderNumber={order ? order.orderId : 'Brak zamówienia'} />
+      <ActiveOrder
+        orderNumber={orderId ? orderId : 'Brak aktywnego zlecenia'}
+      />
       <Balancing
         list={lineData.stations}
         removeFromList={removeFromList}
         addToList={addToList}
         lineId={lineId}
-        order={order}
-      />
+        order={orderId}
+      >
+        {lineData.stations.map((position, index) => (
+          <PositionCard
+            key={position.name}
+            index={index}
+            lineId={lineId}
+            orderId={orderId}
+            position={position}
+            removeFromList={removeFromList}
+          />
+        ))}
+      </Balancing>
     </Layout>
   );
 };

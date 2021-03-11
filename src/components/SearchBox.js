@@ -10,7 +10,7 @@ const StyledBox = styled(Box)`
   border-bottom: 1px solid 'dark-4';
 `;
 
-const SearchBox = ({ search, onChange, setSearch }) => {
+const SearchBox = ({ search, onChange, onClear }) => {
   return (
     <StyledBox border={{ side: 'bottom', color: 'light-4' }}>
       <Box
@@ -31,14 +31,8 @@ const SearchBox = ({ search, onChange, setSearch }) => {
           placeholder='Wyszukaj linię...'
         />
         {search !== '' && (
-          <Button icon={<Close />} onClick={() => setSearch('')} plain />
+          <Button icon={<Close />} onClick={() => onClear()} plain />
         )}
-      </Box>
-      {/* List title */}
-      <Box margin='medium'>
-        <Text size='large'>
-          <strong>Lista linii</strong>
-        </Text>
       </Box>
     </StyledBox>
   );

@@ -38,9 +38,13 @@ const Lines = () => {
     setSearch(newValue);
   };
 
+  const onClear = () => {
+    setSearch('');
+  };
+
   return (
     <Layout pageName={pageName} firstPage={true}>
-      <SearchBox search={search} onChange={onChange} setSearch={setSearch} />
+      <SearchBox search={search} onChange={onChange} onClear={onClear} />
       <LineList filteredLines={filteredLines} />
     </Layout>
   );

@@ -22,7 +22,7 @@ function useInterval(callback, delay) {
 }
 
 const TimerCounter = ({ isRunning, isFinished }) => {
-  const [millsecDelay, setMillsecDelay] = useState(100);
+  const millSecDelay = 100;
   const [millSecCount, setMillSecCount] = useState(0);
   const [secCount, setSecCount] = useState(0);
 
@@ -35,7 +35,7 @@ const TimerCounter = ({ isRunning, isFinished }) => {
         setSecCount(secCount + 1);
       }
     },
-    isRunning ? millsecDelay : null
+    isRunning ? millSecDelay : null
   );
 
   useEffect(() => {
