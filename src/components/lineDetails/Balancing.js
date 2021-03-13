@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Button, Text } from 'grommet';
 import { AddCircle } from 'grommet-icons';
 import PositionCard from '../positionList/PositionCard';
+import { LineContext } from '../../contexts/lineContext';
 
-const Balancing = ({
-  list,
-  removeFromList,
-  addToList,
-  lineId,
-  order,
-  children,
-}) => {
+const Balancing = () => {
+  const { lineData, addToStations } = useContext(LineContext);
+
+  const stationsLength = lineData.stations.length;
+
+  const addToList = () => {
+    const newItem = {
+      station: `${lineData.stations.length + 1}`,
+      startedAt: null,
+      finishedAt: null,
+      comment: null,
+    };
+    addToStations(newItem);
+  };
+
   return (
     <Box background='white' border={{ side: 'top', color: 'light-4' }}>
       <Box margin='medium'>
@@ -19,21 +27,16 @@ const Balancing = ({
         </Text>
       </Box>
       <Box margin='medium'>
-        {/* list.map((position, index) => (
-          <PositionCard
-            key={position.name}
-            positionName={position.name}
-            positionId={position.station}
-            index={index}
-            removeFromList={removeFromList}
-            lineId={lineId}
-            order={order}
-            time={position.time}
-            position={position}
-          />
-        )) */}
-        {children}
-        {list.length < 10 ? (
+        {lineData.stations
+          .sort((a, b) => a.station - b.station)
+          .map((station, index) => (
+            <PositionCard
+              key={station.station}
+              station={station}
+              last={stationsLength - 1 === index}
+            />
+          ))}
+        {stationsLength < 10 ? (
           <Button
             icon={<AddCircle />}
             label='Dodaj stanowisko'

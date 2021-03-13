@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button } from 'grommet';
-import { PlayFill, StopFill, Like, Refresh } from 'grommet-icons';
+import { PlayFill, StopFill, Refresh } from 'grommet-icons';
 import TimerButton from './TimerButton';
 import TimerCounter from './TimerCounter';
 
-const Timer = ({ setPosition, setTimeSub, handleClick, isTimeSub }) => {
+const Timer = ({ setStation, setTimeSub, handlePost, isTimeSub }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [startedAt, setStartedAt] = useState();
@@ -26,13 +26,19 @@ const Timer = ({ setPosition, setTimeSub, handleClick, isTimeSub }) => {
     setTimeSub(false);
   };
 
+  // const difference =
+  //   (Date.parse(station.finishedAt) - Date.parse(station.startedAt)) / 1000;
+
+  // const time = difference.toString().split('.');
+
   useEffect(() => {
-    setPosition((prevState) => ({
+    setStation((prevState) => ({
       ...prevState,
       startedAt: startedAt,
       finishedAt: finishedAt,
+      isFinished: isFinished,
     }));
-  }, [startedAt, finishedAt, setPosition]);
+  }, [startedAt, finishedAt, setStation, isFinished]);
 
   return (
     <Box
@@ -45,19 +51,12 @@ const Timer = ({ setPosition, setTimeSub, handleClick, isTimeSub }) => {
       {/* Timer component responsible for displaying circles and counter */}
       <TimerCounter isFinished={isFinished} isRunning={isRunning} />
       {isFinished ? (
-        <Box direction='row' fill='horizontal' justify='evenly'>
-          <TimerButton
-            background='dark-3'
-            icon={<Refresh size='large' color='white' />}
-            onClick={handleFinished}
-            isRunning={isRunning}
-          />
-          {/*  <TimerButton
-            background='status-ok'
-            icon={<Like size='large' color='white' />}
-            isFinished={isFinished}
-          /> */}
-        </Box>
+        <TimerButton
+          background='dark-3'
+          icon={<Refresh size='large' color='white' />}
+          onClick={handleFinished}
+          isRunning={isRunning}
+        />
       ) : isRunning ? (
         <TimerButton
           background='status-error'
@@ -74,25 +73,19 @@ const Timer = ({ setPosition, setTimeSub, handleClick, isTimeSub }) => {
           isRunning={isRunning}
         />
       )}
-      {isFinished === true ? (
-        <Button
-          label='Zatwierdź czas'
-          primary
-          color='signifyGreen'
-          margin='small'
-          size='large'
-          onClick={handleClick}
-        />
-      ) : isTimeSub ? null : (
-        <Button
-          label='Zatwierdź czas'
-          primary
-          color='signifyGreen'
-          margin='small'
-          size='large'
-          onClick={handleClick}
-        />
-      )}
+
+      {isTimeSub
+        ? null
+        : isFinished && (
+            <Button
+              label='Zatwierdź czas'
+              primary
+              color='signifyGreen'
+              margin='small'
+              size='large'
+              onClick={() => handlePost()}
+            />
+          )}
     </Box>
   );
 };

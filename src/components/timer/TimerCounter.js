@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Box, Text } from 'grommet';
 import styled from 'styled-components';
 
@@ -23,8 +23,8 @@ function useInterval(callback, delay) {
 
 const TimerCounter = ({ isRunning, isFinished }) => {
   const millSecDelay = 100;
-  const [millSecCount, setMillSecCount] = useState(0);
-  const [secCount, setSecCount] = useState(0);
+  const [millSecCount, setMillSecCount] = useState();
+  const [secCount, setSecCount] = useState();
 
   // useInterval custom hook for displaying stopwatch digits
   useInterval(
@@ -44,6 +44,7 @@ const TimerCounter = ({ isRunning, isFinished }) => {
       setMillSecCount(0);
     }
   }, [isFinished]);
+
   return (
     <StyledBoxWrapper
       round='50%'
@@ -71,7 +72,6 @@ const TimerCounter = ({ isRunning, isFinished }) => {
       >
         <Text
           size='4rem'
-          // color={isFinished ? 'white' : 'dark-1'}
           color='dark-1'
           className={isRunning ? 'running' : null}
           direction='row'
@@ -80,7 +80,6 @@ const TimerCounter = ({ isRunning, isFinished }) => {
         </Text>
         <Text
           size='4rem'
-          // color={isFinished ? 'white' : 'dark-1'}
           color='dark-1'
           className={isRunning ? 'running' : null}
           direction='row'
@@ -89,7 +88,6 @@ const TimerCounter = ({ isRunning, isFinished }) => {
         </Text>
         <Text
           size='4rem'
-          // color={isFinished ? 'white' : 'dark-1'}
           color='dark-1'
           className={isRunning ? 'running' : null}
           direction='row'

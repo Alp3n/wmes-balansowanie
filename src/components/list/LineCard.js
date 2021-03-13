@@ -6,9 +6,8 @@ import { Next } from 'grommet-icons';
 const LineCard = ({ line }) => {
   const history = useHistory();
 
-  const handleOpen = async (e) => {
+  const handleOpen = () => {
     history.push(`/lines/${line._id}`, line);
-    console.log('MY LINE: ', line);
   };
 
   return (

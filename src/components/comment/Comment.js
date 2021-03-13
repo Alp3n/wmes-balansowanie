@@ -2,28 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Box, TextArea, Text, Button } from 'grommet';
 import { Edit } from 'grommet-icons';
 
-const Comment = ({ setPosition }) => {
+const Comment = ({ setStation, isCommentSub, handleCommentEdit, textArea }) => {
   const [value, setValue] = useState('');
 
   useEffect(() => {
-    setPosition((prevState) => ({
+    setStation((prevState) => ({
       ...prevState,
       comment: value,
     }));
-  }, [value, setPosition]);
+  }, [value, setStation]);
 
   return (
     <Box
       background='white'
       margin={{ vertical: 'small' }}
+      pad={{ vertical: 'small' }}
       height='small'
       border={{ vertical: 'small', color: 'light-4' }}
     >
       <Box direction='row' align='center' justify='between'>
-        <Text margin={'small'} weight='bold' size='large'>
+        <Text
+          margin={{ vertical: 'medium', horizontal: 'small' }}
+          weight='bold'
+          size='large'
+        >
           Komentarz
         </Text>
-        <Button icon={<Edit color='signifyGreen' />} />
+        {isCommentSub && (
+          <Button
+            icon={<Edit color='signifyGreen' />}
+            onClick={() => handleCommentEdit()}
+          />
+        )}
       </Box>
       <TextArea
         placeholder={'Wpisz komentarz...'}
@@ -32,6 +42,7 @@ const Comment = ({ setPosition }) => {
         resize={false}
         fill
         plain
+        ref={textArea}
       />
     </Box>
   );

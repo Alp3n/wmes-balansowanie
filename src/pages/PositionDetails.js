@@ -1,29 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 
 import { Button } from 'grommet';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import Timer from '../components/timer/Timer';
 import Comment from '../components/comment/Comment';
 import { HEADERS, URL_BALANCING } from '../utils/consts';
+import { LineContext } from '../contexts/lineContext';
 
 const PositionDetails = () => {
-  const { lineId, positionId } = useParams();
-  // const { state } = useLocation();
-  // const [orderId, positionFromState] = state;
+  const { positionId } = useParams();
+  const { lineData, editStation } = useContext(LineContext);
   const [isTimeSub, setTimeSub] = useState(false);
   const [isCommentSub, setCommentSub] = useState(false);
   const [response, setResponse] = useState();
-  const [position, setPosition] = useState({
-    line: lineId,
-    // order: orderId,
+  const [station, setStation] = useState({
     station: positionId,
     startedAt: null,
     finishedAt: null,
     comment: '',
+    isFinished: false,
   });
-  // console.log(orderId);
-  //TODO fix POST PUT (Post on stop button, put on zatwierdź)
+
+  const textArea = useRef(null);
+
+  const postData = {
+    line: lineData.lineId,
+    order: lineData.orderId,
+    station: station.station,
+    startedAt: station.startedAt,
+    finishedAt: station.finishedAt,
+    comment: station.comment,
+  };
 
   const handlePost = async () => {
     await fetch(URL_BALANCING, {
@@ -31,13 +39,14 @@ const PositionDetails = () => {
       headers: HEADERS,
       // mode: 'cors',
       // credentials: 'include',
-      body: JSON.stringify(position),
+      body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
         setResponse(data);
         setTimeSub(true);
       });
+    editStation(positionId, station);
   };
 
   const handlePut = async () => {
@@ -46,7 +55,7 @@ const PositionDetails = () => {
       headers: HEADERS,
       mode: 'cors',
       credentials: 'include',
-      body: JSON.stringify(position),
+      body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -54,74 +63,44 @@ const PositionDetails = () => {
         console.log(response);
         setCommentSub(true);
       });
+    editStation(positionId, station);
   };
 
-  // const handleClick = async () => {
-  //   if (position.comment !== '') {
-  //     await fetch(`${URL_BALANCING}/${response._id}`, {
-  //       method: 'PUT',
-  //       headers: HEADERS,
-  //       mode: 'cors',
-  //       credentials: 'include',
-  //       body: JSON.stringify(position),
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         setResponse(data);
-  //         console.log(response);
-  //         setCommentSub(true);
-  //       });
-  //   } else {
-  //     await fetch(URL_BALANCING, {
-  //       method: 'POST',
-  //       headers: HEADERS,
-  //       mode: 'cors',
-  //       credentials: 'include',
-  //       body: JSON.stringify(position),
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         setResponse(data);
-  //         setTimeSub(true);
-  //       });
-  //   }
-  // };
+  const handleCommentEdit = () => {
+    setCommentSub(false);
+    textArea.current.focus();
+  };
+
   return (
     <Layout pageName={`ST-${positionId}`}>
-      {/* <Box
-        pad='medium'
-        background='white'
-        margin={{ bottom: 'small' }}
-        border={{ side: 'bottom', color: 'light-4' }}
-      >
-        <Text weight='bold' size='large'>
-          Nazwa stanowiska
-        </Text>
-        <Text>ST-{positionId}</Text>
-      </Box> */}
       <Timer
-        setPosition={setPosition}
-        position={position}
+        setStation={setStation}
         setResponse={setResponse}
         setTimeSub={setTimeSub}
-        handleClick={handlePost}
+        handlePost={handlePost}
         isTimeSub={isTimeSub}
       />
-      {isTimeSub ? (
+      {isTimeSub && (
         <>
-          <Comment setPosition={setPosition} />
+          <Comment
+            setStation={setStation}
+            isCommentSub={isCommentSub}
+            handleCommentEdit={handleCommentEdit}
+            textArea={textArea}
+          />
+
           {isCommentSub ? null : (
             <Button
               label='Zatwierdź komentarz'
               primary
               color='signifyGreen'
-              margin='small'
+              margin={{ horizontal: 'small', bottom: 'small' }}
               size='large'
               onClick={() => handlePut()}
             />
           )}
         </>
-      ) : null}
+      )}
     </Layout>
   );
 };

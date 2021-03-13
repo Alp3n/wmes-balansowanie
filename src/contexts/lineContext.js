@@ -3,9 +3,6 @@ import React, { createContext, useState } from 'react';
 export const LineContext = createContext();
 
 const LineContextProvider = (props) => {
-  // const [lineId, setLineId] = useState('');
-  // const [stations, setStations] = useState([]);
-
   const [lineData, setLineData] = useState({
     lineId: null,
     orderId: null,
@@ -27,10 +24,10 @@ const LineContextProvider = (props) => {
     }));
   };
 
-  const removeFromStations = (index) => {
+  const removeFromStations = (id) => {
     setLineData((prevState) => ({
       ...prevState,
-      stations: prevState.stations.filter((_, i) => i !== index),
+      stations: prevState.stations.filter((station) => station.station !== id),
     }));
   };
 
@@ -41,12 +38,15 @@ const LineContextProvider = (props) => {
     }));
   };
 
-  // const editStation = (id, item) => {
-  //   setLineData((prevState) => ({
-  //     ...prevState,
-  //     stations:
-  //   }))
-  // }
+  const editStation = (id, item) => {
+    setLineData((prevState) => ({
+      ...prevState,
+      stations: [
+        ...prevState.stations.filter((station) => station.station !== id),
+        item,
+      ],
+    }));
+  };
 
   return (
     <LineContext.Provider
@@ -57,6 +57,7 @@ const LineContextProvider = (props) => {
         clearStations,
         changeLineId,
         changeOrderId,
+        editStation,
       }}
     >
       {props.children}

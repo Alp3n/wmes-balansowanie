@@ -16,7 +16,7 @@ const ActiveOrder = ({ orderNumber }) => {
           {/*TODO extract string*/}
           Aktualne zlecenie
         </Text>
-        <Button icon={<Edit color='signifyGreen' />} />
+        {/* <Button icon={<Edit color='signifyGreen' />} /> */}
       </Box>
       <Text size='large' margin={{ horizontal: 'small', bottom: 'small' }}>
         {orderNumber}

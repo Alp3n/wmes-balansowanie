@@ -1,30 +1,44 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Text, Card, CardBody, CardHeader } from 'grommet';
 import { Chat, Next, Close } from 'grommet-icons';
+import { LineContext } from '../../contexts/lineContext';
 
-const PositionCard = ({ index, removeFromList, lineId, orderId, position }) => {
+const PositionCard = ({ station, last }) => {
+  const { lineData, removeFromStations } = useContext(LineContext);
+  const { lineId } = lineData;
+
   const history = useHistory();
-  // const positionData = {
-  //   station: position.station,
-  //   line: lineId,
-  //   order: orderId,
-  //   startedAt: position.startedAt,
-  //   finishedAt: position.finishedAt,
-  //   comment: position.comment,
-  // };
-  // console.log(positionData);
+
+  const getSeconds = (start, end) => {
+    let seconds;
+    if (start || end !== null) {
+      seconds = Math.round((Date.parse(end) - Date.parse(start)) / 1000);
+    }
+    return seconds;
+  };
+
   return (
     <Card margin={{ bottom: 'medium' }}>
-      <CardHeader background='status-unknown' pad='medium'>
+      <CardHeader
+        background={station.finishedAt ? 'status-ok' : 'status-unknown'}
+        pad='medium'
+      >
         <Text size='large' weight='bold'>
-          ST-{position.station}
+          ST-{station.station}
         </Text>
-        <Button
-          icon={<Close size='medium' />}
-          onClick={() => removeFromList(index)}
-          plain
-        />
+        {last && (
+          <Button
+            icon={
+              <Close
+                size='medium'
+                // color='status-critical'
+              />
+            }
+            onClick={() => removeFromStations(station.station)}
+            plain
+          />
+        )}
       </CardHeader>
       <CardBody
         direction='row'
@@ -33,16 +47,21 @@ const PositionCard = ({ index, removeFromList, lineId, orderId, position }) => {
         background='white'
       >
         <Button
-          icon={<Chat />}
+          icon={<Chat color={station.comment ? 'status-ok' : null} />}
+          disabled={station.finishedAt ? false : true}
           onClick={() => {
             console.log('I PRESSED MESSAGE EDITION');
           }}
         />
-        <Text size='large'>{position.time}</Text>
+        <Text size='large'>
+          {station.startedAt && station.finishedAt !== null
+            ? `${getSeconds(station.startedAt, station.finishedAt)}s`
+            : '0s'}
+        </Text>
         <Button
           icon={<Next />}
           onClick={() => {
-            history.push(`/lines/${lineId}/${position.station}`);
+            history.push(`/lines/${lineId}/${station.station}`, station);
           }}
         />
       </CardBody>
