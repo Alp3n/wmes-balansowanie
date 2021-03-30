@@ -4,8 +4,8 @@ export const LineContext = createContext();
 
 const LineContextProvider = (props) => {
   const [lineData, setLineData] = useState({
-    lineId: null,
-    orderId: null,
+    lineId: '',
+    orderId: '',
     stations: [],
   });
 
@@ -17,10 +17,18 @@ const LineContextProvider = (props) => {
     setLineData((prevState) => ({ ...prevState, orderId: id }));
   };
 
-  const addToStations = (item) => {
+  const addToStations = () => {
+    const newStation = {
+      station: `${lineData.stations.length + 1}`,
+      startedAt: null,
+      finishedAt: null,
+      comment: null,
+      isFinished: false,
+    };
+
     setLineData((prevState) => ({
       ...prevState,
-      stations: [...prevState.stations, item],
+      stations: [...prevState.stations, newStation],
     }));
   };
 
@@ -48,6 +56,26 @@ const LineContextProvider = (props) => {
     }));
   };
 
+  const setupStations = (lineId, orderId) => {
+    let tempArray = [];
+    for (let i = 1; i < 7; i++) {
+      let newItem = {
+        station: `${i}`,
+        startedAt: null,
+        finishedAt: null,
+        comment: null,
+        isFinished: false,
+      };
+      tempArray.push(newItem);
+    }
+    setLineData((prevState) => ({
+      ...prevState,
+      lineId: lineId,
+      orderId: orderId,
+      stations: [...tempArray],
+    }));
+  };
+
   return (
     <LineContext.Provider
       value={{
@@ -58,6 +86,7 @@ const LineContextProvider = (props) => {
         changeLineId,
         changeOrderId,
         editStation,
+        setupStations,
       }}
     >
       {props.children}

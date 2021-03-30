@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, Text } from 'grommet';
 import styled from 'styled-components';
 
@@ -21,10 +21,10 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
-const TimerCounter = ({ isRunning, isFinished }) => {
+const TimerCounter = ({ isRunning, isFinished, s, ms }) => {
   const millSecDelay = 100;
-  const [millSecCount, setMillSecCount] = useState();
-  const [secCount, setSecCount] = useState();
+  const [millSecCount, setMillSecCount] = useState(0);
+  const [secCount, setSecCount] = useState(0);
 
   // useInterval custom hook for displaying stopwatch digits
   useInterval(

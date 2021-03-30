@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Box, TextInput, Button, Text } from 'grommet';
+import { Box, TextInput, Button } from 'grommet';
 import { Search, Close } from 'grommet-icons';
 
 const StyledBox = styled(Box)`
@@ -10,7 +10,7 @@ const StyledBox = styled(Box)`
   border-bottom: 1px solid 'dark-4';
 `;
 
-const SearchBox = ({ search, onChange, onClear }) => {
+const SearchBox = ({ search, onChange, onClear, text }) => {
   return (
     <StyledBox border={{ side: 'bottom', color: 'light-4' }}>
       <Box
@@ -27,8 +27,9 @@ const SearchBox = ({ search, onChange, onClear }) => {
           type='text'
           value={search}
           onChange={onChange}
-          plain
-          placeholder='Wyszukaj linię...'
+          placeholder={text}
+          plain={true}
+          focusIndicator={false}
         />
         {search !== '' && (
           <Button icon={<Close />} onClick={() => onClear()} plain />

@@ -21,7 +21,7 @@ const PositionCard = ({ station, last }) => {
   return (
     <Card margin={{ bottom: 'medium' }}>
       <CardHeader
-        background={station.finishedAt ? 'status-ok' : 'status-unknown'}
+        background={station.isFinished ? 'status-ok' : 'status-unknown'}
         pad='medium'
       >
         <Text size='large' weight='bold'>
@@ -29,12 +29,7 @@ const PositionCard = ({ station, last }) => {
         </Text>
         {last && (
           <Button
-            icon={
-              <Close
-                size='medium'
-                // color='status-critical'
-              />
-            }
+            icon={<Close size='medium' />}
             onClick={() => removeFromStations(station.station)}
             plain
           />

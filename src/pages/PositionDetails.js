@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef } from 'react';
 
 import { Button } from 'grommet';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import Timer from '../components/timer/Timer';
 import Comment from '../components/comment/Comment';
@@ -9,18 +9,21 @@ import { HEADERS, URL_BALANCING } from '../utils/consts';
 import { LineContext } from '../contexts/lineContext';
 
 const PositionDetails = () => {
-  const { positionId } = useParams();
+  const { state } = useLocation();
+  const stationId = state.station;
   const { lineData, editStation } = useContext(LineContext);
+
   const [isTimeSub, setTimeSub] = useState(false);
   const [isCommentSub, setCommentSub] = useState(false);
   const [response, setResponse] = useState();
-  const [station, setStation] = useState({
-    station: positionId,
-    startedAt: null,
-    finishedAt: null,
-    comment: '',
-    isFinished: false,
-  });
+
+  const contextState = lineData.stations.filter(
+    (station) => station.station === stationId
+  );
+
+  const [station, setStation] = useState(...contextState);
+
+  console.log('STATE:', station, 'ID:', stationId);
 
   const textArea = useRef(null);
 
@@ -37,8 +40,8 @@ const PositionDetails = () => {
     await fetch(URL_BALANCING, {
       method: 'POST',
       headers: HEADERS,
-      // mode: 'cors',
-      // credentials: 'include',
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
@@ -46,7 +49,7 @@ const PositionDetails = () => {
         setResponse(data);
         setTimeSub(true);
       });
-    editStation(positionId, station);
+    editStation(stationId, station);
   };
 
   const handlePut = async () => {
@@ -63,7 +66,7 @@ const PositionDetails = () => {
         console.log(response);
         setCommentSub(true);
       });
-    editStation(positionId, station);
+    editStation(stationId, station);
   };
 
   const handleCommentEdit = () => {
@@ -72,7 +75,7 @@ const PositionDetails = () => {
   };
 
   return (
-    <Layout pageName={`ST-${positionId}`}>
+    <Layout pageName={`ST-${stationId}`}>
       <Timer
         setStation={setStation}
         setResponse={setResponse}
@@ -88,7 +91,6 @@ const PositionDetails = () => {
             handleCommentEdit={handleCommentEdit}
             textArea={textArea}
           />
-
           {isCommentSub ? null : (
             <Button
               label='Zatwierdź komentarz'

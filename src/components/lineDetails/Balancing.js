@@ -4,7 +4,7 @@ import { AddCircle } from 'grommet-icons';
 import PositionCard from '../positionList/PositionCard';
 import { LineContext } from '../../contexts/lineContext';
 
-const Balancing = () => {
+const Balancing = ({ title, buttonText, infoText }) => {
   const { lineData, addToStations } = useContext(LineContext);
 
   const stationsLength = lineData.stations.length;
@@ -20,10 +20,10 @@ const Balancing = () => {
   };
 
   return (
-    <Box background='white' border={{ side: 'top', color: 'light-4' }}>
+    <Box background='white' border={{ side: 'horizontal', color: 'light-4' }}>
       <Box margin='medium'>
         <Text size='large' weight='bold'>
-          Balansowanie
+          {title}
         </Text>
       </Box>
       <Box margin='medium'>
@@ -39,7 +39,7 @@ const Balancing = () => {
         {stationsLength < 10 ? (
           <Button
             icon={<AddCircle />}
-            label='Dodaj stanowisko'
+            label={buttonText}
             margin={{ vertical: 'small' }}
             size='large'
             primary
@@ -48,7 +48,7 @@ const Balancing = () => {
             }}
           />
         ) : (
-          <Text alignSelf='center'>Maksymalna liczba stanowisk</Text>
+          <Text alignSelf='center'>{infoText}</Text>
         )}
       </Box>
     </Box>

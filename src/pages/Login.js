@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextInput, Form, Text, Button, CheckBox, Box } from 'grommet';
 import Layout from '../components/layout/Layout.js';
 
@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { URL_LOGIN, HEADERS } from '../utils/consts';
 
 const {
-  LOGIN_appTittle,
+  LOGIN_title,
   LOGIN_userName,
   LOGIN_password,
   LOGIN_userNamePlaceholder,
@@ -27,27 +27,37 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
-const Login = ({ setUser, user }) => {
-  const [checked, setChecked] = useState(false);
+const Login = () => {
+  const [remember, setRemember] = useState(false);
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
 
   let history = useHistory();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    const user = await loginUser({
+  const handleLogin = async () => {
+    await loginUser({
       login: userName,
       password,
+    }).then((data) => {
+      if (data.error) {
+        return alert(data.error.message);
+      } else if (data.loggedIn) {
+        history.push('/lines');
+      }
     });
-    setUser(user);
-    history.push('/lines');
   };
 
-  useEffect(() => {}, []);
+  // TODO setup cookie read but its not working with CORS policy
+  // useEffect(() => {
+  //   let match = document.cookie.match('wmes.sid');
+  //   if (match) {
+  //     history.push('/lines');
+  //   }
+  //   console.log(match);
+  // }, [history]);
 
   return (
-    <Layout firstPage='true' pageName={LOGIN_appTittle}>
+    <Layout firstPage='true' pageName={LOGIN_title}>
       <Box background='white'>
         <Form onSubmit={handleLogin}>
           <Box pad='medium' gap='medium'>
@@ -75,8 +85,8 @@ const Login = ({ setUser, user }) => {
             </Box>
             <CheckBox
               label={LOGIN_remember}
-              checked={checked}
-              onChange={(event) => setChecked(event.target.checked)}
+              checked={remember}
+              onChange={(event) => setRemember(event.target.checked)}
             />
 
             <Button

@@ -1,37 +1,10 @@
-1. GET -> https://dev.wmes.pl/users/self
+Todos:
 
-if (loggedIn) {
-	-> assign user id to GLOBAL STATE check cookies
-	-> go to lines page
-} else {
-	-> GO TO LOGIN PAGE
-	-> POST 
-	https://dev.wmes.pl/login
-	Accept application/json
-	
-	set GLOBAL STATE with user ID and save cookies
-}
+IMPORTANT
+1. Setting state in PositionDetails from CONTEXT
+2. Refresh button for orderID in LineDetails and Edit for manual change of orderId
 
-2. GET -> https://dev.wmes.pl/prodLines
-
-set ID of prodLine onClick
-
-GET -> https://dev.wmes.pl/prodLines
-
-
-3. SENDING BALANCING 
-POST->https://dev.wmes.pl/ct/balancing/pces
-
-payload:
-{
-	line: ${lineID}, //"LM-1"
-  order: ${orderNumber}, //object
-  station: ${station}, //number
-	startedAt: Date.now(), //start button
-  finishedAt: Date.now(), //stop button
-	comment: ${comment}, //comment
-	createdAt: Date.now(), //on mount
-	createdBy: ${user}, //user {id, ip, label},
-	d: ${count}, //time count
-	stt: ??
-}
+AFTER
+- Check LOGIN
+- Add Menu button with DARK MODE, and LOGOUT
+- Refactor functions outside components

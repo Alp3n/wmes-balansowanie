@@ -1,9 +1,15 @@
-import React from 'react';
+import React /* useContext */ from 'react';
+// import { LineContext } from '../../contexts/lineContext';
+import {
+  Box,
+  Text,
+  // Button
+} from 'grommet';
+// import { Edit } from 'grommet-icons';
 
-import { Box, Text, Button } from 'grommet';
-import { Edit } from 'grommet-icons';
+const ActiveOrder = ({ orderNumber, text }) => {
+  // const { lineData } = useContext(LineContext);
 
-const ActiveOrder = ({ orderNumber }) => {
   return (
     <Box
       background='white'
@@ -13,8 +19,7 @@ const ActiveOrder = ({ orderNumber }) => {
     >
       <Box direction='row'>
         <Text size='large' margin='small' weight='bold'>
-          {/*TODO extract string*/}
-          Aktualne zlecenie
+          {text}
         </Text>
         {/* <Button icon={<Edit color='signifyGreen' />} /> */}
       </Box>

@@ -1,11 +1,25 @@
 {
   "loginPage": {
-    "LOGIN_appTittle": "WMES Balansowanie",
+    "LOGIN_title": "WMES Balansowanie",
     "LOGIN_userName": "Login lub email",
     "LOGIN_password": "Hasło",
     "LOGIN_userNamePlaceholder": "Login/xyz@signify.com",
     "LOGIN_passwordPlaceholder": "Wpisz swoje hasło",
     "LOGIN_remember": "Zapamiętaj mnie",
     "LOGIN_login": "Zaloguj"
-  }
+  },
+  "linesPage": {
+    "LINES_title": "Linie produkcyjne",
+    "LINES_search": "Wyszukaj linię...",
+    "LINES_loading": "Pobieram linie...",
+    "LINES_error": "Wystąpił jakiś problem!"
+  },
+  "lineDetailsPage": {
+    "LINE_DETAILS_activeOrder": "Aktualne zlecenie",
+    "LINE_DETAILS_noOrder": "Brak aktywnego zlecenia",
+    "LINE_DETAILS_balancing": "Balansowanie",
+    "LINE_DETAILS_addStation": "Dodaj stanowisko",
+    "LINE_DETAILS_maxStations": "Maksymalna liczba stanowisk"
+  },
+  "positionDetailsPage": {}
 }

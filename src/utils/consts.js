@@ -10,11 +10,3 @@ export const HEADERS = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
 };
-
-// export default {
-//   URL_CHECK_LOGIN,
-//   URL_LOGIN,
-//   URL_PRODLINES,
-//   URL_PRODSHIFTORDER,
-//   URL_BALANCING,
-// };

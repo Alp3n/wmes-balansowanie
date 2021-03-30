@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Grommet } from 'grommet';
 import { myTheme } from './myTheme';
 import Login from './pages/Login';
@@ -6,17 +6,10 @@ import Lines from './pages/Lines';
 import LineDetails from './pages/LineDetails';
 import PositionDetails from './pages/PositionDetails';
 
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LineContextProvider from './contexts/lineContext';
 
 function App() {
-  const [user, setUser] = useState();
-
   return (
     <Grommet theme={myTheme}>
       <LineContextProvider>
@@ -30,20 +23,15 @@ function App() {
             <Route
               path='/lines'
               exact
-              render={(props) => <Lines {...props} user={user} />}
+              render={(props) => <Lines {...props} />}
             />
-            <Route
-              path='/login'
-              exact
-              render={(props) => (
-                <Login {...props} setUser={setUser} user={user} />
-              )}
-            />
-            {user ? (
+            <Route path='/' exact render={(props) => <Login {...props} />} />
+
+            {/* user ? (
               <Redirect from='/' to='/lines' />
             ) : (
               <Redirect from='/' to='/login' />
-            )}
+            ) */}
             <Route path='/*' component={() => '404'} />
           </Switch>
         </Router>
