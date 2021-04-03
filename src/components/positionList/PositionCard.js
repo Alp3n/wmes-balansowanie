@@ -19,7 +19,7 @@ const PositionCard = ({ station, last }) => {
   };
 
   return (
-    <Card margin={{ bottom: 'medium' }}>
+    <Card margin={{ bottom: 'large' }}>
       <CardHeader
         background={station.isFinished ? 'status-ok' : 'status-unknown'}
         pad='medium'

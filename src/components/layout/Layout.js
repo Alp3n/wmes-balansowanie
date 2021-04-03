@@ -15,6 +15,7 @@ const TopbarHeading = styled(Heading)`
     rgba(0, 230, 150, 1) 0%,
     rgba(30, 200, 210, 1) 100%
   );
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `;
@@ -37,6 +38,7 @@ const Layout = ({ children, pageName, firstPage }) => {
         justify='between'
         elevation='small'
         background='signifyDark'
+        pad='small'
       >
         {firstPage ? null : (
           <Button
@@ -46,7 +48,7 @@ const Layout = ({ children, pageName, firstPage }) => {
             onClick={() => history.goBack()}
           />
         )}
-        <TopbarHeading level='2' margin='medium'>
+        <TopbarHeading level='2' margin='small'>
           {pageName}
         </TopbarHeading>
         <Button

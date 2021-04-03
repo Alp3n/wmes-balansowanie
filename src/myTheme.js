@@ -24,4 +24,9 @@ export const myTheme = deepMerge(grommet, {
       border: true,
     },
   },
+  textInput: {
+    disabled: {
+      opacity: 1,
+    },
+  },
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Layout from '../components/layout/Layout';
@@ -21,6 +21,7 @@ const {
 } = strings.lineDetailsPage;
 
 const LineDetails = () => {
+  const [newOrder, setNewOrder] = useState(false);
   const { state } = useLocation();
   const { lineData, setupStations } = useContext(LineContext);
 
@@ -29,6 +30,11 @@ const LineDetails = () => {
   const fetchURL = `${URL_PRODSHIFTORDER}/${prodShiftOrder}`;
 
   const { status, data } = useFetch(fetchURL);
+
+  const handleRefresh = () => {
+    setupStations(data.prodLine, data.orderId);
+    setNewOrder(false);
+  };
 
   console.log(('LINEDATA', lineData));
   useEffect(() => {
@@ -40,10 +46,22 @@ const LineDetails = () => {
           lineData.orderId !== data.orderId &&
           lineData.lineId !== data.prodLine
         ) {
-          console.log('DIFFERENT ORDER');
+          console.log('DIFFERENT ORDER AND DIFFERENT LINE');
           return setupStations(data.prodLine, data.orderId);
+        } else if (
+          lineData.orderId !== data.orderId &&
+          lineData.lineId === data.prodLine
+        ) {
+          console.log('DIFFERENT ORDER THE SAME LINE');
+          setNewOrder('newOrder');
+          alert('DIFFERENT ORDER THE SAME LINE');
         } else {
           console.log('NOTHING CHANGED');
+        }
+        break;
+      case STATUS_TYPES.error:
+        if (!data.orderId) {
+          return console.log('NO ORDER');
         }
         break;
       default:
@@ -70,6 +88,8 @@ const LineDetails = () => {
             <ActiveOrder
               orderNumber={lineData.orderId}
               text={LINE_DETAILS_activeOrder}
+              handleRefresh={handleRefresh}
+              newOrder={newOrder}
             />
 
             <Balancing
@@ -83,6 +103,7 @@ const LineDetails = () => {
       case STATUS_TYPES.error:
         return (
           <ActiveOrder
+            newOrder={'error'}
             orderNumber={LINE_DETAILS_noOrder}
             text={LINE_DETAILS_activeOrder}
           />

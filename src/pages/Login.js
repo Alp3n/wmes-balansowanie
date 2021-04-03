@@ -63,32 +63,25 @@ const Login = () => {
           <Box pad='medium' gap='medium'>
             <Box>
               <Text margin='xsmall'>{LOGIN_userName}</Text>
-              <Box border={{ size: 'small' }} round='small' onClick={() => {}}>
-                <TextInput
-                  plain
-                  type='text'
-                  placeholder={LOGIN_userNamePlaceholder}
-                  onChange={(e) => setUserName(e.target.value)}
-                />
-              </Box>
+              <TextInput
+                type='text'
+                placeholder={LOGIN_userNamePlaceholder}
+                onChange={(e) => setUserName(e.target.value)}
+              />
             </Box>
             <Box>
               <Text margin='xsmall'>{LOGIN_password}</Text>
-              <Box border={{ size: 'small' }} round='small' onClick={() => {}}>
-                <TextInput
-                  plain
-                  type='password'
-                  placeholder={LOGIN_passwordPlaceholder}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Box>
+              <TextInput
+                type='password'
+                placeholder={LOGIN_passwordPlaceholder}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </Box>
             <CheckBox
               label={LOGIN_remember}
               checked={remember}
               onChange={(event) => setRemember(event.target.checked)}
             />
-
             <Button
               primary
               label={LOGIN_login}

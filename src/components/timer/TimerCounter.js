@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Box, Text } from 'grommet';
 import styled from 'styled-components';
 
+// TODO requestAnimationFrame => setInterval slows down on save battery mode
 // useInterval custom hook for displaying stopwatch digits
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -27,6 +28,7 @@ const TimerCounter = ({ isRunning, isFinished, s, ms }) => {
   const [secCount, setSecCount] = useState(0);
 
   // useInterval custom hook for displaying stopwatch digits
+
   useInterval(
     () => {
       setMillSecCount(millSecCount + 1);

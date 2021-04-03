@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { Button } from 'grommet';
 import { useLocation } from 'react-router-dom';
@@ -11,11 +11,11 @@ import { LineContext } from '../contexts/lineContext';
 const PositionDetails = () => {
   const { state } = useLocation();
   const stationId = state.station;
-  const { lineData, editStation } = useContext(LineContext);
+  const { lineData, editStation, changeResponse } = useContext(LineContext);
 
   const [isTimeSub, setTimeSub] = useState(false);
   const [isCommentSub, setCommentSub] = useState(false);
-  const [response, setResponse] = useState();
+  const [response, setResponse] = useState({});
 
   const contextState = lineData.stations.filter(
     (station) => station.station === stationId
@@ -24,8 +24,7 @@ const PositionDetails = () => {
   const [station, setStation] = useState(...contextState);
 
   console.log('STATE:', station, 'ID:', stationId);
-
-  const textArea = useRef(null);
+  console.log('RESPONSE:', response);
 
   const postData = {
     line: lineData.lineId,
@@ -48,8 +47,9 @@ const PositionDetails = () => {
       .then((data) => {
         setResponse(data);
         setTimeSub(true);
-      });
-    editStation(stationId, station);
+        setStation((prevState) => ({ ...prevState, responseId: data._id }));
+      })
+      .then(editStation(stationId, station));
   };
 
   const handlePut = async () => {
@@ -63,15 +63,13 @@ const PositionDetails = () => {
       .then((response) => response.json())
       .then((data) => {
         setResponse(data);
-        console.log(response);
         setCommentSub(true);
-      });
-    editStation(stationId, station);
+      })
+      .then(editStation(stationId, station));
   };
 
-  const handleCommentEdit = () => {
+  const handleComment = () => {
     setCommentSub(false);
-    textArea.current.focus();
   };
 
   return (
@@ -88,8 +86,7 @@ const PositionDetails = () => {
           <Comment
             setStation={setStation}
             isCommentSub={isCommentSub}
-            handleCommentEdit={handleCommentEdit}
-            textArea={textArea}
+            handleComment={handleComment}
           />
           {isCommentSub ? null : (
             <Button

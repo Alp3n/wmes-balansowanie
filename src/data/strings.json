@@ -21,5 +21,10 @@
     "LINE_DETAILS_addStation": "Dodaj stanowisko",
     "LINE_DETAILS_maxStations": "Maksymalna liczba stanowisk"
   },
-  "positionDetailsPage": {}
+  "positionDetailsPage": {
+    "POSITION_DETAILS_submitTime": "Zatwierdź czas",
+    "POSITION_DETAILS_submitComment": "Zatwierdź komentarz",
+    "POSITION_DETAILS_comment": "Komentarz",
+    "POSITION_DETAILS_commentPlaceholder": "Wpisz komentarz"
+  }
 }

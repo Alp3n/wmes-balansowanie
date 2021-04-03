@@ -9,16 +9,6 @@ const Balancing = ({ title, buttonText, infoText }) => {
 
   const stationsLength = lineData.stations.length;
 
-  const addToList = () => {
-    const newItem = {
-      station: `${lineData.stations.length + 1}`,
-      startedAt: null,
-      finishedAt: null,
-      comment: null,
-    };
-    addToStations(newItem);
-  };
-
   return (
     <Box background='white' border={{ side: 'horizontal', color: 'light-4' }}>
       <Box margin='medium'>
@@ -44,7 +34,7 @@ const Balancing = ({ title, buttonText, infoText }) => {
             size='large'
             primary
             onClick={() => {
-              addToList();
+              addToStations();
             }}
           />
         ) : (

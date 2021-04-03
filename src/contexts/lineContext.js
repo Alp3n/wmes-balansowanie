@@ -20,10 +20,11 @@ const LineContextProvider = (props) => {
   const addToStations = () => {
     const newStation = {
       station: `${lineData.stations.length + 1}`,
-      startedAt: null,
-      finishedAt: null,
-      comment: null,
+      startedAt: '',
+      finishedAt: '',
+      comment: '',
       isFinished: false,
+      responseId: '',
     };
 
     setLineData((prevState) => ({
@@ -61,10 +62,11 @@ const LineContextProvider = (props) => {
     for (let i = 1; i < 7; i++) {
       let newItem = {
         station: `${i}`,
-        startedAt: null,
-        finishedAt: null,
-        comment: null,
-        isFinished: false,
+        startedAt: '',
+        finishedAt: '',
+        comment: '',
+        isFinished: '',
+        responseId: '',
       };
       tempArray.push(newItem);
     }
@@ -73,6 +75,13 @@ const LineContextProvider = (props) => {
       lineId: lineId,
       orderId: orderId,
       stations: [...tempArray],
+    }));
+  };
+
+  const changeResponse = (responseId) => {
+    setLineData((prevState) => ({
+      ...prevState,
+      responseId: responseId,
     }));
   };
 
@@ -87,6 +96,7 @@ const LineContextProvider = (props) => {
         changeOrderId,
         editStation,
         setupStations,
+        changeResponse,
       }}
     >
       {props.children}

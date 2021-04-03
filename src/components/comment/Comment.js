@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, TextArea, Text, Button } from 'grommet';
 import { Edit } from 'grommet-icons';
 
-const Comment = ({ setStation, isCommentSub, handleCommentEdit, textArea }) => {
+const Comment = ({ setStation, isCommentSub, handleComment }) => {
   const [value, setValue] = useState('');
+  const textArea = useRef(null);
+
+  const handleCommentEdit = () => {
+    handleComment(false);
+    textArea.current.focus();
+  };
 
   useEffect(() => {
     setStation((prevState) => ({
