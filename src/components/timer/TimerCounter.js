@@ -22,13 +22,13 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
-const TimerCounter = ({ isRunning, isFinished, s, ms }) => {
+const TimerCounter = ({ isRunning, isFinished, handleStopWatch }) => {
   const millSecDelay = 100;
   const [millSecCount, setMillSecCount] = useState(0);
   const [secCount, setSecCount] = useState(0);
 
   // useInterval custom hook for displaying stopwatch digits
-
+  console.log('Sec: ', secCount, 'MilSec: ', millSecCount);
   useInterval(
     () => {
       setMillSecCount(millSecCount + 1);
@@ -41,11 +41,14 @@ const TimerCounter = ({ isRunning, isFinished, s, ms }) => {
   );
 
   useEffect(() => {
+    if (isFinished) {
+      handleStopWatch(secCount, millSecCount);
+    }
     if (isFinished === false) {
       setSecCount(0);
       setMillSecCount(0);
     }
-  }, [isFinished]);
+  }, [handleStopWatch, isFinished, millSecCount, secCount]);
 
   return (
     <StyledBoxWrapper

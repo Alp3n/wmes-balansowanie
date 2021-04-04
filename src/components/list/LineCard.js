@@ -15,8 +15,8 @@ const LineCard = ({ line }) => {
       margin={{ vertical: 'small', horizontal: 'medium' }}
       onClick={() => handleOpen()}
     >
-      <CardHeader background='white' pad='small' border={{ side: 'bottom' }}>
-        <Text margin={{ left: 'xsmall' }} size='large' weight='bold'>
+      <CardHeader background='white' pad='medium' border={{ side: 'bottom' }}>
+        <Text size='large' weight='bold'>
           {line._id}
         </Text>
       </CardHeader>

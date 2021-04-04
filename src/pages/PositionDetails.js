@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
-import { Button } from 'grommet';
 import { useLocation } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import Timer from '../components/timer/Timer';
@@ -11,7 +10,7 @@ import { LineContext } from '../contexts/lineContext';
 const PositionDetails = () => {
   const { state } = useLocation();
   const stationId = state.station;
-  const { lineData, editStation, changeResponse } = useContext(LineContext);
+  const { lineData, editStation } = useContext(LineContext);
 
   const [isTimeSub, setTimeSub] = useState(false);
   const [isCommentSub, setCommentSub] = useState(false);
@@ -49,7 +48,17 @@ const PositionDetails = () => {
         setTimeSub(true);
         setStation((prevState) => ({ ...prevState, responseId: data._id }));
       })
-      .then(editStation(stationId, station));
+      .then(() => editStation(stationId, station));
+  };
+
+  const handleDelete = async () => {
+    await fetch(`${URL_BALANCING}/${response._id}`, {
+      method: 'DELETE',
+      headers: HEADERS,
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify(response._id),
+    }).then((response) => response.json());
   };
 
   const handlePut = async () => {
@@ -65,7 +74,7 @@ const PositionDetails = () => {
         setResponse(data);
         setCommentSub(true);
       })
-      .then(editStation(stationId, station));
+      .then(() => editStation(stationId, station));
   };
 
   const handleComment = () => {
@@ -79,26 +88,19 @@ const PositionDetails = () => {
         setResponse={setResponse}
         setTimeSub={setTimeSub}
         handlePost={handlePost}
+        handleDelete={handleDelete}
+        startDate={station.startedAt}
+        finishDate={station.finishedAt}
         isTimeSub={isTimeSub}
+        finished={station.isFinished}
       />
       {isTimeSub && (
-        <>
-          <Comment
-            setStation={setStation}
-            isCommentSub={isCommentSub}
-            handleComment={handleComment}
-          />
-          {isCommentSub ? null : (
-            <Button
-              label='Zatwierdź komentarz'
-              primary
-              color='signifyGreen'
-              margin={{ horizontal: 'small', bottom: 'small' }}
-              size='large'
-              onClick={() => handlePut()}
-            />
-          )}
-        </>
+        <Comment
+          setStation={setStation}
+          isCommentSub={isCommentSub}
+          handleComment={handleComment}
+          handlePut={handlePut}
+        />
       )}
     </Layout>
   );

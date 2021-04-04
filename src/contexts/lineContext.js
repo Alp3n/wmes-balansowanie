@@ -22,9 +22,14 @@ const LineContextProvider = (props) => {
       station: `${lineData.stations.length + 1}`,
       startedAt: '',
       finishedAt: '',
+      isTimeSub: false,
       comment: '',
-      isFinished: false,
+      isCommentSub: false,
       responseId: '',
+      stopWatch: {
+        seconds: 0,
+        milSeconds: 0,
+      },
     };
 
     setLineData((prevState) => ({
@@ -64,9 +69,14 @@ const LineContextProvider = (props) => {
         station: `${i}`,
         startedAt: '',
         finishedAt: '',
+        isTimeSub: false,
         comment: '',
-        isFinished: '',
+        isCommentSub: false,
         responseId: '',
+        stopWatch: {
+          seconds: 0,
+          milSeconds: 0,
+        },
       };
       tempArray.push(newItem);
     }

@@ -38,24 +38,17 @@ const Layout = ({ children, pageName, firstPage }) => {
         justify='between'
         elevation='small'
         background='signifyDark'
-        pad='small'
       >
         {firstPage ? null : (
           <Button
             icon={<Previous color='white' />}
-            margin={{ left: 'small' }}
-            plain
             onClick={() => history.goBack()}
           />
         )}
-        <TopbarHeading level='2' margin='small'>
+        <TopbarHeading level='2' margin='medium'>
           {pageName}
         </TopbarHeading>
-        <Button
-          icon={<Menu color='white' />}
-          margin={{ right: 'small' }}
-          plain
-        />
+        <Button icon={<Menu color='white' />} />
       </Topbar>
       <Box>{children}</Box>
     </Box>

@@ -2,9 +2,12 @@ Todos:
 
 IMPORTANT
 1. Setting state in PositionDetails from CONTEXT
-2. Refresh button for orderID in LineDetails and Edit for manual change of orderId
+
 
 AFTER
 - Check LOGIN
 - Add Menu button with DARK MODE, and LOGOUT
 - Refactor functions outside components
+
+DONE:
+2. Refresh button for orderID in LineDetails and Edit for manual change of orderId

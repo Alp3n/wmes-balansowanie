@@ -5,38 +5,76 @@ import TimerButton from './TimerButton';
 import TimerCounter from './TimerCounter';
 // import { LineContext } from '../../contexts/lineContext';
 
-const Timer = ({ setStation, setTimeSub, handlePost, isTimeSub }) => {
+const Timer = ({
+  setStation,
+  setTimeSub,
+  handlePost,
+  handleDelete,
+  isTimeSub,
+  startDate,
+  finishDate,
+  finished,
+}) => {
+  // const { lineData } = useContext(LineContext);
   const [isRunning, setIsRunning] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
-  const [startedAt, setStartedAt] = useState();
-  const [finishedAt, setFinishedAt] = useState();
+  const [isFinished, setIsFinished] = useState(finished);
+  // const [isFinished, setIsFinished] = useState(false);
+  const [startedAt, setStartedAt] = useState(startDate);
+  const [finishedAt, setFinishedAt] = useState(finishDate);
+  const [seconds, setSeconds] = useState();
+  const [milSeconds, setMilSeconds] = useState();
 
-  // const {  } = useContext(LineContext);
+  const handleStopWatch = (s, ms) => {
+    setSeconds(s);
+    setMilSeconds(ms);
+  };
 
   const handleStart = () => {
     setIsRunning(true);
     setStartedAt(new Date().toISOString());
   };
 
-  const handleStop = () => {
+  const handleStop = async () => {
     setFinishedAt(new Date().toISOString());
     setIsRunning(false);
     setIsFinished(true);
   };
 
-  const handleFinished = () => {
+  const handleFinished = async () => {
     setIsFinished(false);
     setTimeSub(false);
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     setStation((prevState) => ({
       ...prevState,
       startedAt: startedAt,
       finishedAt: finishedAt,
       isFinished: isFinished,
     }));
-  }, [finishedAt, setStation, isFinished, startedAt]);
+  }, [finishedAt, setStation, isFinished, startedAt]); */
+  useEffect(() => {
+    setStation((prevState) => ({
+      ...prevState,
+      startedAt: startedAt,
+      finishedAt: finishedAt,
+      isTimeSub: true,
+      isFinished: isFinished,
+      stopWatch: {
+        ...prevState.stopWatch,
+        seconds: seconds,
+        milSeconds: milSeconds,
+      },
+    }));
+  }, [
+    finishedAt,
+    setStation,
+    isFinished,
+    startedAt,
+    isTimeSub,
+    seconds,
+    milSeconds,
+  ]);
 
   return (
     <>
@@ -51,8 +89,7 @@ const Timer = ({ setStation, setTimeSub, handlePost, isTimeSub }) => {
         <TimerCounter
           isFinished={isFinished}
           isRunning={isRunning}
-          // s={s}
-          // ms={ms}
+          handleStopWatch={handleStopWatch}
         />
         {isFinished ? (
           <TimerButton

@@ -37,6 +37,7 @@ const LineDetails = () => {
   };
 
   console.log(('LINEDATA', lineData));
+  //TODO extract to custom useSetup hook
   useEffect(() => {
     switch (status) {
       case STATUS_TYPES.fetched:

@@ -16,6 +16,11 @@ export const myTheme = deepMerge(grommet, {
       signifyGradient: brandGradient,
       signifyDark: '#3C3C41',
     },
+    control: {
+      disabled: {
+        opacity: 1,
+      },
+    },
   },
   list: {
     item: {
