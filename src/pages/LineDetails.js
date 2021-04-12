@@ -6,7 +6,7 @@ import Layout from '../components/layout/Layout';
 import ActiveOrder from '../components/lineDetails/ActiveOrder';
 import Balancing from '../components/lineDetails/Balancing';
 
-import strings from '../data/strings.json';
+import strings from '../utils/strings.json';
 import { URL_PRODSHIFTORDER } from '../utils/consts';
 
 import { LineContext } from '../contexts/lineContext';
@@ -15,7 +15,7 @@ import { useFetch, STATUS_TYPES } from '../hooks/useFetch';
 const { LINE_DETAILS_noOrder } = strings.lineDetailsPage;
 
 const LineDetails = () => {
-  const [newOrder, setNewOrder] = useState(false);
+  const [newOrder, setNewOrder] = useState('same');
   const { state } = useLocation();
   const { lineData, setupStations } = useContext(LineContext);
 
@@ -27,11 +27,9 @@ const LineDetails = () => {
 
   const handleRefresh = () => {
     setupStations(data.prodLine, data.orderId);
-    setNewOrder(false);
+    setNewOrder('same');
   };
 
-  console.log(('LINEDATA', lineData));
-  //TODO extract to custom useSetup hook
   useEffect(() => {
     switch (status) {
       case STATUS_TYPES.fetched:
@@ -47,15 +45,17 @@ const LineDetails = () => {
           lineData.orderId !== data.orderId &&
           lineData.lineId === data.prodLine
         ) {
-          // console.log('DIFFERENT ORDER THE SAME LINE');
-          setNewOrder(true);
-          alert('DIFFERENT ORDER THE SAME LINE');
+          console.log('DIFFERENT ORDER THE SAME LINE');
+          setNewOrder('newOrder');
+          // setNewOrder(true);
+          alert('Nowe zlecenie na linii');
         } else {
           console.log('NOTHING CHANGED');
         }
         break;
       case STATUS_TYPES.error:
         if (!data.orderId) {
+          setNewOrder('error');
           return console.log('NO ORDER');
         }
         break;
@@ -71,6 +71,8 @@ const LineDetails = () => {
     setupStations,
     status,
   ]);
+
+  // TODO add charts in Tabs (Tab-> Balncing, Tab-> Charts)
 
   const switchRender = (status) => {
     switch (status) {
@@ -92,7 +94,7 @@ const LineDetails = () => {
 
       case STATUS_TYPES.error:
         return (
-          <ActiveOrder newOrder='error' orderNumber={LINE_DETAILS_noOrder} />
+          <ActiveOrder newOrder={newOrder} orderNumber={LINE_DETAILS_noOrder} />
         );
 
       default:

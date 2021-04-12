@@ -1,22 +1,28 @@
 import React, { createContext, useState } from 'react';
 
+import { HEADERS, URL_BALANCING } from '../utils/consts';
+
 export const LineContext = createContext();
 
 const LineContextProvider = (props) => {
+  // Default state of the context
   const [lineData, setLineData] = useState({
     lineId: '',
     orderId: '',
     stations: [],
   });
 
+  // Changes line ID
   const changeLineId = (id) => {
     setLineData((prevState) => ({ ...prevState, lineId: id }));
   };
 
+  // Changes order ID
   const changeOrderId = (id) => {
     setLineData((prevState) => ({ ...prevState, orderId: id }));
   };
 
+  // Adds one station to stations array
   const addToStations = () => {
     const newStation = {
       station: `${lineData.stations.length + 1}`,
@@ -27,10 +33,6 @@ const LineContextProvider = (props) => {
       comment: '',
       isCommentSub: false,
       responseId: '',
-      stopWatch: {
-        seconds: 0,
-        milSeconds: 0,
-      },
     };
 
     setLineData((prevState) => ({
@@ -39,6 +41,7 @@ const LineContextProvider = (props) => {
     }));
   };
 
+  // Removes station from stations array
   const removeFromStations = (id) => {
     setLineData((prevState) => ({
       ...prevState,
@@ -46,6 +49,7 @@ const LineContextProvider = (props) => {
     }));
   };
 
+  // Clears stations
   const clearStations = () => {
     setLineData((prevState) => ({
       ...prevState,
@@ -53,18 +57,40 @@ const LineContextProvider = (props) => {
     }));
   };
 
-  const editStation = (id, item) => {
+  // Returns one station by id
+  const filterStation = (id) => {
+    let filteredStation = lineData.stations.filter(
+      (station) => station.station === id
+    );
+    let [station] = filteredStation;
+    return station;
+  };
+
+  // Edit function for any keys
+  const editStation = (id, keys) => {
+    let filteredStation = filterStation(id);
+
+    // Destructuring prev state object and new object into new edited one
+    let editedStation = {
+      ...filteredStation,
+      ...keys,
+    };
+
     setLineData((prevState) => ({
       ...prevState,
       stations: [
+        // Filtering all stations that are not the one edited
         ...prevState.stations.filter((station) => station.station !== id),
-        item,
+        // Inseting edited station
+        editedStation,
       ],
     }));
   };
 
+  // Setup of stations for a line and order
   const setupStations = (lineId, orderId) => {
     let tempArray = [];
+    // 6 sations default
     for (let i = 1; i < 7; i++) {
       let newItem = {
         station: `${i}`,
@@ -75,10 +101,6 @@ const LineContextProvider = (props) => {
         comment: '',
         isCommentSub: false,
         responseId: '',
-        stopWatch: {
-          seconds: 0,
-          milSeconds: 0,
-        },
       };
       tempArray.push(newItem);
     }
@@ -90,12 +112,56 @@ const LineContextProvider = (props) => {
     }));
   };
 
-  const changeResponse = (responseId) => {
-    setLineData((prevState) => ({
-      ...prevState,
-      responseId: responseId,
-    }));
+  // POST data function and edits station state
+  const handlePost = async (stationId, editData, postData) => {
+    await fetch(URL_BALANCING, {
+      method: 'POST',
+      headers: HEADERS,
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let responseData = {
+          ...editData,
+          isTimeSub: true,
+          responseId: data._id,
+        };
+
+        editStation(stationId, responseData);
+      });
   };
+
+  // PUT data function and edits station state
+  const handlePut = async (stationId, responseId, putData) => {
+    await fetch(`${URL_BALANCING}/${responseId}`, {
+      method: 'PUT',
+      headers: HEADERS,
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify(putData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let responseData = {
+          ...putData,
+          responseId: data?._id,
+          isCommentSub: true,
+        };
+        editStation(stationId, responseData);
+      });
+  };
+
+  // const handleDelete = async () => {
+  //   await fetch(`${URL_BALANCING}/${response._id}`, {
+  //     method: 'DELETE',
+  //     headers: HEADERS,
+  //     mode: 'cors',
+  //     credentials: 'include',
+  //     body: JSON.stringify(response._id),
+  //   }).then((response) => response.json());
+  // };
 
   return (
     <LineContext.Provider
@@ -108,7 +174,9 @@ const LineContextProvider = (props) => {
         changeOrderId,
         editStation,
         setupStations,
-        changeResponse,
+        handlePost,
+        handlePut,
+        filterStation,
       }}
     >
       {props.children}

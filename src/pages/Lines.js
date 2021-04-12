@@ -5,7 +5,7 @@ import SearchBox from '../components/SearchBox';
 import LineList from '../components/list/LineList';
 import Loading from '../components/loading/Loading';
 
-import strings from '../data/strings.json';
+import strings from '../utils/strings.json';
 import {
   URL_PRODLINES,
   // HEADERS

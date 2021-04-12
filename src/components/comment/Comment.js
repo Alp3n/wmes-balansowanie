@@ -1,26 +1,42 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Box, TextArea, Text, Button } from 'grommet';
 import { Edit } from 'grommet-icons';
+import { LineContext } from '../../contexts/lineContext';
 
-const Comment = ({ setStation, isCommentSub, handleComment, handlePut }) => {
+const Comment = ({ stationId }) => {
+  const { handlePut, filterStation, editStation } = useContext(LineContext);
+  const filteredStation = filterStation(stationId);
+
   const [value, setValue] = useState('');
+  const [putData, setPutData] = useState({
+    ...filteredStation,
+    comment: '',
+    isCommentSub: false,
+  });
+
+  const responseId = filteredStation.responseId;
   const textArea = useRef(null);
 
   const handleCommentEdit = () => {
-    handleComment(false);
+    editStation(stationId, { isCommentSub: false });
+    setPutData((prevState) => ({
+      ...prevState,
+      isCommentSub: false,
+    }));
     textArea.current.focus();
   };
 
   useEffect(() => {
-    setStation((prevState) => ({
+    setPutData((prevState) => ({
       ...prevState,
       comment: value,
     }));
-  }, [value, setStation]);
+  }, [value]);
+
+  console.log(putData);
 
   return (
     <>
-      {' '}
       <Box
         background='white'
         margin={{ vertical: 'small' }}
@@ -36,7 +52,7 @@ const Comment = ({ setStation, isCommentSub, handleComment, handlePut }) => {
           >
             Komentarz
           </Text>
-          {isCommentSub && (
+          {filteredStation?.isCommentSub && (
             <Button
               icon={<Edit color='signifyGreen' />}
               onClick={() => handleCommentEdit()}
@@ -53,14 +69,14 @@ const Comment = ({ setStation, isCommentSub, handleComment, handlePut }) => {
           ref={textArea}
         />
       </Box>
-      {isCommentSub ? null : (
+      {filteredStation?.isCommentSub ? null : (
         <Button
           label='Zatwierdź komentarz'
           primary
           color='signifyGreen'
           margin={{ horizontal: 'small', bottom: 'small' }}
           size='large'
-          onClick={() => handlePut()}
+          onClick={() => handlePut(stationId, responseId, putData)}
         />
       )}
     </>

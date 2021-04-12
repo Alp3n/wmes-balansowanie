@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Box, Button, Text } from 'grommet';
 import { AddCircle } from 'grommet-icons';
-import PositionCard from '../positionList/PositionCard';
+import StationCard from '../stationList/StationCard';
 import { LineContext } from '../../contexts/lineContext';
-import strings from '../../data/strings.json';
+import strings from '../../utils/strings.json';
 
 const {
   LINE_DETAILS_balancing,
@@ -27,7 +27,7 @@ const Balancing = () => {
         {lineData.stations
           .sort((a, b) => a.station - b.station)
           .map((station, index) => (
-            <PositionCard
+            <StationCard
               key={station.station}
               station={station}
               last={stationsLength - 1 === index}

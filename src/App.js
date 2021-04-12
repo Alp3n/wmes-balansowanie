@@ -4,7 +4,7 @@ import { myTheme } from './myTheme';
 import Login from './pages/Login';
 import Lines from './pages/Lines';
 import LineDetails from './pages/LineDetails';
-import PositionDetails from './pages/PositionDetails';
+import StationDetails from './pages/StationDetails';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LineContextProvider from './contexts/lineContext';
@@ -17,7 +17,7 @@ function App() {
           <Switch>
             <Route
               path='/lines/:lineId/:positionId'
-              component={PositionDetails}
+              component={StationDetails}
             />
             <Route path='/lines/:lineId' component={LineDetails} />
             <Route

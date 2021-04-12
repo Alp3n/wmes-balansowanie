@@ -1,32 +1,29 @@
-import React, { useState, useEffect /* useContext */ } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Box, Button } from 'grommet';
 import { PlayFill, StopFill, Refresh } from 'grommet-icons';
 import TimerButton from './TimerButton';
 import TimerCounter from './TimerCounter';
-// import { LineContext } from '../../contexts/lineContext';
+import { LineContext } from '../../contexts/lineContext';
 
-const Timer = ({
-  setStation,
-  setTimeSub,
-  handlePost,
-  handleDelete,
-  isTimeSub,
-  startDate,
-  finishDate,
-  finished,
-}) => {
-  // const { lineData } = useContext(LineContext);
+const Timer = ({ stationId }) => {
+  const { lineData, filterStation, handlePost } = useContext(LineContext);
   const [isRunning, setIsRunning] = useState(false);
-  const [isFinished, setIsFinished] = useState(finished);
-  // const [isFinished, setIsFinished] = useState(false);
-  const [startedAt, setStartedAt] = useState(startDate);
-  const [finishedAt, setFinishedAt] = useState(finishDate);
-  const [seconds, setSeconds] = useState();
-  const [milSeconds, setMilSeconds] = useState();
+  const [isFinished, setIsFinished] = useState(false);
 
-  const handleStopWatch = (s, ms) => {
-    setSeconds(s);
-    setMilSeconds(ms);
+  const [startedAt, setStartedAt] = useState();
+  const [finishedAt, setFinishedAt] = useState();
+
+  const [postData, setPostData] = useState({
+    line: lineData.lineId,
+    order: lineData.orderId,
+    station: stationId,
+  });
+
+  const filteredStation = filterStation(stationId);
+
+  const editData = {
+    startedAt: postData.startedAt,
+    finishedAt: postData.finishedAt,
   };
 
   const handleStart = () => {
@@ -34,39 +31,23 @@ const Timer = ({
     setStartedAt(new Date().toISOString());
   };
 
-  const handleStop = async () => {
+  const handleStop = () => {
     setFinishedAt(new Date().toISOString());
     setIsRunning(false);
     setIsFinished(true);
   };
 
-  const handleFinished = async () => {
+  const handleFinished = () => {
     setIsFinished(false);
-    setTimeSub(false);
   };
 
   useEffect(() => {
-    setStation((prevState) => ({
+    setPostData((prevState) => ({
       ...prevState,
       startedAt: startedAt,
       finishedAt: finishedAt,
-      isTimeSub: isTimeSub,
-      isFinished: isFinished,
-      stopWatch: {
-        ...prevState.stopWatch,
-        seconds: seconds,
-        milSeconds: milSeconds,
-      },
     }));
-  }, [
-    finishedAt,
-    setStation,
-    isFinished,
-    startedAt,
-    isTimeSub,
-    seconds,
-    milSeconds,
-  ]);
+  }, [finishedAt, startedAt]);
 
   return (
     <>
@@ -81,7 +62,7 @@ const Timer = ({
         <TimerCounter
           isFinished={isFinished}
           isRunning={isRunning}
-          handleStopWatch={handleStopWatch}
+          stationId={stationId}
         />
         {isFinished ? (
           <TimerButton
@@ -107,7 +88,7 @@ const Timer = ({
           />
         )}
       </Box>
-      {isTimeSub
+      {filteredStation?.isTimeSub
         ? null
         : isFinished && (
             <Button
@@ -116,7 +97,7 @@ const Timer = ({
               color='signifyGreen'
               margin='small'
               size='large'
-              onClick={() => handlePost()}
+              onClick={() => handlePost(stationId, editData, postData)}
             />
           )}
     </>

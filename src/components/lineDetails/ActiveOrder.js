@@ -2,7 +2,7 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { LineContext } from '../../contexts/lineContext';
 import { Box, Text, TextInput, Button, Form } from 'grommet';
 import { Edit, Refresh, Checkmark } from 'grommet-icons';
-import strings from '../../data/strings.json';
+import strings from '../../utils/strings.json';
 
 const { LINE_DETAILS_activeOrder } = strings.lineDetailsPage;
 
@@ -37,14 +37,14 @@ const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
         <Text size='large' weight='bold'>
           {LINE_DETAILS_activeOrder}
         </Text>
-        {newOrder ? (
+        {newOrder === 'newOrder' ? (
           <Button
             icon={<Refresh color='signifyGreen' />}
             plain
             margin={{ left: 'small' }}
             onClick={() => handleRefresh()}
           />
-        ) : newOrder === false ? null : disabled ? (
+        ) : newOrder === 'error' ? null : disabled ? (
           <Button
             icon={<Edit color='signifyGreen' />}
             plain
@@ -67,6 +67,7 @@ const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
         width='auto'
       >
         <Form>
+          {/* TODO Validation min 9 max 9 */}
           <TextInput
             size='large'
             value={input}
@@ -74,10 +75,7 @@ const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
             plain='full'
             disabled={disabled}
             ref={textInput}
-            // minLength={9}
-            // maxLength={9}
-            pattern='.{9,9}'
-            required
+            maxLength={9}
           />
         </Form>
       </Box>

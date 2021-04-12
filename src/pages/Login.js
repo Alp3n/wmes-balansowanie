@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextInput, Form, Text, Button, CheckBox, Box } from 'grommet';
 import Layout from '../components/layout/Layout.js';
 
-import strings from '../data/strings.json';
+import strings from '../utils/strings.json';
 import { useHistory } from 'react-router-dom';
 
 import { URL_LOGIN, HEADERS } from '../utils/consts';

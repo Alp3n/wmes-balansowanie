@@ -4,7 +4,7 @@ import { Button, Text, Card, CardBody, CardHeader } from 'grommet';
 import { Chat, Next, Trash } from 'grommet-icons';
 import { LineContext } from '../../contexts/lineContext';
 
-const PositionCard = ({ station, last }) => {
+const StationCard = ({ station, last }) => {
   const { lineData, removeFromStations } = useContext(LineContext);
   const { lineId } = lineData;
 
@@ -21,7 +21,7 @@ const PositionCard = ({ station, last }) => {
   return (
     <Card margin={{ bottom: 'large' }}>
       <CardHeader
-        background={station.isFinished ? 'status-ok' : 'status-unknown'}
+        background={station.isTimeSub ? 'status-ok' : 'status-unknown'}
         pad='medium'
       >
         <Text size='large' weight='bold'>
@@ -64,4 +64,4 @@ const PositionCard = ({ station, last }) => {
   );
 };
 
-export default PositionCard;
+export default StationCard;
