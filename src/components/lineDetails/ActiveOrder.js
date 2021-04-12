@@ -1,9 +1,12 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { LineContext } from '../../contexts/lineContext';
-import { Box, Text, TextInput, Button } from 'grommet';
+import { Box, Text, TextInput, Button, Form } from 'grommet';
 import { Edit, Refresh, Checkmark } from 'grommet-icons';
+import strings from '../../data/strings.json';
 
-const ActiveOrder = ({ orderNumber, text, handleRefresh, newOrder }) => {
+const { LINE_DETAILS_activeOrder } = strings.lineDetailsPage;
+
+const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
   const [disabled, setDisabled] = useState(true);
   const [input, setInput] = useState(orderNumber);
   const { changeOrderId } = useContext(LineContext);
@@ -14,6 +17,7 @@ const ActiveOrder = ({ orderNumber, text, handleRefresh, newOrder }) => {
     await setDisabled(false);
     textInput.current.focus();
   };
+
   const handleSubmit = async () => {
     await changeOrderId(input);
     setDisabled(true);
@@ -31,16 +35,16 @@ const ActiveOrder = ({ orderNumber, text, handleRefresh, newOrder }) => {
     >
       <Box direction='row' align='center' pad='medium'>
         <Text size='large' weight='bold'>
-          {text}
+          {LINE_DETAILS_activeOrder}
         </Text>
-        {newOrder === 'newOrder' ? (
+        {newOrder ? (
           <Button
             icon={<Refresh color='signifyGreen' />}
             plain
             margin={{ left: 'small' }}
             onClick={() => handleRefresh()}
           />
-        ) : newOrder === 'error' ? null : disabled ? (
+        ) : newOrder === false ? null : disabled ? (
           <Button
             icon={<Edit color='signifyGreen' />}
             plain
@@ -62,15 +66,20 @@ const ActiveOrder = ({ orderNumber, text, handleRefresh, newOrder }) => {
         pad={{ horizontal: 'medium', bottom: 'medium' }}
         width='auto'
       >
-        <TextInput
-          size='large'
-          value={input}
-          onChange={(event) => setInput(event.target.value)}
-          plain='full'
-          disabled={disabled}
-          ref={textInput}
-          maxLength='9'
-        />
+        <Form>
+          <TextInput
+            size='large'
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+            plain='full'
+            disabled={disabled}
+            ref={textInput}
+            // minLength={9}
+            // maxLength={9}
+            pattern='.{9,9}'
+            required
+          />
+        </Form>
       </Box>
     </Box>
   );

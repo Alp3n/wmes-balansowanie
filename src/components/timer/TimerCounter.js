@@ -40,13 +40,18 @@ const TimerCounter = ({ isRunning, isFinished, handleStopWatch }) => {
     isRunning ? millSecDelay : null
   );
 
+  // Listening to isFinished and setting state seconds and millseconds count in TimerCounter
   useEffect(() => {
-    if (isFinished) {
-      handleStopWatch(secCount, millSecCount);
-    }
     if (isFinished === false) {
       setSecCount(0);
       setMillSecCount(0);
+    }
+  }, [isFinished]);
+
+  // Listening to isFinished and setting state for station stopWatch in Timer
+  useEffect(() => {
+    if (isFinished) {
+      handleStopWatch(secCount, millSecCount);
     }
   }, [handleStopWatch, isFinished, millSecCount, secCount]);
 

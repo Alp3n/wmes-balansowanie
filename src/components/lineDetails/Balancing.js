@@ -3,8 +3,15 @@ import { Box, Button, Text } from 'grommet';
 import { AddCircle } from 'grommet-icons';
 import PositionCard from '../positionList/PositionCard';
 import { LineContext } from '../../contexts/lineContext';
+import strings from '../../data/strings.json';
 
-const Balancing = ({ title, buttonText, infoText }) => {
+const {
+  LINE_DETAILS_balancing,
+  LINE_DETAILS_addStation,
+  LINE_DETAILS_maxStations,
+} = strings.lineDetailsPage;
+
+const Balancing = () => {
   const { lineData, addToStations } = useContext(LineContext);
 
   const stationsLength = lineData.stations.length;
@@ -13,7 +20,7 @@ const Balancing = ({ title, buttonText, infoText }) => {
     <Box background='white' border={{ side: 'horizontal', color: 'light-4' }}>
       <Box margin='medium'>
         <Text size='large' weight='bold'>
-          {title}
+          {LINE_DETAILS_balancing}
         </Text>
       </Box>
       <Box margin='medium'>
@@ -29,7 +36,7 @@ const Balancing = ({ title, buttonText, infoText }) => {
         {stationsLength < 10 ? (
           <Button
             icon={<AddCircle />}
-            label={buttonText}
+            label={LINE_DETAILS_addStation}
             margin={{ vertical: 'small' }}
             size='large'
             primary
@@ -38,7 +45,7 @@ const Balancing = ({ title, buttonText, infoText }) => {
             }}
           />
         ) : (
-          <Text alignSelf='center'>{infoText}</Text>
+          <Text alignSelf='center'>{LINE_DETAILS_maxStations}</Text>
         )}
       </Box>
     </Box>

@@ -45,20 +45,12 @@ const Timer = ({
     setTimeSub(false);
   };
 
-  /* useEffect(() => {
-    setStation((prevState) => ({
-      ...prevState,
-      startedAt: startedAt,
-      finishedAt: finishedAt,
-      isFinished: isFinished,
-    }));
-  }, [finishedAt, setStation, isFinished, startedAt]); */
   useEffect(() => {
     setStation((prevState) => ({
       ...prevState,
       startedAt: startedAt,
       finishedAt: finishedAt,
-      isTimeSub: true,
+      isTimeSub: isTimeSub,
       isFinished: isFinished,
       stopWatch: {
         ...prevState.stopWatch,

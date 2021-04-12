@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Text, Card, CardBody, CardHeader } from 'grommet';
-import { Chat, Next, Close } from 'grommet-icons';
+import { Chat, Next, Trash } from 'grommet-icons';
 import { LineContext } from '../../contexts/lineContext';
 
 const PositionCard = ({ station, last }) => {
@@ -29,7 +29,7 @@ const PositionCard = ({ station, last }) => {
         </Text>
         {last && (
           <Button
-            icon={<Close size='medium' />}
+            icon={<Trash size='medium' />}
             onClick={() => removeFromStations(station.station)}
             plain
           />

@@ -16,11 +16,11 @@ const PositionDetails = () => {
   const [isCommentSub, setCommentSub] = useState(false);
   const [response, setResponse] = useState({});
 
-  const contextState = lineData.stations.filter(
-    (station) => station.station === stationId
-  );
+  const contextState = (id) => {
+    lineData.stations.filter((station) => station.station === id);
+  };
 
-  const [station, setStation] = useState(...contextState);
+  const [station, setStation] = useState(...contextState(stationId));
 
   console.log('STATE:', station, 'ID:', stationId);
   console.log('RESPONSE:', response);
@@ -80,6 +80,8 @@ const PositionDetails = () => {
   const handleComment = () => {
     setCommentSub(false);
   };
+
+  useEffect(() => ({}));
 
   return (
     <Layout pageName={`ST-${stationId}`}>
