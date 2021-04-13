@@ -4,12 +4,15 @@ import { Box, Text, TextInput, Button, Form } from 'grommet';
 import { Edit, Refresh, Checkmark } from 'grommet-icons';
 import strings from '../../utils/strings.json';
 
-const { LINE_DETAILS_activeOrder } = strings.lineDetailsPage;
+const {
+  LINE_DETAILS_activeOrder,
+  LINE_DETAILS_newOrder,
+} = strings.lineDetailsPage;
 
 const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
   const [disabled, setDisabled] = useState(true);
   const [input, setInput] = useState(orderNumber);
-  const { changeOrderId } = useContext(LineContext);
+  const { lineData, changeOrderId, setupStations } = useContext(LineContext);
 
   const textInput = useRef(null);
 
@@ -18,8 +21,11 @@ const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
     textInput.current.focus();
   };
 
-  const handleSubmit = async () => {
-    await changeOrderId(input);
+  const handleSubmit = () => {
+    changeOrderId(input);
+    if (lineData.orderId !== input) {
+      setupStations(lineData.lineId, input);
+    }
     setDisabled(true);
   };
 
@@ -33,30 +39,33 @@ const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
       border={{ side: 'bottom', color: 'light-4' }}
       margin={{ bottom: 'small' }}
     >
-      <Box direction='row' align='center' pad='medium'>
+      <Box direction='row' align='center' pad='medium' justify='between'>
         <Text size='large' weight='bold'>
           {LINE_DETAILS_activeOrder}
         </Text>
-        {newOrder === 'newOrder' ? (
-          <Button
-            icon={<Refresh color='signifyGreen' />}
-            plain
-            margin={{ left: 'small' }}
+        {newOrder === 'new' ? (
+          <Box
+            direction='row'
+            align='center'
             onClick={() => handleRefresh()}
-          />
+            pad='xsmall'
+          >
+            <Refresh color='signifyGreen' plain />
+            <Text size='xsmall' margin={{ left: 'small' }} color='signifyGreen'>
+              {LINE_DETAILS_newOrder}
+            </Text>
+          </Box>
         ) : newOrder === 'error' ? null : disabled ? (
           <Button
             icon={<Edit color='signifyGreen' />}
-            plain
-            margin={{ left: 'small' }}
             onClick={() => handleEdit()}
+            plain
           />
         ) : (
           <Button
             icon={<Checkmark color='signifyGreen' />}
-            plain
-            margin={{ left: 'small' }}
             onClick={() => handleSubmit()}
+            plain
           />
         )}
       </Box>

@@ -1,17 +1,21 @@
-import React from 'react';
+import React /* , { useContext } */ from 'react';
 import { Grommet } from 'grommet';
-import { myTheme } from './myTheme';
+
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import Login from './pages/Login';
 import Lines from './pages/Lines';
 import LineDetails from './pages/LineDetails';
 import StationDetails from './pages/StationDetails';
+import { lightTheme } from './myTheme';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LineContextProvider from './contexts/lineContext';
+// import { ThemeContext } from 'styled-components';
 
 function App() {
+  // const { myTheme } = useContext(ThemeContext);
   return (
-    <Grommet theme={myTheme}>
+    <Grommet theme={lightTheme}>
       <LineContextProvider>
         <Router>
           <Switch>

@@ -7,6 +7,12 @@ export const STATUS_TYPES = {
   error: 'error',
 };
 
+export const ORDER_TYPES = {
+  same: 'same',
+  new: 'new',
+  error: 'error',
+};
+
 export const useFetch = (url) => {
   const [status, setStatus] = useState('idle'); //idle, fetching, fetched, error
   const [data, setData] = useState([]);
@@ -39,7 +45,6 @@ export const useFetch = (url) => {
     };
 
     fetchData();
-    console.log('useFetch worked');
   }, [url]);
 
   return { status, data };

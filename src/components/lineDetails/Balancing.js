@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Box, Button, Text } from 'grommet';
 import { AddCircle } from 'grommet-icons';
-import StationCard from '../stationList/StationCard';
+import StationCard from '../StationCard';
 import { LineContext } from '../../contexts/lineContext';
 import strings from '../../utils/strings.json';
 

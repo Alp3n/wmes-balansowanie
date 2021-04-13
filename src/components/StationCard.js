@@ -2,7 +2,10 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Text, Card, CardBody, CardHeader } from 'grommet';
 import { Chat, Next, Trash } from 'grommet-icons';
-import { LineContext } from '../../contexts/lineContext';
+import { LineContext } from '../contexts/lineContext';
+import strings from '../utils/strings.json';
+
+const { STATION_CARD_station } = strings.stationCard;
 
 const StationCard = ({ station, last }) => {
   const { lineData, removeFromStations } = useContext(LineContext);
@@ -18,14 +21,19 @@ const StationCard = ({ station, last }) => {
     return seconds;
   };
 
+  const handleClick = () => {
+    history.push(`/lines/${lineId}/${station.station}`, station);
+  };
+
   return (
-    <Card margin={{ bottom: 'large' }}>
+    <Card margin={{ bottom: 'large' }} onClick={handleClick}>
       <CardHeader
         background={station.isTimeSub ? 'status-ok' : 'status-unknown'}
         pad='medium'
       >
         <Text size='large' weight='bold'>
-          ST-{station.station}
+          {STATION_CARD_station}
+          {station.station}
         </Text>
         {last && (
           <Button
@@ -43,22 +51,15 @@ const StationCard = ({ station, last }) => {
       >
         <Button
           icon={<Chat color={station.comment ? 'status-ok' : null} />}
-          disabled={station.finishedAt ? false : true}
-          onClick={() => {
-            console.log('I PRESSED MESSAGE EDITION');
-          }}
+          disabled
+          style={{ opacity: station.finishedAt && 1 }}
         />
         <Text size='large'>
           {station.startedAt && station.finishedAt !== null
             ? `${getSeconds(station.startedAt, station.finishedAt)}s`
             : '0s'}
         </Text>
-        <Button
-          icon={<Next />}
-          onClick={() => {
-            history.push(`/lines/${lineId}/${station.station}`, station);
-          }}
-        />
+        <Button icon={<Next />} />
       </CardBody>
     </Card>
   );

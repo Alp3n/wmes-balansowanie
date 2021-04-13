@@ -1,5 +1,5 @@
 /* import React, { useEffect } from 'react';
-TODO custom hook
+TODO custom hook to reduce bloat in a component
 const useSetup = (status) => {
   useEffect(() => {
     switch (status) {

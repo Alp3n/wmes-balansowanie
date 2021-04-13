@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { TextInput, Form, Text, Button, CheckBox, Box } from 'grommet';
-import Layout from '../components/layout/Layout.js';
+import { TextInput, Form, Text, Button, /* CheckBox, */ Box } from 'grommet';
+import Layout from '../components/Layout.js';
 
 import strings from '../utils/strings.json';
 import { useHistory } from 'react-router-dom';
@@ -13,10 +13,11 @@ const {
   LOGIN_password,
   LOGIN_userNamePlaceholder,
   LOGIN_passwordPlaceholder,
-  LOGIN_remember,
+  // LOGIN_remember,
   LOGIN_login,
 } = strings.loginPage;
 
+// POST request to API for login
 async function loginUser(credentials) {
   return fetch(URL_LOGIN, {
     method: 'POST',
@@ -28,12 +29,13 @@ async function loginUser(credentials) {
 }
 
 const Login = () => {
-  const [remember, setRemember] = useState(false);
+  // const [remember, setRemember] = useState(false);
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
 
   let history = useHistory();
 
+  // Function handling login
   const handleLogin = async () => {
     await loginUser({
       login: userName,
@@ -42,7 +44,7 @@ const Login = () => {
       if (data.error) {
         return alert(data.error.message);
       } else if (data.loggedIn) {
-        history.push('/lines');
+        history.replace('/lines');
       }
     });
   };
@@ -58,9 +60,14 @@ const Login = () => {
 
   return (
     <Layout firstPage='true' pageName={LOGIN_title}>
-      <Box background='white'>
+      <Box justify='center' height='medium'>
         <Form onSubmit={handleLogin}>
-          <Box pad='medium' gap='medium'>
+          <Box
+            pad='medium'
+            gap='medium'
+            background='white'
+            border={{ side: 'horizontal', color: 'light-4' }}
+          >
             <Box>
               <Text margin='xsmall'>{LOGIN_userName}</Text>
               <TextInput
@@ -75,19 +82,21 @@ const Login = () => {
                 type='password'
                 placeholder={LOGIN_passwordPlaceholder}
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete='current-password'
+                id='current-password'
               />
             </Box>
-            <CheckBox
+            {/* <CheckBox
               label={LOGIN_remember}
               checked={remember}
               onChange={(event) => setRemember(event.target.checked)}
-            />
+            /> */}
             <Button
               primary
               label={LOGIN_login}
               fill='horizontal'
               size='large'
-              margin={{ top: 'small' }}
+              margin={{ top: 'small', bottom: 'small' }}
               type='submit'
               style={{ border: 'none' }}
             />

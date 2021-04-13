@@ -1,9 +1,0 @@
-.topbar-heading {
-  background: -webkit-linear-gradient(
-    45deg,
-    rgba(0, 230, 150, 1) 0%,
-    rgba(30, 200, 210, 1) 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}

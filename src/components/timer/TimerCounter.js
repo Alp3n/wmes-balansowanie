@@ -1,34 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Text } from 'grommet';
 import styled from 'styled-components';
+import useInterval from '../../hooks/useInterval';
 
-// TODO requestAnimationFrame => setInterval slows down on save battery mode
-// useInterval custom hook for displaying stopwatch digits
-function useInterval(callback, delay) {
-  const savedCallback = useRef();
-
-  useEffect(() => {
-    savedCallback.current = callback;
-  });
-
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
-
-const TimerCounter = ({
-  isRunning,
-  isFinished,
-}) => {
-  const millSecDelay = 100;
-  const [millSecCount, setMillSecCount] = useState(0);
-  const [secCount, setSecCount] = useState(0);
+const TimerCounter = ({ isRunning, isFinished, seconds, milseconds }) => {
+  const delay = 100;
+  const [millSecCount, setMillSecCount] = useState(isFinished ? milseconds : 0);
+  const [secCount, setSecCount] = useState(isFinished ? seconds : 0);
 
   // useInterval custom hook for displaying stopwatch digits
   useInterval(
@@ -39,7 +17,7 @@ const TimerCounter = ({
         setSecCount(secCount + 1);
       }
     },
-    isRunning ? millSecDelay : null
+    isRunning ? delay : null
   );
 
   // Listening to isFinished and setting state seconds and millseconds count in TimerCounter

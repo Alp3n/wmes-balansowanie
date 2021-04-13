@@ -4,10 +4,12 @@ import { Box, TextInput, Button } from 'grommet';
 import { Search, Close } from 'grommet-icons';
 
 const StyledBox = styled(Box)`
-  position: sticky;
-  top: 56px;
+  position: fixed;
+  /* top: 56px; */
   background: white;
   border-bottom: 1px solid 'dark-4';
+  width: 100%;
+  z-index: 999;
 `;
 
 const SearchBox = ({ search, onChange, onClear, text }) => {

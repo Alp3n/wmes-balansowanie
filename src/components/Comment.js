@@ -1,13 +1,22 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Box, TextArea, Text, Button } from 'grommet';
 import { Edit } from 'grommet-icons';
-import { LineContext } from '../../contexts/lineContext';
+import { LineContext } from '../contexts/lineContext';
+import strings from '../utils/strings.json';
+
+const {
+  COMMENT_confirmComment,
+  COMMENT_comment,
+  COMMENT_enterComment,
+} = strings.comment;
 
 const Comment = ({ stationId }) => {
   const { handlePut, filterStation, editStation } = useContext(LineContext);
   const filteredStation = filterStation(stationId);
-
-  const [value, setValue] = useState('');
+  const [disabled, setDisabled] = useState(false);
+  const [value, setValue] = useState(
+    filteredStation?.isCommentSub ? filteredStation.comment : ''
+  );
   const [putData, setPutData] = useState({
     ...filteredStation,
     comment: '',
@@ -17,12 +26,13 @@ const Comment = ({ stationId }) => {
   const responseId = filteredStation.responseId;
   const textArea = useRef(null);
 
-  const handleCommentEdit = () => {
+  const handleCommentEdit = async () => {
     editStation(stationId, { isCommentSub: false });
     setPutData((prevState) => ({
       ...prevState,
       isCommentSub: false,
     }));
+    await setDisabled(false);
     textArea.current.focus();
   };
 
@@ -33,7 +43,7 @@ const Comment = ({ stationId }) => {
     }));
   }, [value]);
 
-  console.log(putData);
+  console.log('PUT DATA:', putData);
 
   return (
     <>
@@ -50,7 +60,7 @@ const Comment = ({ stationId }) => {
             weight='bold'
             size='large'
           >
-            Komentarz
+            {COMMENT_comment}
           </Text>
           {filteredStation?.isCommentSub && (
             <Button
@@ -60,23 +70,26 @@ const Comment = ({ stationId }) => {
           )}
         </Box>
         <TextArea
-          placeholder={'Wpisz komentarz...'}
+          placeholder={COMMENT_enterComment}
           value={value}
           onChange={(event) => setValue(event.target.value)}
           resize={false}
           fill
           plain
           ref={textArea}
+          disabled={disabled}
         />
       </Box>
       {filteredStation?.isCommentSub ? null : (
         <Button
-          label='Zatwierdź komentarz'
+          label={COMMENT_confirmComment}
           primary
           color='signifyGreen'
           margin={{ horizontal: 'small', bottom: 'small' }}
           size='large'
-          onClick={() => handlePut(stationId, responseId, putData)}
+          onClick={() =>
+            handlePut(stationId, responseId, putData).then(setDisabled(true))
+          }
         />
       )}
     </>

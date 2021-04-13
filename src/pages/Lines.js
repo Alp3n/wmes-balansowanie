@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-import Layout from '../components/layout/Layout';
+import Layout from '../components/Layout';
 import SearchBox from '../components/SearchBox';
-import LineList from '../components/list/LineList';
-import Loading from '../components/loading/Loading';
+import LineList from '../components/lineList/LineList';
+import Loading from '../components/Loading';
 
 import strings from '../utils/strings.json';
-import {
-  URL_PRODLINES,
-  // HEADERS
-} from '../utils/consts';
+import { URL_PRODLINES } from '../utils/consts';
 import { useFetch, STATUS_TYPES } from '../hooks/useFetch';
-import ErrorMsg from '../components/error/Error';
+import ErrorMsg from '../components/ErrorMsg';
 
 const {
   LINES_title,
