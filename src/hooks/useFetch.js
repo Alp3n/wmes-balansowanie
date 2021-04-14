@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { HEADERS } from '../utils/consts';
 
 export const STATUS_TYPES = {
   idle: 'idle',
@@ -27,7 +28,11 @@ export const useFetch = (url) => {
       setStatus(STATUS_TYPES.fetching);
 
       try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+          credentials: 'include',
+          headers: HEADERS,
+          mode: 'cors',
+        });
         const data = await response.json();
 
         // DEV MODE

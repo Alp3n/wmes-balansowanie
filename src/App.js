@@ -17,7 +17,7 @@ function App() {
   return (
     <Grommet theme={lightTheme}>
       <LineContextProvider>
-        <Router>
+        <Router basename='/ct-balancing'>
           <Switch>
             <Route
               path='/lines/:lineId/:positionId'

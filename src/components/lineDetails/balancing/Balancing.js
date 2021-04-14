@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { useFetch } from '../../hooks/useFetch';
+import { useFetch } from '../../../hooks/useFetch';
 
 import { Box } from 'grommet';
 import ResultsTable from './ResultsTable';
@@ -7,10 +7,10 @@ import ResultsTable from './ResultsTable';
 import { URL_BALANCING } from '../../../utils/consts';
 
 import DateFilter from './DateFilter';
-// import Loading from '../Loading';
+import Loading from '../../Loading';
 
 // Fake data for tests
-import data from './data.json';
+// import data from './data.json';
 
 // Function for setting default dates
 import { setDays } from '../../../functions/functions';
@@ -24,8 +24,6 @@ const Balancing = ({ orderId }) => {
   )}&startedAt=lt=${Date.parse(secondDate)}&order._id=string:${orderId}`;
   const FETCH_URL = URL_BALANCING + params;
 
-  console.log(FETCH_URL);
-
   const handleFd = (newDate) => {
     setFirstDate(newDate);
   };
@@ -35,7 +33,7 @@ const Balancing = ({ orderId }) => {
   };
 
   // TODO 403 Forbiden cookies i guess
-  // const { status, data } = useFetch(FETCH_URL);
+  const { status, data } = useFetch(FETCH_URL);
   //TODO add chart
   return (
     <Box>
@@ -45,12 +43,11 @@ const Balancing = ({ orderId }) => {
         handleFd={handleFd}
         handleSd={handleSd}
       />
-      <ResultsTable data={data.collection} />
-      {/* status === 'fetched' ? (
+      {status === 'fetched' ? (
         <ResultsTable data={data.collection} />
       ) : (
         <Loading />
-      ) */}
+      )}
     </Box>
   );
 };

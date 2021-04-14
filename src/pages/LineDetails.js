@@ -89,14 +89,16 @@ const LineDetails = () => {
               newOrder={newOrder}
               handleRefresh={handleRefresh}
             />
-
+            {/* TODO balancing dates */}
             <Tabs>
               <Tab title='Pomiary'>
                 <Measurment />
               </Tab>
-              <Tab title='Balansowanie'>
-                <Balancing orderId={lineData.orderId} />
-              </Tab>
+              {
+                <Tab title='Balansowanie'>
+                  <Balancing orderId={lineData.orderId} />
+                </Tab>
+              }
             </Tabs>
           </>
         );

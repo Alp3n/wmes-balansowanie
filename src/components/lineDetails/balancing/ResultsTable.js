@@ -70,6 +70,7 @@ const ResultsTable = ({ data }) => {
             />
           );
         }}
+        primaryKey={false}
       />
     </Box>
   );
