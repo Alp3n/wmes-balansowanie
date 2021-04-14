@@ -39,5 +39,13 @@
     "COMMENT_comment": "Komentarz",
     "COMMENT_enterComment": "Wpisz komentarz...",
     "COMMENT_confirmComment": "Zatwierdź komentarz"
+  },
+  "balancing": {
+    "BALANCING_station": "Stacja",
+    "BALANCING_startTime": "Czas rozpoczęcia",
+    "BALANCING_duration": "Czas trwania",
+    "BALANCING_tt": "Takt Time (SAP)",
+    "BALANCING_comment": "Komentarz",
+    "BALANCING_filter": "Filtruj"
   }
 }

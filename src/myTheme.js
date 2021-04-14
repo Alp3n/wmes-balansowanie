@@ -35,27 +35,28 @@ export const lightTheme = deepMerge(grommet, {
     },
   },
   tabs: {
-    gap: '80px',
+    gap: '16px',
     padding: '6px',
     header: {
       background: 'signifyDark',
     },
   },
   tab: {
-    pad: 'small',
+    pad: 'medium',
   },
   table: {
     background: 'background',
+    extend: () => `
+      tbody > tr > td:nth-child(1) > button {
+      padding: 16px 6px;
+    }`,
     header: {
       border: 'bottom',
       background: 'white',
     },
     body: {
-      extend: () => `
-    border-bottom: 1px solid #ffffff;
-    `,
       border: 'bottom',
-      background: 'background',
+      background: 'white',
     },
   },
 });

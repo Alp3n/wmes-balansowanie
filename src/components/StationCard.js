@@ -5,6 +5,9 @@ import { Chat, Next, Trash } from 'grommet-icons';
 import { LineContext } from '../contexts/lineContext';
 import strings from '../utils/strings.json';
 
+// Formating two ISOstrings to get difference in time MM-SS
+import { durationFromISOFormatter } from '../functions/functions';
+
 const { STATION_CARD_station } = strings.stationCard;
 
 const StationCard = ({ station, last }) => {
@@ -13,14 +16,7 @@ const StationCard = ({ station, last }) => {
 
   const history = useHistory();
 
-  const getSeconds = (start, end) => {
-    let seconds;
-    if (start || end !== null) {
-      seconds = Math.round((Date.parse(end) - Date.parse(start)) / 1000);
-    }
-    return seconds;
-  };
-
+  // Handling routing and passing station state
   const handleClick = () => {
     history.push(`/lines/${lineId}/${station.station}`, station);
   };
@@ -56,7 +52,10 @@ const StationCard = ({ station, last }) => {
         />
         <Text size='large'>
           {station.startedAt && station.finishedAt !== null
-            ? `${getSeconds(station.startedAt, station.finishedAt)}s`
+            ? `${durationFromISOFormatter(
+                station.startedAt,
+                station.finishedAt
+              )}`
             : '0s'}
         </Text>
         <Button icon={<Next />} />

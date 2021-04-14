@@ -12,7 +12,7 @@ import { URL_PRODSHIFTORDER } from '../utils/consts';
 import { LineContext } from '../contexts/lineContext';
 import { useFetch, STATUS_TYPES, ORDER_TYPES } from '../hooks/useFetch';
 import { Tabs, Tab } from 'grommet';
-import Balancing from '../components/balancing/Balancing';
+import Balancing from '../components/lineDetails/balancing/Balancing';
 
 const { LINE_DETAILS_noOrder } = strings.lineDetailsPage;
 
@@ -95,7 +95,7 @@ const LineDetails = () => {
                 <Measurment />
               </Tab>
               <Tab title='Balansowanie'>
-                <Balancing />
+                <Balancing orderId={lineData.orderId} />
               </Tab>
             </Tabs>
           </>
