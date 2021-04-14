@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { Box } from 'grommet';
+import ResultsTable from './ResultsTable';
 
 const Balancing = () => {
-  return <Box></Box>;
+  return (
+    <Box>
+      <ResultsTable />
+    </Box>
+  );
 };
 
 export default Balancing;

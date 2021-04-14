@@ -6,7 +6,6 @@ import { LineContext } from '../../contexts/lineContext';
 import strings from '../../utils/strings.json';
 
 const {
-  LINE_DETAILS_measurment,
   LINE_DETAILS_addStation,
   LINE_DETAILS_maxStations,
 } = strings.lineDetailsPage;
@@ -18,11 +17,6 @@ const Measurment = () => {
 
   return (
     <Box background='white' border={{ side: 'horizontal', color: 'light-4' }}>
-      <Box margin='medium'>
-        <Text size='large' weight='bold'>
-          {LINE_DETAILS_measurment}
-        </Text>
-      </Box>
       <Box margin='medium'>
         {lineData.stations
           .sort((a, b) => a.station - b.station)
