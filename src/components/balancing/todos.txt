@@ -1,0 +1,4 @@
+Fetch URL: https://dev.wmes.pl/ct/balancing/pces
+params: ?sort(-startedAt)&limit(100)&startedAt=ge=1618160400000&startedAt=lt=1618419600000&order._id=string:125953331
+
+params: ?sort(-startedAt)&limit(100)&startedAt=ge={firstDate}&startedAt=lt={secondDate}&order._id=string:{orderId}

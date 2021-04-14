@@ -6,12 +6,12 @@ import { LineContext } from '../../contexts/lineContext';
 import strings from '../../utils/strings.json';
 
 const {
-  LINE_DETAILS_balancing,
+  LINE_DETAILS_measurment,
   LINE_DETAILS_addStation,
   LINE_DETAILS_maxStations,
 } = strings.lineDetailsPage;
 
-const Balancing = () => {
+const Measurment = () => {
   const { lineData, addToStations } = useContext(LineContext);
 
   const stationsLength = lineData.stations.length;
@@ -20,7 +20,7 @@ const Balancing = () => {
     <Box background='white' border={{ side: 'horizontal', color: 'light-4' }}>
       <Box margin='medium'>
         <Text size='large' weight='bold'>
-          {LINE_DETAILS_balancing}
+          {LINE_DETAILS_measurment}
         </Text>
       </Box>
       <Box margin='medium'>
@@ -52,4 +52,4 @@ const Balancing = () => {
   );
 };
 
-export default Balancing;
+export default Measurment;

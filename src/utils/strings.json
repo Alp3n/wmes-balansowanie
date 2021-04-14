@@ -18,6 +18,7 @@
     "LINE_DETAILS_activeOrder": "Aktualne zlecenie",
     "LINE_DETAILS_noOrder": "Brak aktywnego zlecenia",
     "LINE_DETAILS_balancing": "Balansowanie",
+    "LINE_DETAILS_measurment": "Pomiary",
     "LINE_DETAILS_addStation": "Dodaj stanowisko",
     "LINE_DETAILS_maxStations": "Maksymalna liczba stanowisk",
     "LINE_DETAILS_newOrder": "Nowe zlecenie"

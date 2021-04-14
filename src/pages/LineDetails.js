@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import Loading from '../components/Loading';
 import Layout from '../components/Layout';
 import ActiveOrder from '../components/lineDetails/ActiveOrder';
-import Balancing from '../components/lineDetails/Balancing';
+import Measurment from '../components/lineDetails/Measurment';
 
 import strings from '../utils/strings.json';
 import { URL_PRODSHIFTORDER } from '../utils/consts';
@@ -88,7 +88,7 @@ const LineDetails = () => {
               handleRefresh={handleRefresh}
             />
 
-            <Balancing />
+            <Measurment />
           </>
         );
 
