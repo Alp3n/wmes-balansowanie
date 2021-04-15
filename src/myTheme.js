@@ -35,8 +35,7 @@ export const lightTheme = deepMerge(grommet, {
     },
   },
   tabs: {
-    gap: '16px',
-    padding: '6px',
+    pad: 'none',
     header: {
       background: 'signifyDark',
     },

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Box, Text } from 'grommet';
 import styled from 'styled-components';
 import useInterval from '../../hooks/useInterval';
+// import { useStopwatch } from 'react-use-precision-timer';
+// import { getTimeV2 } from './timerFuncs';
 
 const TimerCounter = ({ isRunning, isFinished, seconds, milseconds }) => {
   const delay = 100;

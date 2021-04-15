@@ -1,4 +1,4 @@
-import React /* , { useContext } */ from 'react';
+import React from 'react';
 import { Grommet } from 'grommet';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -10,10 +10,8 @@ import StationDetails from './pages/StationDetails';
 import { lightTheme } from './myTheme';
 
 import LineContextProvider from './contexts/lineContext';
-// import { ThemeContext } from 'styled-components';
 
 function App() {
-  // const { myTheme } = useContext(ThemeContext);
   return (
     <Grommet theme={lightTheme}>
       <LineContextProvider>
@@ -31,11 +29,6 @@ function App() {
             />
             <Route path='/' exact render={(props) => <Login {...props} />} />
 
-            {/* user ? (
-              <Redirect from='/' to='/lines' />
-            ) : (
-              <Redirect from='/' to='/login' />
-            ) */}
             <Route path='/*' component={() => '404'} />
           </Switch>
         </Router>

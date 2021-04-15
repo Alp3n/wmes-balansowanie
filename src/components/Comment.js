@@ -81,16 +81,17 @@ const Comment = ({ stationId }) => {
         />
       </Box>
       {filteredStation?.isCommentSub ? null : (
-        <Button
-          label={COMMENT_confirmComment}
-          primary
-          color='signifyGreen'
-          margin={{ horizontal: 'small', bottom: 'small' }}
-          size='large'
-          onClick={() =>
-            handlePut(stationId, responseId, putData).then(setDisabled(true))
-          }
-        />
+        <Box margin='medium' background='white' round='large'>
+          <Button
+            label={COMMENT_confirmComment}
+            // primary
+            color='signifyGreen'
+            size='large'
+            onClick={() =>
+              handlePut(stationId, responseId, putData).then(setDisabled(true))
+            }
+          />
+        </Box>
       )}
     </>
   );

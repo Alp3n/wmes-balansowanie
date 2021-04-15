@@ -8,6 +8,15 @@ export const getTime = (startedAt, finishedAt, type) => {
   }
 };
 
+export const getTimeV2 = (milliseconds, returnType) => {
+  if (returnType === 'seconds') {
+    return Math.floor(milliseconds / 1000);
+  }
+  if (returnType === 'milliseconds') {
+    return Math.floor(milliseconds / 1000).split('.')[1];
+  }
+};
+
 export const handleStart = (setIsRunning, setStartedAt) => {
   setIsRunning(true);
   setStartedAt(new Date().toISOString());

@@ -46,6 +46,8 @@
     "BALANCING_duration": "Czas trwania",
     "BALANCING_tt": "Takt Time (SAP)",
     "BALANCING_comment": "Komentarz",
-    "BALANCING_filter": "Filtruj"
+    "BALANCING_filter": "Filtruj",
+    "BALANCING_start": "Początek",
+    "BALANCING_end": "Koniec"
   }
 }

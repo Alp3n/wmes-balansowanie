@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { TextInput, Form, Text, Button, /* CheckBox, */ Box } from 'grommet';
+import React, { useState, useEffect } from 'react';
+import { TextInput, Form, FormField, Button, CheckBox, Box } from 'grommet';
 import Layout from '../components/Layout.js';
 
 import strings from '../utils/strings.json';
@@ -13,7 +13,7 @@ const {
   LOGIN_password,
   LOGIN_userNamePlaceholder,
   LOGIN_passwordPlaceholder,
-  // LOGIN_remember,
+  LOGIN_remember,
   LOGIN_login,
 } = strings.loginPage;
 
@@ -28,10 +28,21 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
+const defaultValue = {
+  username: localStorage.getItem('username')
+    ? localStorage.getItem('username')
+    : '',
+  password: localStorage.getItem('password')
+    ? localStorage.getItem('password')
+    : '',
+  remember: localStorage.getItem('remember') === 'true',
+};
+
+console.log(defaultValue.remember);
 const Login = () => {
-  // const [remember, setRemember] = useState(false);
-  const [userName, setUserName] = useState();
-  const [password, setPassword] = useState();
+  const [remember, setRemember] = useState(defaultValue.remember);
+  const [userName, setUserName] = useState(defaultValue.username);
+  const [password, setPassword] = useState(defaultValue.password);
 
   let history = useHistory();
 
@@ -49,14 +60,17 @@ const Login = () => {
     });
   };
 
-  // TODO setup cookie read but its not working with CORS policy
-  // useEffect(() => {
-  //   let match = document.cookie.match('wmes.sid');
-  //   if (match) {
-  //     history.push('/lines');
-  //   }
-  //   console.log(match);
-  // }, [history]);
+  useEffect(() => {
+    if (remember) {
+      localStorage.setItem('username', userName);
+      localStorage.setItem('password', password);
+      localStorage.setItem('remember', true);
+    } else if (!remember) {
+      localStorage.setItem('remember', false);
+      localStorage.clear('username');
+      localStorage.clear('password');
+    }
+  }, [password, userName, remember]);
 
   return (
     <Layout firstPage='true' pageName={LOGIN_title}>
@@ -68,29 +82,41 @@ const Login = () => {
             background='white'
             border={{ side: 'horizontal', color: 'light-4' }}
           >
-            <Box>
-              <Text margin='xsmall'>{LOGIN_userName}</Text>
+            <FormField
+              label={LOGIN_userName}
+              name='username'
+              contentProps={{ border: 'all', round: 'small' }}
+            >
               <TextInput
+                value={userName}
+                name='username'
                 type='text'
                 placeholder={LOGIN_userNamePlaceholder}
                 onChange={(e) => setUserName(e.target.value)}
               />
-            </Box>
-            <Box>
-              <Text margin='xsmall'>{LOGIN_password}</Text>
+            </FormField>
+
+            <FormField
+              label={LOGIN_password}
+              name='password'
+              contentProps={{ border: 'all', round: 'small' }}
+            >
               <TextInput
+                name='password'
+                value={password}
                 type='password'
                 placeholder={LOGIN_passwordPlaceholder}
                 onChange={(e) => setPassword(e.target.value)}
-                autoComplete='current-password'
-                id='current-password'
               />
-            </Box>
-            {/* <CheckBox
-              label={LOGIN_remember}
-              checked={remember}
-              onChange={(event) => setRemember(event.target.checked)}
-            /> */}
+            </FormField>
+            <FormField name='remember' contentProps={{ border: false }}>
+              <CheckBox
+                name='remember'
+                label={LOGIN_remember}
+                checked={remember}
+                onChange={(event) => setRemember(event.target.checked)}
+              />
+            </FormField>
             <Button
               primary
               label={LOGIN_login}

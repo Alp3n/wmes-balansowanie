@@ -86,6 +86,21 @@ const LineContextProvider = (props) => {
     }));
   };
 
+  // Clean station
+
+  const cleanStation = (stationId) => {
+    const cleanStation = {
+      station: stationId,
+      startedAt: '',
+      finishedAt: '',
+      isTimeSub: false,
+      comment: '',
+      isCommentSub: false,
+      responseId: '',
+    };
+    editStation(stationId, cleanStation);
+  };
+
   // Setup of stations for a line and order
   const setupStations = (lineId, orderId) => {
     let tempArray = [];
@@ -151,6 +166,17 @@ const LineContextProvider = (props) => {
       });
   };
 
+  // PUT data function for comment
+  const commentPut = async (responseId, putData) => {
+    await fetch(`${URL_BALANCING}/${responseId}`, {
+      method: 'PUT',
+      headers: HEADERS,
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify(putData),
+    }).then((response) => response.json());
+  };
+
   // const handleDelete = async () => {
   //   await fetch(`${URL_BALANCING}/${response._id}`, {
   //     method: 'DELETE',
@@ -174,6 +200,8 @@ const LineContextProvider = (props) => {
         setupStations,
         handlePost,
         handlePut,
+        commentPut,
+        cleanStation,
         filterStation,
       }}
     >

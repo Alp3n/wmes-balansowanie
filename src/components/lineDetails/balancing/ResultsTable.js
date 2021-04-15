@@ -67,6 +67,7 @@ const ResultsTable = ({ data }) => {
               comment={row.comment}
               d={durationFormatter(row.d)}
               tt={`${row.stt}%`}
+              _id={row._id}
             />
           );
         }}

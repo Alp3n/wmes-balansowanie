@@ -14,10 +14,9 @@ const TYPES = {
   milliseconds: 'milseconds',
 };
 
-const Timer = ({ stationId }) => {
+const Timer = ({ stationId, isFinished, setIsFinished }) => {
   const { lineData, filterStation, handlePost } = useContext(LineContext);
   const [isRunning, setIsRunning] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
 
   const [startedAt, setStartedAt] = useState();
   const [finishedAt, setFinishedAt] = useState();
@@ -44,7 +43,7 @@ const Timer = ({ stationId }) => {
     }));
   }, [finishedAt, startedAt]);
 
-  const switchRender = () => {
+  const switchRender = (status) => {
     switch (status) {
       case true:
         return (
@@ -112,7 +111,7 @@ const Timer = ({ stationId }) => {
         pad={{ vertical: 'large' }}
       >
         {/* Timer component responsible for displaying circles and counter */}
-        {switchRender()}
+        {switchRender(status)}
       </Box>
       {filteredStation?.isTimeSub
         ? null

@@ -76,7 +76,6 @@ const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
         width='auto'
       >
         <Form>
-          {/* TODO Validation min 9 max 9 */}
           <TextInput
             size='large'
             value={input}

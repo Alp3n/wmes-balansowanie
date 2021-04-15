@@ -14,7 +14,7 @@ const StyledBox = styled(Box)`
 
 const SearchBox = ({ search, onChange, onClear, text }) => {
   return (
-    <StyledBox border={{ side: 'bottom', color: 'light-4' }}>
+    <StyledBox border={{ side: 'bottom', color: 'light-4' }} overflow='hidden'>
       <Box
         direction='row'
         align='center'

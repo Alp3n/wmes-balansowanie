@@ -5,6 +5,7 @@ import Loading from '../components/Loading';
 import Layout from '../components/Layout';
 import ActiveOrder from '../components/lineDetails/ActiveOrder';
 import Measurment from '../components/lineDetails/Measurment';
+import MeasurmentBeta from '../components/lineDetails/MeasurmentBeta';
 
 import strings from '../utils/strings.json';
 import { URL_PRODSHIFTORDER } from '../utils/consts';
@@ -13,6 +14,7 @@ import { LineContext } from '../contexts/lineContext';
 import { useFetch, STATUS_TYPES, ORDER_TYPES } from '../hooks/useFetch';
 import { Tabs, Tab } from 'grommet';
 import Balancing from '../components/lineDetails/balancing/Balancing';
+import TabsWrapper from '../components/lineDetails/TabsWrapper';
 
 const { LINE_DETAILS_noOrder } = strings.lineDetailsPage;
 
@@ -89,17 +91,7 @@ const LineDetails = () => {
               newOrder={newOrder}
               handleRefresh={handleRefresh}
             />
-            {/* TODO balancing dates */}
-            <Tabs>
-              <Tab title='Pomiary'>
-                <Measurment />
-              </Tab>
-              {
-                <Tab title='Balansowanie'>
-                  <Balancing orderId={lineData.orderId} />
-                </Tab>
-              }
-            </Tabs>
+            <TabsWrapper />
           </>
         );
 

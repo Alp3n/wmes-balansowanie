@@ -4,7 +4,7 @@ import { Filter, Down, Up } from 'grommet-icons';
 
 import strings from '../../../utils/strings.json';
 
-const { BALANCING_filter } = strings.balancing;
+const { BALANCING_filter, BALANCING_start, BALANCING_end } = strings.balancing;
 
 const DateFilter = ({ fd, sd, handleFd, handleSd }) => {
   const [isOpen, setOpen] = useState(false);
@@ -42,11 +42,25 @@ const DateFilter = ({ fd, sd, handleFd, handleSd }) => {
 
       {isOpen && (
         <Box direction='row' align='center'>
-          <Box width='small' margin='small' background='white' round='small'>
-            <DateInput format='dd/mm/yyyy' value={fd} onChange={handleFd} />
+          <Box pad='small'>
+            <Text margin={{ bottom: 'xsmall' }}>{BALANCING_start}</Text>
+            <Box width='small'>
+              <DateInput
+                format='dd/mm/yyyy'
+                value={fd}
+                onChange={(event) => handleFd(event.value)}
+              />
+            </Box>
           </Box>
-          <Box width='small' margin='small' background='white' round='small'>
-            <DateInput format='dd/mm/yyyy' value={sd} onChange={handleSd} />
+          <Box pad='small'>
+            <Text margin={{ bottom: 'xsmall' }}>{BALANCING_end}</Text>
+            <Box width='small'>
+              <DateInput
+                format='dd/mm/yyyy'
+                value={sd}
+                onChange={(event) => handleSd(event.value)}
+              />
+            </Box>
           </Box>
         </Box>
       )}
