@@ -1,16 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Text, Card, CardBody, CardHeader } from 'grommet';
-import { Chat, Next, Trash } from 'grommet-icons';
+
+import { Button, Text, Card, CardBody, CardHeader, CardFooter } from 'grommet';
+import { Up, LineChart, Next, Trash } from 'grommet-icons';
+
 import { LineContext } from '../contexts/lineContext';
 import strings from '../utils/strings.json';
 
 // Formating two ISOstrings to get difference in time MM-SS
 import { durationFromISOFormatter } from '../functions/functions';
+import StationChart from './lineDetails/dataChart/StationChart';
+
+import data from './lineDetails/dataChart/data.json';
+import StationResults from './lineDetails/dataChart/StationResults';
 
 const { STATION_CARD_station } = strings.stationCard;
 
 const StationCard = ({ station, last }) => {
+  const [isOpen, setOpen] = useState(false);
   const { lineData, removeFromStations } = useContext(LineContext);
   const { lineId } = lineData;
 
@@ -22,7 +29,7 @@ const StationCard = ({ station, last }) => {
   };
 
   return (
-    <Card margin={{ bottom: 'large' }} onClick={handleClick}>
+    <Card margin={{ bottom: 'large' }}>
       <CardHeader
         background={station.isTimeSub ? 'status-ok' : 'status-unknown'}
         pad='medium'
@@ -46,9 +53,8 @@ const StationCard = ({ station, last }) => {
         background='white'
       >
         <Button
-          icon={<Chat color={station.comment ? 'status-ok' : null} />}
-          disabled
-          style={{ opacity: station.finishedAt && 1 }}
+          icon={isOpen ? <Up /> : <LineChart />}
+          onClick={() => setOpen((prevState) => !prevState)}
         />
         <Text size='large'>
           {station.startedAt && station.finishedAt !== null
@@ -58,8 +64,18 @@ const StationCard = ({ station, last }) => {
               )}`
             : '0s'}
         </Text>
-        <Button icon={<Next />} />
+        <Button icon={<Next />} onClick={handleClick} />
       </CardBody>
+      {isOpen && (
+        <CardFooter
+          border={{ side: 'top', color: 'light-4' }}
+          // pad='medium'
+          justify='center'
+        >
+          {/* <StationChart data={data} /> */}
+          <StationResults data={data[0]} />
+        </CardFooter>
+      )}
     </Card>
   );
 };

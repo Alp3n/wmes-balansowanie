@@ -3,11 +3,11 @@ import { Box, Button, Form, Text, TextArea } from 'grommet';
 import { Edit, Checkmark } from 'grommet-icons';
 import { LineContext } from '../contexts/lineContext';
 
-const EditableInput = ({ station, _id, comment, title }) => {
+const EditableInput = ({ _id, comment, title }) => {
   const [isDisabled, setDisabled] = useState(true);
   const [input, setInput] = useState(comment);
 
-  const { commentPut, editComment } = useContext(LineContext);
+  const { commentPut } = useContext(LineContext);
   const editableInput = useRef(null);
 
   const handleEdit = async () => {
