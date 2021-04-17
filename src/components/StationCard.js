@@ -9,14 +9,14 @@ import strings from '../utils/strings.json';
 
 // Formating two ISOstrings to get difference in time MM-SS
 import { durationFromISOFormatter } from '../functions/functions';
-import StationChart from './lineDetails/dataChart/StationChart';
+// import StationChart from './lineDetails/dataChart/StationChart';
 
-import data from './lineDetails/dataChart/data.json';
+// import data from './lineDetails/dataChart/data.json';
 import StationResults from './lineDetails/dataChart/StationResults';
 
 const { STATION_CARD_station } = strings.stationCard;
 
-const StationCard = ({ station, last }) => {
+const StationCard = ({ station, last, data }) => {
   const [isOpen, setOpen] = useState(false);
   const { lineData, removeFromStations } = useContext(LineContext);
   const { lineId } = lineData;
@@ -67,13 +67,9 @@ const StationCard = ({ station, last }) => {
         <Button icon={<Next />} onClick={handleClick} />
       </CardBody>
       {isOpen && (
-        <CardFooter
-          border={{ side: 'top', color: 'light-4' }}
-          // pad='medium'
-          justify='center'
-        >
+        <CardFooter border={{ side: 'top', color: 'light-4' }} justify='center'>
           {/* <StationChart data={data} /> */}
-          <StationResults data={data[0]} />
+          <StationResults data={data} />
         </CardFooter>
       )}
     </Card>

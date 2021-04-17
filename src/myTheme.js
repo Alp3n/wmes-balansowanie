@@ -15,6 +15,11 @@ export const lightTheme = deepMerge(grommet, {
       signifyBlue: '#1EC8D2',
       signifyGradient: brandGradient,
       signifyDark: '#3C3C41',
+      'chart-blue': '#7cb5ec',
+      'chart-gray': 'light-4',
+      'chart-green': '#90ed7d',
+      'chart-orange': '#f7a35c',
+      'chart-purple': '#8085e9',
     },
     control: {
       disabled: {
@@ -41,7 +46,7 @@ export const lightTheme = deepMerge(grommet, {
     },
   },
   tab: {
-    pad: 'medium',
+    pad: 'small',
   },
   table: {
     background: 'background',

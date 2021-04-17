@@ -6,6 +6,8 @@ const round = (value, point) => {
   return Math.round(value * mult) / mult;
 };
 
+const noData = 'Brak danych';
+
 const Detail = ({ label, value, color }) => {
   return (
     <Box
@@ -18,19 +20,26 @@ const Detail = ({ label, value, color }) => {
       <Text weight='bold' margin={{ left: 'xsmall' }}>
         {label}:
       </Text>
-      <Text margin={{ right: 'xsmall' }}>{round(value, 1).toFixed(1)}s</Text>
+      <Text margin={{ right: 'xsmall' }}>
+        {value === undefined ? noData : `${round(value, 1).toFixed(1)}s`}
+      </Text>
     </Box>
   );
 };
 
 const StationResults = ({ data }) => {
+  console.log(data?.max === undefined);
   return (
     <Box alignSelf='center'>
-      <Detail label={'Minimum'} value={data?.min} color='lightblue' />
-      <Detail label={'Maksimum'} value={data?.max} color='light-4' />
-      <Detail label={'Średnia'} value={data?.avg} color='lightgreen' />
-      <Detail label={'Mediana'} value={data?.med} color='orange' />
-      <Detail label={'Mediana'} value={data?.med} color='mediumpurple' />
+      <Detail label={'Minimum'} value={data?.min} color='chart-blue' />
+      <Detail label={'Maksimum'} value={data?.max} color='chart-gray' />
+      <Detail label={'Średnia'} value={data?.avg} color='chart-green' />
+      <Detail label={'Mediana'} value={data?.med} color='chart-orange' />
+      <Detail
+        label={'Takt Time (SAP)'}
+        value={data?.stt}
+        color='chart-purple'
+      />
     </Box>
   );
 };

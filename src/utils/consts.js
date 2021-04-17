@@ -8,7 +8,13 @@ export const URL_CHECK_LOGIN = `${URL_IP}/users/self`;
 export const URL_LOGIN = `${URL_IP}/login`;
 export const URL_PRODLINES = `${URL_IP}/prodLines?deactivatedAt=null&limit(0)`;
 export const URL_PRODSHIFTORDER = `${URL_IP}/prodShiftOrders`;
-export const URL_BALANCING = `${URL_IP}/ct/balancing/pces`;
+export const URL_PCES = `${URL_IP}/ct/balancing/pces`;
+export const URL_BALANCING = `${URL_IP}/ct/reports/balancing`;
+
+export const PARAMS_BALANCING = (firstDate, secondDate, orderId) =>
+  `?sort(-startedAt)&limit(100)&startedAt=ge=${Date.parse(
+    firstDate
+  )}&startedAt=lt=${Date.parse(secondDate)}&order._id=string:${orderId}`;
 
 export const HEADERS = {
   'Content-Type': 'application/json',

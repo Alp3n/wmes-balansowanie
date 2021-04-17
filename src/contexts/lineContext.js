@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 
-import { HEADERS, URL_BALANCING } from '../utils/consts';
+import { HEADERS, URL_PCES } from '../utils/consts';
 
 export const LineContext = createContext();
 
@@ -127,7 +127,7 @@ const LineContextProvider = (props) => {
 
   // POST data function and edits station state
   const handlePost = async (stationId, editData, postData) => {
-    await fetch(URL_BALANCING, {
+    await fetch(URL_PCES, {
       method: 'POST',
       headers: HEADERS,
       mode: 'cors',
@@ -148,7 +148,7 @@ const LineContextProvider = (props) => {
 
   // PUT data function and edits station state
   const handlePut = async (stationId, responseId, putData) => {
-    await fetch(`${URL_BALANCING}/${responseId}`, {
+    await fetch(`${URL_PCES}/${responseId}`, {
       method: 'PUT',
       headers: HEADERS,
       mode: 'cors',
@@ -168,7 +168,7 @@ const LineContextProvider = (props) => {
 
   // PUT data function for comment
   const commentPut = async (responseId, putData) => {
-    await fetch(`${URL_BALANCING}/${responseId}`, {
+    await fetch(`${URL_PCES}/${responseId}`, {
       method: 'PUT',
       headers: HEADERS,
       mode: 'cors',
@@ -178,7 +178,7 @@ const LineContextProvider = (props) => {
   };
 
   // const handleDelete = async () => {
-  //   await fetch(`${URL_BALANCING}/${response._id}`, {
+  //   await fetch(`${URL_PCES}/${response._id}`, {
   //     method: 'DELETE',
   //     headers: HEADERS,
   //     mode: 'cors',

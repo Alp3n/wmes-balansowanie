@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, Tab } from 'grommet';
-import Measurment from './Measurment';
-import Balancing from './balancing/Balancing';
+import Measurment from './measurment/Measurment';
+import LineResults from './results/LineResults';
 
 // Function for setting default dates
 import { setDays } from '../../functions/functions';
@@ -22,22 +22,20 @@ const TabsWrapper = () => {
     <Tabs>
       {/* Component showing stations card for time measurment */}
       <Tab title='Pomiary'>
-        <Measurment />
+        <Measurment firstDate={firstDate} secondDate={secondDate} />
       </Tab>
 
-      {/* <Tab title='Pomiary'>
-        <MeasurmentBeta />
-      </Tab> */}
-
       {/* Component showing history results */}
-      <Tab title='Balansowanie'>
-        <Balancing
+      <Tab title='Rezultaty'>
+        <LineResults
           firstDate={firstDate}
           secondDate={secondDate}
           handleFd={handleFd}
           handleSd={handleSd}
         />
       </Tab>
+
+      <Tab title='Balansowanie'>{/* <MeasurmentBeta /> */}</Tab>
     </Tabs>
   );
 };

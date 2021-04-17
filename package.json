@@ -2,7 +2,7 @@
   "name": "wmes-balansowanie",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/ct-balancing",
+  "homepage": "dev.wmes.pl/ct-balancing",
   "start_url": "/ct-balancing",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
