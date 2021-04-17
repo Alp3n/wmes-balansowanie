@@ -5,6 +5,7 @@ import LineResults from './results/LineResults';
 
 // Function for setting default dates
 import { setDays } from '../../functions/functions';
+import OrderChart from './dataChart/OrderChart';
 
 const TabsWrapper = () => {
   const [firstDate, setFirstDate] = useState(setDays(30, 'sub'));
@@ -35,7 +36,9 @@ const TabsWrapper = () => {
         />
       </Tab>
 
-      <Tab title='Balansowanie'>{/* <LineChart /> */}</Tab>
+      <Tab title='Balansowanie'>
+        {<OrderChart firstDate={firstDate} secondDate={secondDate} />}
+      </Tab>
     </Tabs>
   );
 };

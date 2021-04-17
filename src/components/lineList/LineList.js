@@ -8,7 +8,7 @@ const LineList = ({ filteredLines }) => {
     <Box
       overflow='auto'
       height='100%'
-      pad={{ vertical: 'medium' }}
+      // pad={{ vertical: 'medium' }}
       style={{ position: 'relative', top: '72px' }}
     >
       <InfiniteScroll items={filteredLines}>

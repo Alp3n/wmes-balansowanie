@@ -1,10 +1,11 @@
-import React from 'react';
-import { Box, Heading, Button } from 'grommet';
+import React, { useContext } from 'react';
+import { Box, Text, Button, ResponsiveContext } from 'grommet';
 import { Previous /* Menu */ } from 'grommet-icons';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Layout = ({ children, pageName, firstPage }) => {
+  const size = useContext(ResponsiveContext);
   const history = useHistory();
   return (
     <Box background='background' fill='horizontal'>
@@ -23,9 +24,11 @@ const Layout = ({ children, pageName, firstPage }) => {
             onClick={() => history.goBack()}
           />
         )}
-        <TopbarHeading level='2' margin='medium'>
-          {pageName}
-        </TopbarHeading>
+        <Box margin={{ horizontal: 'medium', vertical: 'medium' }}>
+          <TopbarHeading size='large' weight='bold'>
+            {pageName}
+          </TopbarHeading>
+        </Box>
         {/* <Button icon={<Menu color='white' />} /> */}
         <Button plain margin='small' disabled />
       </Topbar>
@@ -36,7 +39,7 @@ const Layout = ({ children, pageName, firstPage }) => {
 
 export default Layout;
 
-const TopbarHeading = styled(Heading)`
+const TopbarHeading = styled(Text)`
   background: linear-gradient(
     45deg,
     rgba(0, 230, 150, 1) 0%,
@@ -66,5 +69,5 @@ const Topbar = styled(Box)`
 
 const BoxChildren = styled(Box)`
   position: relative;
-  top: 56px;
+  top: 52px;
 `;
