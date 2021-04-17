@@ -35,7 +35,7 @@ const TabsWrapper = () => {
         />
       </Tab>
 
-      <Tab title='Balansowanie'>{/* <MeasurmentBeta /> */}</Tab>
+      <Tab title='Balansowanie'>{/* <LineChart /> */}</Tab>
     </Tabs>
   );
 };

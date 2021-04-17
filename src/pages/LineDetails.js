@@ -32,7 +32,6 @@ const LineDetails = () => {
     setNewOrder(ORDER_TYPES.same);
   };
 
-  console.log(lineData);
   useEffect(() => {
     switch (status) {
       case STATUS_TYPES.fetched:

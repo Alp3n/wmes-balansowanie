@@ -21,7 +21,7 @@
     "LINE_DETAILS_measurment": "Pomiary",
     "LINE_DETAILS_addStation": "Dodaj stanowisko",
     "LINE_DETAILS_maxStations": "Maksymalna liczba stanowisk",
-    "LINE_DETAILS_newOrder": "Nowe zlecenie"
+    "LINE_DETAILS_refresh": "Odśwież"
   },
   "positionDetailsPage": {
     "POSITION_DETAILS_submitTime": "Zatwierdź czas",

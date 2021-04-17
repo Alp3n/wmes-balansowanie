@@ -5,7 +5,7 @@ import { AddCircle } from 'grommet-icons';
 import strings from '../../../utils/strings.json';
 import { URL_BALANCING, PARAMS_BALANCING } from '../../../utils/consts';
 
-import StationCard from '../../StationCard';
+import StationCard from './StationCard';
 
 import { LineContext } from '../../../contexts/lineContext';
 import { useFetch } from '../../../hooks/useFetch';
@@ -57,7 +57,7 @@ const Measurment = ({ firstDate, secondDate }) => {
 
   return (
     <Box background='white' border={{ side: 'horizontal', color: 'light-4' }}>
-      <Box margin='medium'>
+      <Box margin='medium' pad={{ top: 'small' }}>
         {results ? (
           lineData.stations
             .sort((a, b) => a.station - b.station)

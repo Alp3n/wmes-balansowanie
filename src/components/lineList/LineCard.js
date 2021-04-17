@@ -27,7 +27,7 @@ const LineCard = ({ line }) => {
         align='center'
         pad='medium'
       >
-        <Text size='small'>{line.description}</Text>
+        <Text>{line.description}</Text>
         <Next />
       </CardBody>
     </Card>

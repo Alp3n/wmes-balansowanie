@@ -87,7 +87,6 @@ const LineContextProvider = (props) => {
   };
 
   // Clean station
-
   const cleanStation = (stationId) => {
     const cleanStation = {
       station: stationId,

@@ -4,15 +4,15 @@ import { useHistory } from 'react-router-dom';
 import { Button, Text, Card, CardBody, CardHeader, CardFooter } from 'grommet';
 import { Up, LineChart, Next, Trash } from 'grommet-icons';
 
-import { LineContext } from '../contexts/lineContext';
-import strings from '../utils/strings.json';
+import { LineContext } from '../../../contexts/lineContext';
+import strings from '../../../utils/strings.json';
 
 // Formating two ISOstrings to get difference in time MM-SS
-import { durationFromISOFormatter } from '../functions/functions';
+import { durationFromISOFormatter } from '../../../functions/functions';
 // import StationChart from './lineDetails/dataChart/StationChart';
 
 // import data from './lineDetails/dataChart/data.json';
-import StationResults from './lineDetails/dataChart/StationResults';
+import StationResults from './StationResults';
 
 const { STATION_CARD_station } = strings.stationCard;
 

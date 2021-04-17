@@ -46,9 +46,7 @@ const headerData = [
   },
 ];
 
-// TODO Add headerData and Data for params
 const ResultsTable = ({ data }) => {
-  console.log(data);
   return (
     <Box style={{ overflow: 'auto' }}>
       <DataTable

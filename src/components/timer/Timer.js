@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Box, Button } from 'grommet';
 import { PlayFill, StopFill, Refresh } from 'grommet-icons';
+
 import TimerButton from './TimerButton';
 import TimerCounter from './TimerCounter';
+
 import { LineContext } from '../../contexts/lineContext';
 import { getTime, handleStart, handleStop, handleFinished } from './timerFuncs';
+
 import strings from '../../utils/strings.json';
 
 const { TIMER_confirmTime } = strings.timer;
@@ -50,13 +53,13 @@ const Timer = ({ stationId, isFinished, setIsFinished }) => {
           <TimerCounter
             isFinished={filteredStation.isTimeSub}
             seconds={getTime(
-              filteredStation.startedAt,
-              filteredStation.finishedAt,
+              filteredStation?.startedAt,
+              filteredStation?.finishedAt,
               TYPES.seconds
             )}
             milseconds={getTime(
-              filteredStation.startedAt,
-              filteredStation.finishedAt,
+              filteredStation?.startedAt,
+              filteredStation?.finishedAt,
               TYPES.milliseconds
             )}
           />

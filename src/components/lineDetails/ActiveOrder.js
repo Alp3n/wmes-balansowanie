@@ -6,7 +6,7 @@ import strings from '../../utils/strings.json';
 
 const {
   LINE_DETAILS_activeOrder,
-  LINE_DETAILS_newOrder,
+  LINE_DETAILS_refresh,
 } = strings.lineDetailsPage;
 
 const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
@@ -44,17 +44,12 @@ const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
           {LINE_DETAILS_activeOrder}
         </Text>
         {newOrder === 'new' ? (
-          <Box
-            direction='row'
-            align='center'
+          <Button
+            icon={<Refresh color='signifyGreen' />}
+            label={LINE_DETAILS_refresh}
             onClick={() => handleRefresh()}
-            pad='xsmall'
-          >
-            <Refresh color='signifyGreen' plain />
-            <Text size='xsmall' margin={{ left: 'small' }} color='signifyGreen'>
-              {LINE_DETAILS_newOrder}
-            </Text>
-          </Box>
+            plain
+          />
         ) : newOrder === 'error' ? null : disabled ? (
           <Button
             icon={<Edit color='signifyGreen' />}

@@ -43,8 +43,6 @@ const Comment = ({ stationId }) => {
     }));
   }, [value]);
 
-  console.log('PUT DATA:', putData);
-
   return (
     <>
       <Box
