@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
-import { Box, Text, Button, ResponsiveContext } from 'grommet';
+import React from 'react';
+import { Box, Text, Button } from 'grommet';
 import { Previous /* Menu */ } from 'grommet-icons';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Layout = ({ children, pageName, firstPage }) => {
-  const size = useContext(ResponsiveContext);
   const history = useHistory();
   return (
     <Box background='background' fill='horizontal'>

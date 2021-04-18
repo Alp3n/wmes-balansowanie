@@ -15,7 +15,7 @@ import Loading from '../../Loading';
 // } = strings.lineDetailsPage;
 
 const labelFormatter = (value) => {
-  return <Text>{value.toFixed(1)}s</Text>;
+  return `${value.toFixed(1)}`;
 };
 
 const OrderChart = ({ firstDate, secondDate }) => {
@@ -27,15 +27,23 @@ const OrderChart = ({ firstDate, secondDate }) => {
   const { status, data } = useFetch(URL_FETCH);
 
   return (
-    <Box overflow='hidden' background='white'>
+    <Box background='white' pad='small'>
       {status === 'fetched' ? (
         data.stations[0].avg !== null ? (
           <DataChart
             // style={{ width: '860px' }}
+            gap='none'
             bounds='align'
-            size={{ width: '375px', height: 'medium' }}
+            size={{ width: 'medium', height: 'medium' }}
             data={data?.stations}
             series={[
+              {
+                label: 'Stacja',
+                property: 'no',
+                render: (value) => {
+                  return value === 0 ? 'All' : `ST${value}`;
+                },
+              },
               {
                 label: 'Minimum',
                 property: 'min',
@@ -113,13 +121,20 @@ const OrderChart = ({ firstDate, secondDate }) => {
               },
             ]}
             axis={{
-              x: { granularity: 'fine' },
-              // y: { granularity: 'fine' },
+              x: {
+                granularity: 'fine',
+                property: 'no',
+              },
+              y: {
+                granularity: 'fine',
+                property: 'max',
+                render: (value) => value.toFixed(0),
+              },
             }}
             guide={{ y: { granularity: 'fine' } }}
             legend
             detail
-            alignSelf='stretch'
+            alignSelf='center'
           />
         ) : (
           <Text alignSelf='center' margin='medium' weight='bold' size='large'>

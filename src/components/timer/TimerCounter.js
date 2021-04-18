@@ -61,7 +61,7 @@ const TimerCounter = ({ isRunning, isFinished, seconds, milseconds }) => {
           className={isRunning ? 'running' : null}
           direction='row'
         >
-          {secCount}
+          {secCount.toString().padStart(2, '0')}
         </Text>
         <Text
           size='4rem'

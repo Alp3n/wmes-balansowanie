@@ -29,8 +29,6 @@ const RowDetails = ({ station, startedAt, d, comment, tt, _id }) => {
       <Text weight='bold'>{BALANCING_tt}</Text>
       <Text>{tt}</Text>
 
-      {/* <Text weight='bold'>{BALANCING_comment}</Text>
-      <Text>{comment}</Text> */}
       <EditableInput
         title={BALANCING_comment}
         comment={comment}
