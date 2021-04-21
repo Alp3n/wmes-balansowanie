@@ -10,29 +10,32 @@ import StationDetails from './pages/StationDetails';
 import { lightTheme } from './myTheme';
 
 import LineContextProvider from './contexts/lineContext';
+import ModalContextProvider from './contexts/modalContext';
 
 function App() {
   return (
     <Grommet theme={lightTheme}>
-      <LineContextProvider>
-        <Router basename='/ct-balancing'>
-          <Switch>
-            <Route
-              path='/lines/:lineId/:positionId'
-              component={StationDetails}
-            />
-            <Route path='/lines/:lineId' component={LineDetails} />
-            <Route
-              path='/lines'
-              exact
-              render={(props) => <Lines {...props} />}
-            />
-            <Route path='/' exact render={(props) => <Login {...props} />} />
+      <ModalContextProvider>
+        <LineContextProvider>
+          <Router basename='/ct-balancing'>
+            <Switch>
+              <Route
+                path='/lines/:lineId/:positionId'
+                component={StationDetails}
+              />
+              <Route path='/lines/:lineId' component={LineDetails} />
+              <Route
+                path='/lines'
+                exact
+                render={(props) => <Lines {...props} />}
+              />
+              <Route path='/' exact render={(props) => <Login {...props} />} />
 
-            <Route path='/*' component={() => '404'} />
-          </Switch>
-        </Router>
-      </LineContextProvider>
+              <Route path='/*' component={() => '404'} />
+            </Switch>
+          </Router>
+        </LineContextProvider>
+      </ModalContextProvider>
     </Grommet>
   );
 }

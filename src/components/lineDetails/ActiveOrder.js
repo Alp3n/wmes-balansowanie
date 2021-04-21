@@ -6,18 +6,21 @@ import strings from '../../utils/strings.json';
 
 const {
   LINE_DETAILS_activeOrder,
+  LINE_DETAILS_noActiveOrder,
+  LINE_DETAILS_noOrder,
   LINE_DETAILS_refresh,
 } = strings.lineDetailsPage;
 
-const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
+const ActiveOrder = ({ handleRefresh, orderStatus }) => {
   const [disabled, setDisabled] = useState(true);
-  const [input, setInput] = useState(orderNumber);
+  const [input, setInput] = useState('');
   const { lineData, changeOrderId, setupStations } = useContext(LineContext);
 
   const textInput = useRef(null);
 
   const handleEdit = async () => {
     await setDisabled(false);
+    setInput('');
     textInput.current.focus();
   };
 
@@ -30,8 +33,8 @@ const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
   };
 
   useEffect(() => {
-    setInput(orderNumber);
-  }, [orderNumber]);
+    setInput(!lineData.orderId ? LINE_DETAILS_noOrder : lineData.orderId);
+  }, [lineData.orderId, orderStatus]);
 
   return (
     <Box
@@ -41,16 +44,18 @@ const ActiveOrder = ({ orderNumber, handleRefresh, newOrder }) => {
     >
       <Box direction='row' align='center' pad='medium' justify='between'>
         <Text size='large' weight='bold'>
-          {LINE_DETAILS_activeOrder}
+          {!lineData.orderId
+            ? LINE_DETAILS_noActiveOrder
+            : LINE_DETAILS_activeOrder}
         </Text>
-        {newOrder === 'new' ? (
+        {orderStatus === 'new' ? (
           <Button
             icon={<Refresh color='signifyGreen' />}
             label={LINE_DETAILS_refresh}
             onClick={() => handleRefresh()}
             plain
           />
-        ) : newOrder === 'error' ? null : disabled ? (
+        ) : disabled ? (
           <Button
             icon={<Edit color='signifyGreen' />}
             onClick={() => handleEdit()}

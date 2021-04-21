@@ -46,7 +46,7 @@ const headerData = [
   },
 ];
 
-const ResultsTable = ({ data }) => {
+const ResultsTable = ({ data, setAction }) => {
   return (
     <Box style={{ overflow: 'auto' }}>
       <DataTable
@@ -58,6 +58,7 @@ const ResultsTable = ({ data }) => {
         rowDetails={(row) => {
           return (
             <RowDetails
+              line={row.line}
               station={row.station}
               startedAt={`${dateFormatter(row.startedAt)}, ${timeFormatter(
                 row.startedAt
@@ -66,6 +67,7 @@ const ResultsTable = ({ data }) => {
               d={durationFormatter(row.d)}
               tt={`${row.stt}%`}
               _id={row._id}
+              action={setAction}
             />
           );
         }}

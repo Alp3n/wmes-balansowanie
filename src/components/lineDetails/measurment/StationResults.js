@@ -28,7 +28,6 @@ const Detail = ({ label, value, color }) => {
 };
 
 const StationResults = ({ data }) => {
-  console.log(data?.max === undefined);
   return (
     <Box alignSelf='center'>
       <Detail label={'Minimum'} value={data?.min} color='chart-blue' />

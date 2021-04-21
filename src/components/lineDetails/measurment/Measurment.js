@@ -23,7 +23,7 @@ const Measurment = ({ firstDate, secondDate }) => {
 
   const URL_FETCH =
     URL_BALANCING + PARAMS_BALANCING(firstDate, secondDate, orderId);
-  const { status, data } = useFetch(URL_FETCH);
+  const { status, data } = useFetch(URL_FETCH, orderId);
 
   const stationsArray = lineData.stations;
   const stationsLength = stationsArray.length;

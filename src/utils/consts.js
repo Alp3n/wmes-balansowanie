@@ -1,7 +1,3 @@
-// const URL_IP = `http://192.168.1.100`;
-// const URL_IP = `http://192.168.1.101`;
-// const URL_IP = `http://192.168.1.102`;
-// const URL_IP = `http://192.168.1.103`;
 const URL_IP = window.location.hostname.endsWith('.wmes.pl') ? '' : 'https://dev.wmes.pl';
 
 export const URL_CHECK_LOGIN = `${URL_IP}/users/self`;

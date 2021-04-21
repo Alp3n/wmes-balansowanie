@@ -1,57 +1,27 @@
 import React from 'react';
-import { DataChart } from 'grommet';
-
-const series = ['min', 'max', 'avg', 'med'];
-
-const charts = [
-  {
-    property: 'min',
-    type: 'bar',
-    color: 'blue',
-    thickness: 'large',
-  },
-  {
-    property: 'max',
-    type: 'bar',
-    color: 'grey',
-    thickness: 'large',
-  },
-  {
-    property: 'avg',
-    type: 'bar',
-    color: 'green',
-    thickness: 'large',
-  },
-  {
-    property: 'med',
-    type: 'bar',
-    color: 'orange',
-    thickness: 'large',
-  },
-];
+import { Box, Chart, Text } from 'grommet';
 
 const StationChart = ({ data }) => {
-  const singleData = data[0];
-
-  const destructure = (object) => {
-    const { min, max, avg, med } = object;
-    const array = [{ min: min }, { max: max }, { avg: avg }, { med: med }];
-    return array;
-  };
-
-  const single = destructure(singleData);
-
-  console.log(single);
-
   return (
-    <DataChart
-      data={single}
-      series={series}
-      chart={charts}
-      axis={{ y: { property: 'value', granularity: 'fine', sufix: 's' } }}
-      legend
-      guide={{ y: { granularity: 'fine' } }}
-    />
+    <Box align='center'>
+      <Chart
+        bounds={[
+          [0, 3],
+          [0, 500],
+        ]}
+        values={[
+          { value: [0, data.min], color: 'chart-blue' },
+          { value: [1, data.max], color: 'chart-gray' },
+          { value: [2, data.avg], color: 'chart-green' },
+          { value: [3, data.med], color: 'chart-orange' },
+        ]}
+        size={{ width: '30px' }}
+        thickness='xsmall'
+        animate
+        alignSelf='center'
+      />
+      <Text size='xsmall'>{data.no === 0 ? 'All' : `ST-${data.no}`}</Text>
+    </Box>
   );
 };
 

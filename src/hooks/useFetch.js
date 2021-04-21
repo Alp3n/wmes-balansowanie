@@ -5,23 +5,30 @@ export const STATUS_TYPES = {
   idle: 'idle',
   fetching: 'fetching',
   fetched: 'fetched',
+  empty: 'empty',
   error: 'error',
 };
 
 export const ORDER_TYPES = {
   same: 'same',
   new: 'new',
+  empty: 'empty',
   error: 'error',
 };
 
-export const useFetch = (url) => {
-  const [status, setStatus] = useState('idle'); //idle, fetching, fetched, error
+export const useFetch = (url, dependency) => {
+  const [status, setStatus] = useState(STATUS_TYPES.idle); //idle, fetching, fetched, empty, error
   const [data, setData] = useState([]);
 
   useEffect(() => {
     if (!url) {
       console.log('BRAK URL');
       return;
+    }
+
+    if (dependency === null) {
+      // EMPTY DEPENDENCY = EXPECT NULL;
+      return setStatus(STATUS_TYPES.empty);
     }
 
     const fetchData = async () => {
@@ -35,12 +42,6 @@ export const useFetch = (url) => {
         });
         const data = await response.json();
 
-        // DEV MODE
-        // setTimeout(() => {
-        //   setData(data);
-        //   setStatus(STATUS_TYPES.fetched);
-        // }, 500);
-
         setData(data);
         setStatus('fetched');
       } catch (err) {
@@ -49,8 +50,10 @@ export const useFetch = (url) => {
       }
     };
 
-    fetchData();
-  }, [url]);
+    if (dependency !== null) {
+      return fetchData();
+    }
+  }, [url, dependency]);
 
   return { status, data };
 };

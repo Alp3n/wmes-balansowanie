@@ -15,8 +15,9 @@
     "LINES_error": "Wystąpił problem! Sróbuj ponownie"
   },
   "lineDetailsPage": {
-    "LINE_DETAILS_activeOrder": "Aktualne zlecenie",
-    "LINE_DETAILS_noOrder": "Brak aktywnego zlecenia",
+    "LINE_DETAILS_activeOrder": "Aktywne zlecenie",
+    "LINE_DETAILS_noActiveOrder": "Brak aktywnego zlecenia",
+    "LINE_DETAILS_noOrder": "Edytuj ręcznie",
     "LINE_DETAILS_balancing": "Balansowanie",
     "LINE_DETAILS_measurment": "Pomiary",
     "LINE_DETAILS_addStation": "Dodaj stanowisko",
@@ -41,6 +42,7 @@
     "COMMENT_confirmComment": "Zatwierdź komentarz"
   },
   "balancing": {
+    "BALANCING_line": "Linia",
     "BALANCING_station": "Stacja",
     "BALANCING_startTime": "Czas rozpoczęcia",
     "BALANCING_duration": "Czas trwania",

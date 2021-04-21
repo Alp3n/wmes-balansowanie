@@ -16,7 +16,7 @@ export const lightTheme = deepMerge(grommet, {
       signifyGradient: brandGradient,
       signifyDark: '#3C3C41',
       'chart-blue': '#7cb5ec',
-      'chart-gray': 'light-4',
+      'chart-gray': 'dark-3',
       'chart-green': '#90ed7d',
       'chart-orange': '#f7a35c',
       'chart-purple': '#8085e9',
@@ -46,6 +46,23 @@ export const lightTheme = deepMerge(grommet, {
     },
   },
   tab: {
+    color: 'white',
+    active: {
+      color: 'signifyGreen',
+    },
+    hover: {
+      color: 'signifyGreen',
+    },
+    border: {
+      color: 'white',
+      active: {
+        color: 'signifyGreen',
+      },
+      hover: {
+        color: 'signifyGreen',
+      },
+    },
+
     pad: 'small',
   },
   table: {

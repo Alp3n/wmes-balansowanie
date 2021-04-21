@@ -30,8 +30,6 @@ const StationDetails = () => {
     cleanStation(station);
   };
 
-  console.log(filteredStation);
-
   return (
     <Layout pageName={`ST-${station}`}>
       <Box

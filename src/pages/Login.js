@@ -38,7 +38,6 @@ const defaultValue = {
   remember: localStorage.getItem('remember') === 'true',
 };
 
-console.log(defaultValue.remember);
 const Login = () => {
   const [remember, setRemember] = useState(defaultValue.remember);
   const [userName, setUserName] = useState(defaultValue.username);
@@ -61,16 +60,28 @@ const Login = () => {
   };
 
   useEffect(() => {
+    const handleLogin = async () => {
+      await loginUser({
+        login: userName,
+        password,
+      }).then((data) => {
+        if (data.error) {
+          return alert(data.error.message);
+        } else if (data.loggedIn) {
+          history.replace('/lines');
+        }
+      });
+    };
+
     if (remember) {
+      localStorage.setItem('remember', true);
+      handleLogin();
+    } else if (!remember) {
       localStorage.setItem('username', userName);
       localStorage.setItem('password', password);
-      localStorage.setItem('remember', true);
-    } else if (!remember) {
       localStorage.setItem('remember', false);
-      localStorage.clear('username');
-      localStorage.clear('password');
     }
-  }, [password, userName, remember]);
+  }, [password, userName, remember, history]);
 
   return (
     <Layout firstPage='true' pageName={LOGIN_title}>
