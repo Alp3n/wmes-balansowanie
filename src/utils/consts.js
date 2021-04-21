@@ -16,6 +16,18 @@ export const PARAMS_BALANCING = (firstDate, secondDate, orderId) =>
     firstDate
   )}&startedAt=lt=${Date.parse(secondDate)}&order._id=string:${orderId}`;
 
+export const PARAMS_BALANCING_BY_LINE = (
+  firstDate,
+  secondDate,
+  orderId,
+  lineId
+) =>
+  `?sort(-startedAt)&limit(100)&startedAt=ge=${Date.parse(
+    firstDate
+  )}&startedAt=lt=${Date.parse(
+    secondDate
+  )}&order._id=string:${orderId}&line=${lineId}`;
+
 export const HEADERS = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
