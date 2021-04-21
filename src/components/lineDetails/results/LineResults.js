@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useFetch } from '../../../hooks/useFetch';
 import { LineContext } from '../../../contexts/lineContext';
 
@@ -11,12 +11,13 @@ import DateFilter from './DateFilter';
 import Loading from '../../Loading';
 
 const LineResults = ({ firstDate, secondDate, handleFd, handleSd }) => {
+  const [action, setAction] = useState();
   const { lineData } = useContext(LineContext);
   const orderId = lineData.orderId;
 
   const FETCH_URL = URL_PCES + PARAMS_BALANCING(firstDate, secondDate, orderId);
 
-  const { status, data } = useFetch(FETCH_URL);
+  const { status, data } = useFetch(FETCH_URL, action);
 
   return (
     <Box>
@@ -27,7 +28,7 @@ const LineResults = ({ firstDate, secondDate, handleFd, handleSd }) => {
         handleSd={handleSd}
       />
       {status === 'fetched' ? (
-        <ResultsTable data={data.collection} />
+        <ResultsTable data={data.collection} setAction={setAction} />
       ) : (
         <Loading />
       )}

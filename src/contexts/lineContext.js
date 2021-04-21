@@ -4,13 +4,20 @@ import { HEADERS, URL_PCES } from '../utils/consts';
 
 export const LineContext = createContext();
 
+const defaultState = {
+  lineId: '',
+  orderId: '',
+  stations: [],
+};
+
 const LineContextProvider = (props) => {
   // Default state of the context
-  const [lineData, setLineData] = useState({
-    lineId: '',
-    orderId: '',
-    stations: [],
-  });
+  const [lineData, setLineData] = useState(defaultState);
+
+  // To default state
+  const toDefaultState = () => {
+    setLineData((prevState) => ({ ...prevState, defaultState }));
+  };
 
   // Changes line ID
   const changeLineId = (id) => {
@@ -176,15 +183,15 @@ const LineContextProvider = (props) => {
     }).then((response) => response.json());
   };
 
-  // const handleDelete = async () => {
-  //   await fetch(`${URL_PCES}/${response._id}`, {
-  //     method: 'DELETE',
-  //     headers: HEADERS,
-  //     mode: 'cors',
-  //     credentials: 'include',
-  //     body: JSON.stringify(response._id),
-  //   }).then((response) => response.json());
-  // };
+  const handleDelete = async (responseId) => {
+    await fetch(`${URL_PCES}/${responseId}`, {
+      method: 'DELETE',
+      headers: HEADERS,
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({ action: 'delete' }),
+    });
+  };
 
   return (
     <LineContext.Provider
@@ -202,6 +209,8 @@ const LineContextProvider = (props) => {
         commentPut,
         cleanStation,
         filterStation,
+        toDefaultState,
+        handleDelete,
       }}
     >
       {props.children}

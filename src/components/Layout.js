@@ -1,11 +1,14 @@
-import React from 'react';
-import { Box, Text, Button } from 'grommet';
+import React, { useContext } from 'react';
+import { Box, Text, Button, Layer } from 'grommet';
 import { Previous /* Menu */ } from 'grommet-icons';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { ModalContext } from '../contexts/modalContext';
+
 const Layout = ({ children, pageName, firstPage }) => {
   const history = useHistory();
+  const { showModal, modal, closeModal } = useContext(ModalContext);
   return (
     <Box background='background' fill='horizontal'>
       <Topbar
@@ -32,11 +35,27 @@ const Layout = ({ children, pageName, firstPage }) => {
         <Button plain margin='small' disabled />
       </Topbar>
       <BoxChildren>{children}</BoxChildren>
+      {showModal && (
+        <Layer
+          plain
+          onClickOutside={closeModal}
+          onEsc={closeModal}
+          // animation='slide'
+        >
+          {modal}
+        </Layer>
+      )}
     </Box>
   );
 };
 
 export default Layout;
+
+const Topbar = styled(Box)`
+  position: fixed;
+  top: 0;
+  z-index: 2;
+`;
 
 const TopbarHeading = styled(Text)`
   background: linear-gradient(
@@ -58,12 +77,6 @@ const TopbarHeading = styled(Text)`
   -moz-background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-`;
-
-const Topbar = styled(Box)`
-  position: fixed;
-  top: 0;
-  z-index: 999;
 `;
 
 const BoxChildren = styled(Box)`

@@ -5,6 +5,8 @@ import useInterval from '../../hooks/useInterval';
 // import { useStopwatch } from 'react-use-precision-timer';
 // import { getTimeV2 } from './timerFuncs';
 
+//TODO use Date.now()
+
 const TimerCounter = ({ isRunning, isFinished, seconds, milseconds }) => {
   const delay = 100;
   const [millSecCount, setMillSecCount] = useState(isFinished ? milseconds : 0);
@@ -57,7 +59,7 @@ const TimerCounter = ({ isRunning, isFinished, seconds, milseconds }) => {
       >
         <Text
           size='4rem'
-          color='dark-1'
+          color={isFinished ? 'white' : 'dark-1'}
           className={isRunning ? 'running' : null}
           direction='row'
         >
@@ -65,15 +67,15 @@ const TimerCounter = ({ isRunning, isFinished, seconds, milseconds }) => {
         </Text>
         <Text
           size='4rem'
-          color='dark-1'
+          color={isFinished ? 'white' : 'dark-1'}
           className={isRunning ? 'running' : null}
           direction='row'
         >
-          :
+          .
         </Text>
         <Text
           size='4rem'
-          color='dark-1'
+          color={isFinished ? 'white' : 'dark-1'}
           className={isRunning ? 'running' : null}
           direction='row'
         >

@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { Box, Button, Form, Text, TextArea } from 'grommet';
+import { Box, Button, Text, TextArea } from 'grommet';
 import { Edit, Checkmark } from 'grommet-icons';
 import { LineContext } from '../contexts/lineContext';
 
-const EditableInput = ({ _id, comment, title }) => {
+//TODO open details after PUT
+const EditableInput = ({ _id, comment, title, setEdited }) => {
   const [isDisabled, setDisabled] = useState(true);
   const [input, setInput] = useState(comment);
 
@@ -15,17 +16,19 @@ const EditableInput = ({ _id, comment, title }) => {
     editableInput.current.focus();
   };
 
-  const handleSubmit = (commentPut, _id, input) => {
+  const handleSubmit = () => {
     commentPut(_id, { comment: input });
     setDisabled(true);
+    setEdited(input);
   };
 
   useEffect(() => {
     setInput(comment);
   }, [comment]);
 
+  comment = input;
   return (
-    <Form>
+    <>
       <Box direction='row' align='center'>
         <Text weight='bold' margin={{ right: 'small' }}>
           {title}
@@ -40,10 +43,7 @@ const EditableInput = ({ _id, comment, title }) => {
           <Button
             plain
             icon={
-              <Checkmark
-                onClick={() => handleSubmit(commentPut, _id, input)}
-                color='signifyGreen'
-              />
+              <Checkmark onClick={() => handleSubmit()} color='signifyGreen' />
             }
             margin='xsmall'
           />
@@ -62,7 +62,7 @@ const EditableInput = ({ _id, comment, title }) => {
           onFocus={(value) => value.length}
         />
       </Box>
-    </Form>
+    </>
   );
 };
 

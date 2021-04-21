@@ -21,7 +21,8 @@ const Lines = () => {
   const [search, setSearch] = useState('');
   const [filteredLines, setFilteredLines] = useState([]);
 
-  const { status, data } = useFetch(URL_PRODLINES);
+  // fetching from (URL, dependency) dependecy = true because no need for any here passing true
+  const { status, data } = useFetch(URL_PRODLINES, true);
 
   useEffect(() => {
     if (status === STATUS_TYPES.fetched) {

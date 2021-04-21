@@ -16,7 +16,7 @@ const useSetup = (status) => {
           lineData.orderId !== data.orderId &&
           lineData.lineId === data.prodLine
         ) {
-          // console.log('DIFFERENT ORDER THE SAME LINE');
+          console.log('DIFFERENT ORDER THE SAME LINE');
           setNewOrder(true);
           alert('DIFFERENT ORDER THE SAME LINE');
         } else {
