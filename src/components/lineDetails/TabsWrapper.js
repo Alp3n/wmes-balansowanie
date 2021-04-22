@@ -45,7 +45,7 @@ const TabsWrapper = () => {
           </Tab>
 
           {/* Component showing chart with the order results for each station */}
-          <Tab title='Balansowanie'>
+          <Tab title='Wykres'>
             {/* {<OrderChart firstDate={firstDate} secondDate={secondDate} />} */}
             <NewOrderChart firstDate={firstDate} secondDate={secondDate} />
           </Tab>
