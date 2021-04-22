@@ -17,9 +17,11 @@ const Detail = ({ label, value, color }) => {
       width='medium'
       background={color}
     >
-      <Text weight='bold' margin={{ left: 'xsmall' }}>
-        {label}:
-      </Text>
+      <Box direction='row'>
+        <Text weight='bold' margin={{ left: 'xsmall' }}>
+          {label}:
+        </Text>
+      </Box>
       <Text margin={{ right: 'xsmall' }}>
         {value === undefined ? noData : `${round(value, 1).toFixed(1)}s`}
       </Text>
@@ -27,17 +29,33 @@ const Detail = ({ label, value, color }) => {
   );
 };
 
-const StationResults = ({ data }) => {
+const StationResults = ({ data, noColor }) => {
   return (
     <Box alignSelf='center'>
-      <Detail label={'Minimum'} value={data?.min} color='chart-blue' />
-      <Detail label={'Maksimum'} value={data?.max} color='chart-gray' />
-      <Detail label={'Średnia'} value={data?.avg} color='chart-green' />
-      <Detail label={'Mediana'} value={data?.med} color='chart-orange' />
+      <Detail
+        label={'Minimum'}
+        value={data?.min}
+        color={noColor ? null : 'chart-blue'}
+      />
+      <Detail
+        label={'Maksimum'}
+        value={data?.max}
+        color={noColor ? null : 'chart-gray'}
+      />
+      <Detail
+        label={'Średnia'}
+        value={data?.avg}
+        color={noColor ? null : 'chart-green'}
+      />
+      <Detail
+        label={'Mediana'}
+        value={data?.med}
+        color={noColor ? null : 'chart-orange'}
+      />
       <Detail
         label={'Takt Time (SAP)'}
         value={data?.stt}
-        color='chart-purple'
+        color={noColor ? null : 'chart-purple'}
       />
     </Box>
   );

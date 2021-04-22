@@ -7,8 +7,8 @@ import { LineContext } from '../../contexts/lineContext';
 
 // Function for setting default dates
 import { setDays } from '../../functions/functions';
-// import NewOrderChart from './dataChart/NewOrderChart';
-import OrderChart from './dataChart/OrderChart';
+import NewOrderChart from './dataChart/NewOrderChart';
+// import OrderChart from './dataChart/OrderChart';
 
 //TODO play with charts
 const TabsWrapper = () => {
@@ -46,8 +46,8 @@ const TabsWrapper = () => {
 
           {/* Component showing chart with the order results for each station */}
           <Tab title='Balansowanie'>
-            {<OrderChart firstDate={firstDate} secondDate={secondDate} />}
-            {/* <NewOrderChart firstDate={firstDate} secondDate={secondDate} /> */}
+            {/* {<OrderChart firstDate={firstDate} secondDate={secondDate} />} */}
+            <NewOrderChart firstDate={firstDate} secondDate={secondDate} />
           </Tab>
         </Tabs>
       )}
