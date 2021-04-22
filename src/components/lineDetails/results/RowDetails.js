@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { Box, Button, Text } from 'grommet';
+import { Trash } from 'grommet-icons';
+
 import strings from '../../../utils/strings';
+import { LineContext } from '../../../contexts/lineContext';
+import { ModalContext } from '../../../contexts/modalContext';
 
 import EditableInput from '../../EditableInput';
-import { LineContext } from '../../../contexts/lineContext';
-import { Trash } from 'grommet-icons';
-import { ModalContext } from '../../../contexts/modalContext';
+import Modal from '../../Modal';
 
 const {
   BALANCING_station,
@@ -16,30 +18,25 @@ const {
   BALANCING_line,
 } = strings.balancing;
 
-const Modal = (props) => {
-  return (
-    <Box
-      background={{ color: 'light-4', opacity: 'strong' }}
-      fill
-      align='center'
-      justify='center'
-    >
-      <Box background='white' pad='large' gap='medium' round>
-        {props.children}
-      </Box>
-    </Box>
-  );
-};
+const {
+  MODAL_DELETE_question,
+  MODAL_DELETE_delete,
+  MODAL_DELETE_cancel,
+} = strings.modal;
 
 const DeleteModal = ({ handleYes, handleNo, id }) => {
   return (
     <Modal>
       <Text weight='bold' size='large' alignSelf='center'>
-        Czy chcesz usunąć pomiar?
+        {MODAL_DELETE_question}
       </Text>
       <Box direction='row' justify='evenly' align='center'>
-        <Button primary label='Tak' onClick={() => handleYes(id)} />
-        <Button size='medium' label='Nie' onClick={handleNo} />
+        <Button
+          primary
+          label={MODAL_DELETE_delete}
+          onClick={() => handleYes(id)}
+        />
+        <Button size='medium' label={MODAL_DELETE_cancel} onClick={handleNo} />
       </Box>
     </Modal>
   );

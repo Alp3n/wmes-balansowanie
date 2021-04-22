@@ -51,5 +51,10 @@
     "BALANCING_filter": "Filtruj",
     "BALANCING_start": "Początek",
     "BALANCING_end": "Koniec"
+  },
+  "modal": {
+    "MODAL_DELETE_question": "Czy chcesz usunąć pomiar?",
+    "MODAL_DELETE_delete": "Usuń",
+    "MODAL_DELETE_cancel": "Anuluj"
   }
 }
