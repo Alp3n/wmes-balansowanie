@@ -6,7 +6,7 @@ import LineCard from './LineCard';
 const LineList = ({ filteredLines }) => {
   return (
     <Box
-      overflow='auto'
+      overflow='hidden'
       height='100%'
       // pad={{ vertical: 'medium' }}
       style={{ position: 'relative', top: '72px' }}

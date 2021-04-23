@@ -46,9 +46,13 @@ const DateFilter = ({ fd, sd, handleFd, handleSd }) => {
             <Text margin={{ bottom: 'xsmall' }}>{BALANCING_start}</Text>
             <Box width='small'>
               <DateInput
-                format='dd/mm/yyyy'
+                format='dd.mm.yyyy'
                 value={fd}
                 onChange={(event) => handleFd(event.value)}
+                calendarProps={{
+                  size: 'small',
+                }}
+                inputProps={{ readOnly: true }}
               />
             </Box>
           </Box>
@@ -56,9 +60,13 @@ const DateFilter = ({ fd, sd, handleFd, handleSd }) => {
             <Text margin={{ bottom: 'xsmall' }}>{BALANCING_end}</Text>
             <Box width='small'>
               <DateInput
-                format='dd/mm/yyyy'
                 value={sd}
                 onChange={(event) => handleSd(event.value)}
+                format='dd.mm.yyyy'
+                calendarProps={{
+                  size: 'small',
+                }}
+                inputProps={{ readOnly: true }}
               />
             </Box>
           </Box>

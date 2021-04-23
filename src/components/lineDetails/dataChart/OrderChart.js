@@ -8,6 +8,7 @@ import { useFetch } from '../../../hooks/useFetch';
 
 import { LineContext } from '../../../contexts/lineContext';
 import Loading from '../../Loading';
+import styled from 'styled-components';
 
 // const {
 //   LINE_DETAILS_addStation,
@@ -30,11 +31,11 @@ const OrderChart = ({ firstDate, secondDate }) => {
     <Box background='white' pad='small'>
       {status === 'fetched' ? (
         data.stations[0].avg !== null ? (
-          <DataChart
-            // style={{ width: '860px' }}
+          <StyledDataChart
             gap='none'
             bounds='align'
-            size={{ width: 'medium', height: 'medium' }}
+            // size={{ width: 'medium', height: 'medium' }}
+            size={{ width: 'fill', height: 'medium' }}
             data={data?.stations}
             series={[
               {
@@ -44,67 +45,67 @@ const OrderChart = ({ firstDate, secondDate }) => {
                   return value === 0 ? 'All' : `ST${value}`;
                 },
               },
-              {
-                label: 'Minimum',
-                property: 'min',
-                render: (value) => {
-                  return labelFormatter(value);
-                },
-              },
-              {
-                label: 'Maximum',
-                property: 'max',
-                render: (value) => {
-                  return labelFormatter(value);
-                },
-              },
-              {
-                label: 'Średnia',
-                property: 'avg',
-                render: (value) => {
-                  return labelFormatter(value);
-                },
-              },
-              {
-                label: 'Mediana',
-                property: 'med',
-                render: (value) => {
-                  return labelFormatter(value);
-                },
-              },
-              {
-                label: 'Takt Time',
-                property: 'stt',
-                render: (value) => {
-                  return labelFormatter(value);
-                },
-              },
+              // {
+              //   label: 'Minimum',
+              //   property: 'min',
+              //   render: (value) => {
+              //     return labelFormatter(value);
+              //   },
+              // },
+              // {
+              //   label: 'Maximum',
+              //   property: 'max',
+              //   render: (value) => {
+              //     return labelFormatter(value);
+              //   },
+              // },
+              // {
+              //   label: 'Średnia',
+              //   property: 'avg',
+              //   render: (value) => {
+              //     return labelFormatter(value);
+              //   },
+              // },
+              // {
+              //   label: 'Mediana',
+              //   property: 'med',
+              //   render: (value) => {
+              //     return labelFormatter(value);
+              //   },
+              // },
+              // {
+              //   label: 'Takt Time',
+              //   property: 'stt',
+              //   render: (value) => {
+              //     return labelFormatter(value);
+              //   },
+              // },
             ]}
             chart={[
               {
                 property: 'max',
                 color: 'chart-gray',
                 type: 'bar',
-                thickness: 'medium',
+                thickness: 'small',
               },
               {
                 property: 'avg',
                 color: 'chart-green',
                 type: 'bar',
-                thickness: 'medium',
+                thickness: 'small',
               },
               {
                 property: 'med',
                 color: 'chart-orange',
                 type: 'bar',
-                thickness: 'medium',
+                thickness: 'small',
               },
 
               {
                 property: 'min',
                 color: 'chart-blue',
                 type: 'bar',
-                thickness: 'medium',
+                thickness: 'small',
               },
               {
                 property: 'stt',
@@ -128,7 +129,7 @@ const OrderChart = ({ firstDate, secondDate }) => {
               y: {
                 granularity: 'fine',
                 property: 'max',
-                render: (value) => value.toFixed(0),
+                // render: (value) => value.toFixed(0),
               },
             }}
             guide={{ y: { granularity: 'fine' } }}
@@ -149,3 +150,8 @@ const OrderChart = ({ firstDate, secondDate }) => {
 };
 
 export default OrderChart;
+
+const StyledDataChart = styled(DataChart)`
+  width: 100%;
+  overflow: hidden;
+`;

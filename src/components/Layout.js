@@ -18,7 +18,7 @@ const Layout = ({ children, pageName, firstPage }) => {
         justify='between'
         elevation='small'
         background='signifyDark'
-        overflow='hidden'
+        // overflow='hidden'
       >
         {firstPage ? null : (
           <Button

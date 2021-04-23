@@ -7,8 +7,10 @@ import { LineContext } from '../../contexts/lineContext';
 
 // Function for setting default dates
 import { setDays } from '../../functions/functions';
-import NewOrderChart from './dataChart/NewOrderChart';
-// import OrderChart from './dataChart/OrderChart';
+// import NewOrderChart from './dataChart/NewOrderChart';
+import styled from 'styled-components';
+import OrderChart from './dataChart/OrderChart';
+import ReactChart from './dataChart/ReactChart';
 
 //TODO play with charts
 const TabsWrapper = () => {
@@ -28,7 +30,7 @@ const TabsWrapper = () => {
   return (
     <>
       {lineData.orderId && (
-        <Tabs>
+        <StyledTabs>
           {/* Component showing stations card for time measurment */}
           <Tab title='Pomiary'>
             <Measurment firstDate={firstDate} secondDate={secondDate} />
@@ -46,13 +48,19 @@ const TabsWrapper = () => {
 
           {/* Component showing chart with the order results for each station */}
           <Tab title='Wykres'>
-            {/* {<OrderChart firstDate={firstDate} secondDate={secondDate} />} */}
-            <NewOrderChart firstDate={firstDate} secondDate={secondDate} />
+            <ReactChart firstDate={firstDate} secondDate={secondDate} />
+            {/* <OrderChart firstDate={firstDate} secondDate={secondDate} /> */}
+            {/* <NewOrderChart firstDate={firstDate} secondDate={secondDate} /> */}
           </Tab>
-        </Tabs>
+        </StyledTabs>
       )}
     </>
   );
 };
 
 export default TabsWrapper;
+
+const StyledTabs = styled(Tabs)`
+  position: relative;
+  bottom: 0;
+`;

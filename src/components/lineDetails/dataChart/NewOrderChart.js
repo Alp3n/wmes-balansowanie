@@ -39,8 +39,12 @@ const NewOrderChart = ({ firstDate, secondDate }) => {
         const lineValues = data.stations.map((st, index) => {
           return { value: [index, st.stt] };
         });
-
-        return (
+        console.log(data);
+        return data.stations.length === 1 ? (
+          <Box align='center' margin='large'>
+            <Text weight='bold'>Brak danych</Text>
+          </Box>
+        ) : (
           <>
             <Box background='white' pad={{ top: 'large' }}>
               <Stack guidingChild='last'>
@@ -188,6 +192,7 @@ const NewOrderChart = ({ firstDate, secondDate }) => {
             </Box>
           </>
         );
+
       default:
         break;
     }

@@ -48,13 +48,13 @@ const Comment = ({ stationId }) => {
       <Box
         background='white'
         margin={{ vertical: 'small' }}
-        pad={{ vertical: 'small' }}
+        pad={{ vertical: 'small', horizontal: 'small' }}
         height='small'
         border={{ vertical: 'small', color: 'light-4' }}
       >
         <Box direction='row' align='center' justify='between'>
           <Text
-            margin={{ vertical: 'medium', horizontal: 'small' }}
+            margin={{ vertical: 'medium', horizontal: 'xsmall' }}
             weight='bold'
             size='large'
           >
@@ -67,6 +67,7 @@ const Comment = ({ stationId }) => {
             />
           )}
         </Box>
+
         <TextArea
           placeholder={COMMENT_enterComment}
           value={value}
