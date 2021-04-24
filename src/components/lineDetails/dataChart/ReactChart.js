@@ -1,8 +1,7 @@
 import React, { useMemo, useContext, useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { Box } from 'grommet';
-
 import { lightTheme } from '../../../myTheme';
-
 import { Chart } from 'react-charts';
 import { ResizableBox } from 'react-resizable';
 
@@ -10,70 +9,16 @@ import { useFetch } from '../../../hooks/useFetch';
 import { LineContext } from '../../../contexts/lineContext';
 
 import { URL_BALANCING, PARAMS_BALANCING } from '../../../utils/consts';
-import styled from 'styled-components';
 
-const myData = [
-  {
-    label: 'Minimum',
-    data: [
-      { primary: '1', secondary: 4 },
-      { primary: '2', secondary: 200 },
-      { primary: '3', secondary: 100 },
-      { primary: '4', secondary: 60 },
-      { primary: '5', secondary: 400 },
-      { primary: '6', secondary: 400 },
-      { primary: 'All', secondary: 300 },
-    ],
-  },
-  {
-    label: 'Maksimum',
-    data: [
-      { primary: '1', secondary: 200 },
-      { primary: '2', secondary: 230 },
-      { primary: '3', secondary: 120 },
-      { primary: '4', secondary: 60 },
-      { primary: '5', secondary: 444 },
-      { primary: '6', secondary: 400 },
-      { primary: 'All', secondary: 300 },
-    ],
-  },
-  {
-    label: 'Średnia',
-    data: [
-      { primary: '1', secondary: 200 },
-      { primary: '2', secondary: 230 },
-      { primary: '3', secondary: 120 },
-      { primary: '4', secondary: 60 },
-      { primary: '5', secondary: 444 },
-      { primary: '6', secondary: 400 },
-      { primary: 'All', secondary: 300 },
-    ],
-  },
-  {
-    label: 'Mediana',
-    data: [
-      { primary: '1', secondary: 200 },
-      { primary: '2', secondary: 230 },
-      { primary: '3', secondary: 120 },
-      { primary: '4', secondary: 60 },
-      { primary: '5', secondary: 444 },
-      { primary: '6', secondary: 400 },
-      { primary: 'All', secondary: 300 },
-    ],
-  },
-  {
-    label: 'Takt Time',
-    color: 'red',
-    data: [
-      { primary: '1', secondary: 450 },
-      { primary: '2', secondary: 450 },
-      { primary: '3', secondary: 450 },
-      { primary: '4', secondary: 450 },
-      { primary: '5', secondary: 450 },
-      { primary: '6', secondary: 450 },
-      { primary: 'All', secondary: 450 },
-    ],
-  },
+import LabelWithRadial from './LabelWithRadial';
+import Loading from '../../Loading';
+
+const legendData = [
+  { label: 'Minimum', color: 'chart-blue' },
+  { label: 'Maksimum', color: 'chart-gray' },
+  { label: 'Średnia', color: 'chart-green' },
+  { label: 'Mediana', color: 'chart-orange' },
+  { label: 'Takt Time', color: 'chart-purple' },
 ];
 
 const ReactChart = ({ firstDate, secondDate }) => {
@@ -85,11 +30,7 @@ const ReactChart = ({ firstDate, secondDate }) => {
 
   const { status, data } = useFetch(URL_FETCH);
 
-  // return {
-  //   primary: (object.no + 1).toString(),
-  //   secondary: object[values],
-  // };
-
+  // Formating data from fetch to match chart data model
   useEffect(() => {
     const myValues = [
       { label: 'Minimum', short: 'min' },
@@ -100,31 +41,15 @@ const ReactChart = ({ firstDate, secondDate }) => {
     ];
 
     const reshapeArray = (array, values) => {
-      let reshapedArray = [];
-
-      let label;
-      let data = [];
-
-      values.forEach(
-        (value) => (
-          {
-            label: value.long,
-            data: [
-              array.forEach(
-                (object) => (
-                  console.log(object.no, object[value.short]),
-                  {
-                    primary: object.no,
-                    secondary: object[value.short],
-                  }
-                )
-              ),
-            ],
-          },
-          console.log()
-          // TODO PUSH
-        )
-      );
+      let reshapedArray = values.map((v, i) => {
+        return {
+          label: v.label,
+          data: array.map((a) => ({
+            primary: a.no === 0 ? 'Wszystkie' : `ST-${a.no}`,
+            secondary: a[v.short],
+          })),
+        };
+      });
 
       return reshapedArray;
     };
@@ -135,29 +60,35 @@ const ReactChart = ({ firstDate, secondDate }) => {
     }
   }, [data.stations, status]);
 
-  // console.log('STATE', state);
+  const datas = useMemo(() => state, [state]);
 
-  const datas = useMemo(() => myData, []);
-
+  // Axes values for the chart
   const axes = useMemo(
     () => [
       { primary: true, type: 'ordinal', position: 'bottom' },
-      { type: 'linear', position: 'left' },
+      {
+        type: 'linear',
+        position: 'left',
+        min: 500,
+        format: (s) => `${s}s`,
+      },
     ],
     []
   );
 
+  // Series values for the chart
   const series = React.useCallback(
-    (s, i) => ({
-      type: i === 4 ? 'line' : 'bar',
+    (s) => ({
+      type: s.label === 'TaktTime' ? 'line' : 'bar',
     }),
     []
   );
 
+  // Series styles values for the chart
   const getSeriesStyle = React.useCallback(
     (s) => ({
       color:
-        s.label === 'Takt Time'
+        s.label === 'TaktTime'
           ? lightTheme.global.colors['chart-purple']
           : s.label === 'Minimum'
           ? lightTheme.global.colors['chart-blue']
@@ -172,22 +103,43 @@ const ReactChart = ({ firstDate, secondDate }) => {
     []
   );
 
-  return (
-    <StyledResizable
-      height={300}
-      minConstraints={[200, 200]}
-      maxConstraints={[400, 400]}
-    >
-      {datas !== undefined && (
-        <Chart
-          axes={axes}
-          data={datas}
-          series={series}
-          tooltip
-          getSeriesStyle={getSeriesStyle}
-        />
-      )}
-    </StyledResizable>
+  return status === 'fetching' ? (
+    <Loading />
+  ) : (
+    <Box pad={{ top: 'large' }} background='white'>
+      <StyledResizable
+        height={300}
+        minConstraints={[200, 200]}
+        maxConstraints={[400, 400]}
+      >
+        {datas !== undefined && (
+          <Chart
+            axes={axes}
+            data={datas}
+            series={series}
+            tooltip
+            getSeriesStyle={getSeriesStyle}
+          />
+        )}
+      </StyledResizable>
+
+      {/* LEGEND */}
+      <Box
+        direction='row'
+        margin={{ top: 'small' }}
+        pad='small'
+        border={{ side: 'horizontal' }}
+        justify='center'
+      >
+        {legendData.map((item) => (
+          <LabelWithRadial
+            key={item.label}
+            color={item.color}
+            label={item.label}
+          />
+        ))}
+      </Box>
+    </Box>
   );
 };
 
@@ -195,7 +147,6 @@ export default ReactChart;
 
 const StyledResizable = styled(ResizableBox)`
   margin: 3%;
-  overflow: hidden;
   align-items: center;
-  /* padding: 3%; */
+  background: white;
 `;

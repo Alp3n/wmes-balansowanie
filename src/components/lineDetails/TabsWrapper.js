@@ -49,8 +49,6 @@ const TabsWrapper = () => {
           {/* Component showing chart with the order results for each station */}
           <Tab title='Wykres'>
             <ReactChart firstDate={firstDate} secondDate={secondDate} />
-            {/* <OrderChart firstDate={firstDate} secondDate={secondDate} /> */}
-            {/* <NewOrderChart firstDate={firstDate} secondDate={secondDate} /> */}
           </Tab>
         </StyledTabs>
       )}
