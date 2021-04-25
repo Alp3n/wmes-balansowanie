@@ -1,9 +1,8 @@
 import React, { useMemo, useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
+
 import { Box } from 'grommet';
 import { lightTheme } from '../../../myTheme';
 import { Chart } from 'react-charts';
-import { ResizableBox } from 'react-resizable';
 
 import { useFetch } from '../../../hooks/useFetch';
 import { LineContext } from '../../../contexts/lineContext';
@@ -45,7 +44,7 @@ const ReactChart = ({ firstDate, secondDate }) => {
         return {
           label: v.label,
           data: array.map((a) => ({
-            primary: a.no === 0 ? 'Wszystkie' : `ST-${a.no}`,
+            primary: a.no === 0 ? 'All' : `ST-${a.no}`,
             secondary: a[v.short],
           })),
         };
@@ -106,12 +105,8 @@ const ReactChart = ({ firstDate, secondDate }) => {
   return status === 'fetching' ? (
     <Loading />
   ) : (
-    <Box pad={{ top: 'large' }} background='white'>
-      <StyledResizable
-        height={300}
-        minConstraints={[200, 200]}
-        maxConstraints={[400, 400]}
-      >
+    <Box pad={{ top: 'large' }} background='white' overflow='hidden'>
+      <Box height='medium' margin='medium'>
         {datas !== undefined && (
           <Chart
             axes={axes}
@@ -121,7 +116,7 @@ const ReactChart = ({ firstDate, secondDate }) => {
             getSeriesStyle={getSeriesStyle}
           />
         )}
-      </StyledResizable>
+      </Box>
 
       {/* LEGEND */}
       <Box
@@ -144,9 +139,3 @@ const ReactChart = ({ firstDate, secondDate }) => {
 };
 
 export default ReactChart;
-
-const StyledResizable = styled(ResizableBox)`
-  margin: 3%;
-  align-items: center;
-  background: white;
-`;

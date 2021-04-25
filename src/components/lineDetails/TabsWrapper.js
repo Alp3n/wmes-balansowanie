@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import styled from 'styled-components';
 import { Tabs, Tab } from 'grommet';
 import Measurment from './measurment/Measurment';
 import LineResults from './results/LineResults';
@@ -7,9 +8,6 @@ import { LineContext } from '../../contexts/lineContext';
 
 // Function for setting default dates
 import { setDays } from '../../functions/functions';
-// import NewOrderChart from './dataChart/NewOrderChart';
-import styled from 'styled-components';
-import OrderChart from './dataChart/OrderChart';
 import ReactChart from './dataChart/ReactChart';
 
 //TODO play with charts
