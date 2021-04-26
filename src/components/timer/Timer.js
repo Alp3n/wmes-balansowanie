@@ -9,7 +9,6 @@ import { LineContext } from '../../contexts/lineContext';
 import { getTime, handleStart, handleStop, handleFinished } from './timerFuncs';
 
 import strings from '../../utils/strings.json';
-import { useStopwatch } from 'react-use-precision-timer';
 
 const { TIMER_confirmTime } = strings.timer;
 
@@ -24,8 +23,6 @@ const Timer = ({ stationId, isFinished, setIsFinished }) => {
 
   const [startedAt, setStartedAt] = useState();
   const [finishedAt, setFinishedAt] = useState();
-
-  const stopWatch = useStopwatch();
 
   const [postData, setPostData] = useState({
     line: lineData.lineId,

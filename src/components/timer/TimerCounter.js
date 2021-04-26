@@ -2,29 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Box, Text } from 'grommet';
 import styled from 'styled-components';
 import useInterval from '../../hooks/useInterval';
-// import { useStopwatch } from 'react-use-precision-timer';
-// import { getTimeV2 } from './timerFuncs';
-
-//TODO use Date.now()
 
 const TimerCounter = ({ isRunning, isFinished, seconds, milseconds }) => {
   const delay = 100;
   const [currentDate, setCurrentDate] = useState();
   const [duration, setDuration] = useState(0.0);
-  // const [millSecCount, setMillSecCount] = useState(isFinished ? milseconds : 0);
-  // const [secCount, setSecCount] = useState(isFinished ? seconds : 0);
 
   // useInterval custom hook for displaying stopwatch digits
   useInterval(
     () => {
       let diff = currentDate - new Date();
       setDuration(-(diff / 1000));
-
-      // setMillSecCount(millSecCount + 1);
-      // if (millSecCount >= 9) {
-      //   setMillSecCount(0);
-      //   setSecCount(secCount + 1);
-      // }
     },
     isRunning ? delay : null
   );
@@ -35,14 +23,11 @@ const TimerCounter = ({ isRunning, isFinished, seconds, milseconds }) => {
       setCurrentDate(new Date());
     }
     if (isFinished === false) {
-      // setSecCount(0);
-      // setMillSecCount(0);
       setDuration(0.0);
     }
   }, [isFinished, isRunning]);
 
   const showTimer = () => {
-    // show = duration < 10 && duration.toFixed(1);
     if (duration < 10) {
       return `0${duration.toFixed(1).toString()}`;
     } else {
