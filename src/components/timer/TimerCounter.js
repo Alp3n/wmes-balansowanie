@@ -9,28 +9,46 @@ import useInterval from '../../hooks/useInterval';
 
 const TimerCounter = ({ isRunning, isFinished, seconds, milseconds }) => {
   const delay = 100;
-  const [millSecCount, setMillSecCount] = useState(isFinished ? milseconds : 0);
-  const [secCount, setSecCount] = useState(isFinished ? seconds : 0);
+  const [currentDate, setCurrentDate] = useState();
+  const [duration, setDuration] = useState(0.0);
+  // const [millSecCount, setMillSecCount] = useState(isFinished ? milseconds : 0);
+  // const [secCount, setSecCount] = useState(isFinished ? seconds : 0);
 
   // useInterval custom hook for displaying stopwatch digits
   useInterval(
     () => {
-      setMillSecCount(millSecCount + 1);
-      if (millSecCount >= 9) {
-        setMillSecCount(0);
-        setSecCount(secCount + 1);
-      }
+      let diff = currentDate - new Date();
+      setDuration(-(diff / 1000));
+
+      // setMillSecCount(millSecCount + 1);
+      // if (millSecCount >= 9) {
+      //   setMillSecCount(0);
+      //   setSecCount(secCount + 1);
+      // }
     },
     isRunning ? delay : null
   );
 
   // Listening to isFinished and setting state seconds and millseconds count in TimerCounter
   useEffect(() => {
-    if (isFinished === false) {
-      setSecCount(0);
-      setMillSecCount(0);
+    if (isRunning) {
+      setCurrentDate(new Date());
     }
-  }, [isFinished]);
+    if (isFinished === false) {
+      // setSecCount(0);
+      // setMillSecCount(0);
+      setDuration(0.0);
+    }
+  }, [isFinished, isRunning]);
+
+  const showTimer = () => {
+    // show = duration < 10 && duration.toFixed(1);
+    if (duration < 10) {
+      return `0${duration.toFixed(1).toString()}`;
+    } else {
+      return `${duration.toFixed(1)}`;
+    }
+  };
 
   return (
     <StyledBoxWrapper
@@ -63,23 +81,9 @@ const TimerCounter = ({ isRunning, isFinished, seconds, milseconds }) => {
           className={isRunning ? 'running' : null}
           direction='row'
         >
-          {secCount.toString().padStart(2, '0')}
-        </Text>
-        <Text
-          size='4rem'
-          color={isFinished ? 'white' : 'dark-1'}
-          className={isRunning ? 'running' : null}
-          direction='row'
-        >
-          .
-        </Text>
-        <Text
-          size='4rem'
-          color={isFinished ? 'white' : 'dark-1'}
-          className={isRunning ? 'running' : null}
-          direction='row'
-        >
-          {millSecCount}
+          {isFinished & (seconds + milseconds > 1)
+            ? `${seconds.toString().padStart(2, '0')}.${milseconds}`
+            : showTimer()}
         </Text>
       </StyledBoxContent>
     </StyledBoxWrapper>
