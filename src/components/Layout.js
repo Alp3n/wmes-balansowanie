@@ -32,7 +32,7 @@ const Layout = ({ children, pageName, firstPage }) => {
           </TopbarHeading>
         </Box>
         {/* <Button icon={<Menu color='white' />} /> */}
-        <Button plain margin='small' disabled />
+        <Button plain margin='medium' disabled />
       </Topbar>
       <BoxChildren>{children}</BoxChildren>
       {showModal && (
