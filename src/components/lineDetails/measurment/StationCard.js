@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Button, Text, Card, CardBody, CardHeader, CardFooter } from 'grommet';
-import { Up, LineChart, Next, Trash } from 'grommet-icons';
+import { Up, LineChart, Next, Trash, Camera, Time, Clock } from 'grommet-icons';
 
 import { LineContext } from '../../../contexts/lineContext';
 import strings from '../../../utils/strings.json';
@@ -24,8 +24,12 @@ const StationCard = ({ station, last, data }) => {
   const history = useHistory();
 
   // Handling routing and passing station state
-  const handleClick = () => {
+  const handleStopwatch = () => {
     history.push(`/lines/${lineId}/${station.station}`, station);
+  };
+
+  const handleCamera = () => {
+    history.push(`/lines/${lineId}/${station.station}/camera`, station);
   };
 
   return (
@@ -52,10 +56,11 @@ const StationCard = ({ station, last, data }) => {
         align='center'
         background='white'
       >
-        <Button
+        {/* <Button
           icon={isOpen ? <Up /> : <LineChart />}
           onClick={() => setOpen((prevState) => !prevState)}
-        />
+        /> */}
+        <Button icon={<Camera />} onClick={handleCamera} />
         <Text size='large'>
           {station.startedAt && station.finishedAt !== null
             ? `${durationFromISOFormatter(
@@ -64,14 +69,14 @@ const StationCard = ({ station, last, data }) => {
               )}`
             : '0s'}
         </Text>
-        <Button icon={<Next />} onClick={handleClick} />
+        <Button icon={<Clock />} onClick={handleStopwatch} />
       </CardBody>
-      {isOpen && (
+      {/*isOpen && (
         <CardFooter border={{ side: 'top', color: 'light-4' }} justify='center'>
-          {/* <StationChart data={data} /> */}
+          { <StationChart data={data} /> }
           <StationResults data={data} />
         </CardFooter>
-      )}
+      )*/}
     </Card>
   );
 };

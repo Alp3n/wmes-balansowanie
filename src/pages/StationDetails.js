@@ -47,6 +47,7 @@ const StationDetails = () => {
           {orderId}
         </Text>
       </Box>
+
       <Timer
         stationId={station}
         isFinished={isFinished}

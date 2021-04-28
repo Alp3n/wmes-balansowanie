@@ -57,6 +57,6 @@ const TabsWrapper = () => {
 export default TabsWrapper;
 
 const StyledTabs = styled(Tabs)`
-  position: relative;
-  bottom: 0;
+  /* position: relative; */
+  overflow: scroll;
 `;

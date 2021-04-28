@@ -11,6 +11,7 @@ import { lightTheme } from './myTheme';
 
 import LineContextProvider from './contexts/lineContext';
 import ModalContextProvider from './contexts/modalContext';
+import Camera from './pages/Camera';
 
 function App() {
   return (
@@ -19,6 +20,11 @@ function App() {
         <LineContextProvider>
           <Router basename='/ct-balancing'>
             <Switch>
+              <Route
+                path='/lines/:lineId/:positionId/camera'
+                component={Camera}
+                exact
+              />
               <Route
                 path='/lines/:lineId/:positionId'
                 component={StationDetails}
