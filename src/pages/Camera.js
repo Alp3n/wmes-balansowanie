@@ -1,40 +1,51 @@
 import React, { useState, useRef, useEffect } from 'react';
+import {
+  useReactMediaRecorder,
+  ReactMediaRecorder,
+} from 'react-media-recorder';
 import { useLocation, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Box, Button, Text } from 'grommet';
 import { useUserMedia } from '../hooks/useUserMedia';
 import { Previous } from 'grommet-icons';
+import PreviewVideo from '../components/lineDetails/camera/PreviewVideo';
+import RecordButton from '../components/lineDetails/camera/RecordButton';
 
-const CAPTURE_OPTIONS = {
-  audio: false,
+const MEDIA_TRACK_CONSTRAINTS = {
   video: {
     facingMode: { exact: 'environment' },
+    frameRate: { min: 24, max: 30 },
     width: { min: 1280, max: 1920 },
     height: { min: 720, max: 1080 },
   },
 };
 
 const Camera = () => {
-  const videoRef = useRef();
-  const mediaStream = useUserMedia(CAPTURE_OPTIONS);
+  // const videoRef = useRef();
+  // const mediaStream = useUserMedia(CAPTURE_OPTIONS);
+  const {
+    status,
+    startRecording,
+    stopRecording,
+    mediaBlobUrl,
+    previewStream,
+  } = useReactMediaRecorder(MEDIA_TRACK_CONSTRAINTS);
 
   const history = useHistory();
   const { state } = useLocation();
-  console.log(state);
 
-  if (mediaStream && videoRef.current && !videoRef.current.srcObject) {
-    videoRef.current.srcObject = mediaStream;
-  }
+  // if (mediaStream && videoRef.current && !videoRef.current.srcObject) {
+  //   videoRef.current.srcObject = mediaStream;
+  // }
 
-  useEffect(() => {
-    videoRef.current.onloadedmetadata = () => {
-      videoRef.current.play();
-    };
-  }, []);
+  // useEffect(() => {
+  //   videoRef.current.onloadedmetadata = () => {
+  //     videoRef.current.play();
+  //   };
+  // }, []);
 
   return (
     <CameraWrapper>
-      {/* Header */}
       <NavigationHeader
         fill='horizontal'
         direction='row'
@@ -51,29 +62,32 @@ const Camera = () => {
         <Button plain margin='medium' disabled />
       </NavigationHeader>
 
-      {/* Camera view */}
-      <CameraCanvas
-        ref={videoRef}
-        autoPlay
-        muted
-        webkit-playsinline
-        playsInline
-      ></CameraCanvas>
+      {status === 'stopped' ? (
+        <StyledVideo
+          src={mediaBlobUrl}
+          controls
+          playsInline
+          webkit-playsInline
+        />
+      ) : (
+        <PreviewVideo mediaStream={previewStream} />
+      )}
 
-      {/* Control bar */}
       <ControlBox
         fill='horizontal'
         direction='row'
-        justify='between'
-        // pad='medium'
+        justify='center'
+        pad='medium'
       >
-        <StyledButton size='medium' label='Komentarz' />
-        <Button
-          size='medium'
-          label='Nagrywaj'
-          primary
-          // margin={{ horizontal: 'small' }}
-        />
+        {status === 'idle' ? (
+          <RecordButton
+            onClick={startRecording}
+            color='white'
+            status={status}
+          />
+        ) : status === 'recording' ? (
+          <RecordButton onClick={stopRecording} color='red' status={status} />
+        ) : null}
       </ControlBox>
     </CameraWrapper>
   );
@@ -85,21 +99,10 @@ const CameraWrapper = styled(Box)`
   position: relative;
 `;
 
-const CameraCanvas = styled.video`
-  position: relative;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: 1;
-  border: 3px red solid;
-  padding: none;
-  margin: none;
-`;
-
 const ControlBox = styled(Box)`
   position: absolute;
-  bottom: 0;
-  z-index: 999;
+  bottom: 3%;
+  z-index: 2;
 `;
 
 const NavigationHeader = styled(Box)`
@@ -108,7 +111,10 @@ const NavigationHeader = styled(Box)`
   z-index: 999;
 `;
 
-const StyledButton = styled(Button)`
-  background-color: white;
-  border: none;
+const StyledVideo = styled.video`
+  position: relative;
+  height: 100vh;
+  z-index: 1;
+  padding: 0 !important;
+  margin: 0 !important;
 `;
