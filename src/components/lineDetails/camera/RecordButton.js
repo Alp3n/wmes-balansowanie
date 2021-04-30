@@ -20,6 +20,7 @@ const StyledOutside = styled.div`
   height: 64px;
   width: 64px;
   border-radius: 100%;
+  grid-area: rec;
 `;
 
 const StyledInside = styled.div`

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const PreviewVideo = ({ mediaStream }) => {
   const videoRef = useRef(null);
-
+  console.log(mediaStream);
   useEffect(() => {
     if (videoRef.current && mediaStream) {
       videoRef.current.srcObject = mediaStream;
@@ -31,10 +31,14 @@ const StyledVideo = styled.video`
   z-index: 1;
   padding: 0 !important;
   margin: 0 !important;
+
+  video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+  }
 `;
 
 const StyledWrapper = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
