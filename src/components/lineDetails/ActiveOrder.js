@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { LineContext } from '../../contexts/lineContext';
 import { Box, Text, TextInput, Button, Form } from 'grommet';
 import { Edit, Refresh, Checkmark } from 'grommet-icons';
+import { lightTheme } from '../../myTheme';
 import strings from '../../utils/strings.json';
 
 const {
@@ -43,7 +44,7 @@ const ActiveOrder = ({ handleRefresh, orderStatus }) => {
       margin={{ bottom: 'small' }}
     >
       <Box direction='row' align='center' pad='medium' justify='between'>
-        <Text size='large' weight='bold'>
+        <Text size='large' /* weight='bold' */>
           {!lineData.orderId
             ? LINE_DETAILS_noActiveOrder
             : LINE_DETAILS_activeOrder}
@@ -84,6 +85,7 @@ const ActiveOrder = ({ handleRefresh, orderStatus }) => {
             disabled={disabled}
             ref={textInput}
             maxLength={9}
+            // style={{ color: lightTheme.global.colors.signifyGreen }}
           />
         </Form>
       </Box>

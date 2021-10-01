@@ -1,57 +1,85 @@
-import React from 'react';
-import { Box, Button, Text } from 'grommet';
-import { Expand, Play, Stop } from 'grommet-icons';
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { Box, Text } from 'grommet';
 import styled from 'styled-components';
+import { CameraContext } from '../../../contexts/cameraContext';
+import VideoControlBox from './VideoControlBox';
 
-const VideoPlayer = ({ status, src }) => {
+const MyVideoPlayer = ({ src }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const { cameraData, addMarker } = useContext(CameraContext);
+  const vidRef = useRef(null);
+
+  const handlePlay = () => {
+    vidRef.current.play();
+    setIsPlaying(true);
+  };
+
+  const handlePause = () => {
+    vidRef.current.pause();
+    setIsPlaying(false);
+  };
+
+  const handleFullscreen = () => {
+    if (vidRef.current) {
+      vidRef.current.requestFullscreen();
+    }
+  };
+
+  // handling events for video element
+  useEffect(() => {
+    vidRef.current.currentTime = currentTime;
+    // vidRef.current.play();
+
+    vidRef.current.addEventListener('started', handlePlay);
+    vidRef.current.addEventListener('ended', handlePause);
+
+    return () => {
+      // vidRef.current.removeEventListener('started', handleStarted);
+      // vidRef.current.removeEventListener('ended', handleEnded);
+    };
+  }, [currentTime]);
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setCurrentTime(vidRef?.current?.currentTime);
+  //   }, 1);
+  // }, [currentTime]);
+  console.log('RECORDED', cameraData);
   return (
-    <StyledWrapper>
-      {/* Video */}
-      <StyledVideo src={src} playsInline autoPlay webkit-playsInline />
-
-      {/* Control box */}
-      <Box
-        fill='horizontal'
-        direction='row'
-        gap='xsmall'
-        height='xxsmall'
-        align='center'
-        background='signifyDark'
-      >
-        <Button
-          icon={
-            status === 'isPlaying' ? (
-              <Stop size='small' />
-            ) : (
-              <Play size='small' />
-            )
-          }
-        />
-        <Text size='small'>00:00</Text>
-        <Text size='small'>/</Text>
-        <Text size='small'>00:10</Text>
-        <StyledDuration fill='horizontal' background='white'></StyledDuration>
-        <Button icon={<Expand size='small' />} />
+    <>
+      <Box background='white'>
+        <Text margin='small' size='large' weight='bold'>
+          Przejrzyj nagranie
+        </Text>
       </Box>
-    </StyledWrapper>
+      <StyledVideo
+        ref={vidRef}
+        src={src}
+        playsInline
+        webkit-playsInline
+        muted
+        controls
+        // controls
+      />
+      <VideoControlBox
+        status={isPlaying}
+        handlePause={handlePause}
+        handlePlay={handlePlay}
+        handleFullscreen={handleFullscreen}
+        // markers={markers}
+      />
+    </>
   );
 };
 
-export default VideoPlayer;
-
-const StyledWrapper = styled(Box)`
-  position: relative;
-  top: 48px;
-`;
+export default MyVideoPlayer;
 
 const StyledVideo = styled.video`
   background-color: gray;
   aspect-ratio: 16/9;
-
-  height: 50vh;
+  width: 100%;
   z-index: 1;
-`;
-
-const StyledDuration = styled(Box)`
-  z-index: 10;
 `;

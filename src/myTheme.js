@@ -13,13 +13,16 @@ export const lightTheme = deepMerge(grommet, {
       background: '#f0f0f0',
       signifyGreen: '#00E696',
       signifyBlue: '#1EC8D2',
-      signifyGradient: brandGradient,
+      signifyGradient:
+        'linear-gradient(45deg, rgba(0,230,150,1) 0%, rgba(30,200,210,1) 100%)',
       signifyDark: '#3C3C41',
+      signifyOrange: '#f59042',
       'chart-blue': '#7cb5ec',
       'chart-gray': '#777777',
       'chart-green': '#90ed7d',
       'chart-orange': '#f7a35c',
       'chart-purple': '#8085e9',
+      'light-4': '#DADADA',
     },
     control: {
       disabled: {
@@ -78,6 +81,22 @@ export const lightTheme = deepMerge(grommet, {
     body: {
       border: 'bottom',
       background: 'white',
+    },
+  },
+  rangeInput: {
+    track: {
+      // color: 'signifyDark',
+      height: '16px',
+      lower: {
+        color: 'signifyGreen',
+      },
+      upper: {
+        color: 'signifyDark',
+      },
+      extend: () => `border-radius: 10px`,
+    },
+    thumb: {
+      color: 'signifyBlue',
     },
   },
 });

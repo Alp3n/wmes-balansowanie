@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { ModalContext } from '../contexts/modalContext';
 
-const Layout = ({ children, pageName, firstPage }) => {
+const Layout = ({ children, pageName, firstPage, transparent }) => {
   const history = useHistory();
   const { showModal, modal, closeModal } = useContext(ModalContext);
   return (
@@ -16,9 +16,9 @@ const Layout = ({ children, pageName, firstPage }) => {
         direction='row'
         align='center'
         justify='between'
-        elevation='small'
+        elevation={transparent ? null : 'small'}
         background='signifyDark'
-        // overflow='hidden'
+        transparent={transparent}
       >
         {firstPage ? null : (
           <Button
@@ -34,14 +34,9 @@ const Layout = ({ children, pageName, firstPage }) => {
         {/* <Button icon={<Menu color='white' />} /> */}
         <Button plain margin='medium' disabled />
       </Topbar>
-      <BoxChildren>{children}</BoxChildren>
+      <BoxChildren transparent={transparent}>{children}</BoxChildren>
       {showModal && (
-        <Layer
-          plain
-          onClickOutside={closeModal}
-          onEsc={closeModal}
-          // animation='slide'
-        >
+        <Layer plain onClickOutside={closeModal} onEsc={closeModal}>
           {modal}
         </Layer>
       )}
@@ -53,8 +48,10 @@ export default Layout;
 
 const Topbar = styled(Box)`
   position: fixed;
+  position: -webkit-fixed;
   top: 0;
-  z-index: 2;
+  left: 0;
+  z-index: 999;
 `;
 
 const TopbarHeading = styled(Text)`

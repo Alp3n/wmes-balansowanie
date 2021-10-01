@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const RecordButton = ({ onClick, color, status }) => {
+const RecordButton = ({ onClick, color }) => {
   return (
     <StyledOutside onClick={onClick} color={color}>
-      <StyledInside status={status} />
+      <StyledInside />
     </StyledOutside>
   );
 };
@@ -12,23 +12,24 @@ const RecordButton = ({ onClick, color, status }) => {
 export default RecordButton;
 
 const StyledOutside = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   background-color: ${(props) => props.color};
   height: 64px;
   width: 64px;
   border-radius: 100%;
   grid-area: rec;
+  z-index: 999 !important;
 `;
 
 const StyledInside = styled.div`
   position: absolute;
   background-color: ${(props) => props.color};
-  border: 2px solid
-    ${(props) => (props.status === 'recording' ? '#fff' : '#ccc')};
+  border: 2px solid ${(props) => (props.color === 'red' ? '#fff' : '#ccc')};
   height: 54px;
   width: 54px;
   border-radius: 100%;
+  z-index: 1111 !important;
 `;
